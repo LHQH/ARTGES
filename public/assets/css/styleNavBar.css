@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+/* Logo */
+.logo h1 {
+    margin: 0;
+    color: #2f66ff;
+    font-size: 32px;
+}
+
+.logo p {
+    margin-top: 5px;
+    color: #555;
+    font-size: 22px;
+}
+
+.logo {
+    margin-bottom: 40px;
+}
+
+/* Menu */
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu li:hover {
+    background: #e8f0ff;
+}
+
+.menu li.active {
+    background: #cfe0ff;
+    color: #1a5cff;
+}
+
+/* Page content */
+.content {
+    margin-left: 260px;
+    padding: 40px;
+}

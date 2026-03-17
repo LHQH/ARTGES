@@ -1,0 +1,25 @@
+model ConstructSite {
+  id_construct   Int      @id @default(autoincrement())
+  construct_ref  String
+  construct_name String?
+  construct_date DateTime?
+  description    String?
+  start_date     DateTime?
+  end_date       DateTime?
+  status         String?
+  created_at     DateTime @default(now())
+
+  id_record  Int?
+  id_bill    Int?
+  id_address Int?
+  id_client  Int?
+  id_craftman Int?
+
+  record   Record?   @relation(fields: [id_record], references: [id_record])
+  bill     Bill?     @relation(fields: [id_bill], references: [id_bill])
+  address  Address?  @relation(fields: [id_address], references: [id_address])
+  client   Client?   @relation(fields: [id_client], references: [id_client])
+  craftman Craftman? @relation(fields: [id_craftman], references: [id_craftman])
+
+  purchases Purchase[]
+}

@@ -1,0 +1,10 @@
+model Event {
+  id_event      Int      @id @default(autoincrement())
+  start_datetime DateTime
+  end_datetime   DateTime
+  description    String?
+  type_rdv_intervention_visite_ String
+
+  id_craftman Int?
+  craftman Craftman? @relation(fields: [id_craftman], references: [id_craftman])
+}

@@ -1,0 +1,12 @@
+model Address {
+    id_address  Int     @id @default(autoincrement())
+    way_number  String?
+    street_name String?
+    postcode    String?
+    city        String?
+
+    clients        Client[]
+    constructSites ConstructSite[]
+    id_craftman    Int
+    craftman       Craftman        @relation(fields: [id_craftman], references: [id_craftman])
+}

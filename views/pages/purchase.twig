@@ -1,0 +1,51 @@
+{% extends "../layouts/base.twig" %}
+{% extends "../partials/navBar.twig" %}
+
+{% block main %}
+	<section class="headGest">
+		<h2>Achats</h2>
+		<p>Gérer vos achats</p>
+
+		<div id="search">
+			<label for="finder">Recherche :</label>
+			<input type="text" name="searchContent" id="searchContent">
+		</div>
+		<div>
+			<button>+ Nouvel achat</button>
+		</div>
+	</section>
+	<section>
+		<h3>Liste des achats</h3>
+		<div class="columnTitle">
+			<p>Date</p>
+			<p>Fournisseur</p>
+			<p>description</p>
+			<p>QTY</p>
+			<p>Chantier</p>
+			<p>Montant</p>
+		</div>
+		<div class="columnInfo">
+			<p>
+				{# {{VARIABLE DATE}} #}
+			</p>
+			<p>
+				{# {{VARIABLE FOURNISSEUR}} #}
+			</p>
+			<p>
+				{# {{VARIABLE DESCRIPTION}} #}
+			</p>
+			<p>
+				{# {{VARIABLE QTY}} #}
+			</p>
+			<p>
+				{# {{VARIABLE REF CHANTIER}} #}
+			</p>
+			<p>
+				{# {{VARIABLE MONTANT ACHAT}} #}
+			</p>
+		</div>
+
+	</section>
+
+
+{% endblock %}

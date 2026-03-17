@@ -1,0 +1,48 @@
+{% extends "../layouts/base.twig" %}
+{% extends "../partials/navBar.twig" %}
+
+{% block main %}
+	<section class="headGest">
+		<h2>Devis</h2>
+		<p>Créer et gérer vos devis</p>
+
+		<div id="search">
+			<label for="finder">Recherche :</label>
+			<input type="text" name="searchContent" id="searchContent">
+		</div>
+		<div>
+			<button>+ Nouveau devis</button>
+		</div>
+	</section>
+	<section>
+		<article>
+			<div>
+				<p>
+					{# {{variable du NOMCLIENT}} #}
+				</p>
+				<p>
+					Réference devis
+
+				</p>
+				<p>
+					{# {{VARIABLE REF DU DEVIS}} #}
+				</p>
+			</div>
+			<div>
+				<img src="" alt="previewDEVIS">
+			</div>
+
+			<div>
+				<p>
+					{# Créer le{{DATE CREATION DEVIS}} #}
+				</p>
+			</div>
+
+		</article>
+
+
+	</section>
+
+
+{% endblock %}
+

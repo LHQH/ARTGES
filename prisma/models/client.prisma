@@ -1,0 +1,17 @@
+model Client {
+    id_client  Int      @id @default(autoincrement())
+    last_name  String
+    first_name String
+    email      String?   @unique
+    phone      String?
+    created_at DateTime @default(now())
+
+    id_address Int?
+    address    Address? @relation(fields: [id_address], references: [id_address])
+
+    records         Record[]
+    construct_sites ConstructSite[]
+
+    id_craftman Int?
+    craftman    Craftman? @relation(fields: [id_craftman], references: [id_craftman])
+}

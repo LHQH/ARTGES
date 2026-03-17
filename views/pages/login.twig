@@ -1,0 +1,38 @@
+{% extends "../layouts/base.twig" %}
+{% include "../partials/header.twig" %}
+
+{% block main %}
+	<section>
+		<div>
+			<h2>Connexion</h2>
+		</div>
+
+
+		<form action="/artisan/login" method="POST">
+			<label for="mail">Mail</label>
+			<input type="mail" name="mail" placeholder="Votre adresse mail">
+			<label for="password">Mot de passe</label>
+			<input type="password" name="password" placeholder="Mot de passe">
+			<div id="loginBtn">
+				<button>Se connecter</button>
+			</div>
+
+
+		</form>
+		{% if error %}
+			<p>{{error}}</p>
+		{% endif %}
+
+	</section>
+
+	<p>OU</p>
+
+
+	<section>
+		<h3>Pas encore inscrit ?</h3>
+		<button>Commencer gratuitement</button>
+
+	</section>
+
+
+{% endblock %}

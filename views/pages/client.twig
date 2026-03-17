@@ -1,0 +1,53 @@
+{% extends "../layouts/base.twig" %}
+{% extends "../partials/navBar.twig" %}
+
+{% block main %}
+	<section class="headGest">
+		<h2>Clients</h2>
+		<p>Gérer votre base de données client</p>
+
+		<div id="search">
+			<label for="finder">Recherche :</label>
+			<input type="text" name="searchContent" id="searchContent">
+		</div>
+		<div>
+			<button>+ Nouveau client</button>
+		</div>
+	</section>
+	<section>
+		<article>
+			<div>
+				<p>
+					{# {{variable du NOMCLIENT}} #}
+				</p>
+				<img src="" alt="MODIF">
+				<img src="" alt="SUPP">
+			</div>
+			<div>
+				<img src="" alt="PHONE">
+				<p>
+					{# {{variable du PHONE CLIENT}} #}
+				</p>
+				<img src="" alt="MAIL">
+				<p>
+					{# {{variable du MAIL CLIENT}} #}
+				</p>
+				<img src="" alt="ADRESSE">
+				<p>
+					{# {{variable du ADRESSE CLIENT}} #}
+				</p>
+			</div>
+
+			<div>
+				<p>
+					{# Client depuis le {{DATE CREATION CLIENT}} #}
+				</p>
+			</div>
+
+		</article>
+
+
+	</section>
+
+
+{% endblock %}

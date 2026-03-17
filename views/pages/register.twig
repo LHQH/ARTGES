@@ -1,0 +1,47 @@
+{% extends "../layouts/base.twig" %}
+{% include "../partials/header.twig" %}
+
+
+{% block main %}
+	<div>
+		<p>Tout les champs sont obligatoire*</p>
+	</div>
+
+
+	<form action="/artisan/Register" method="POST">
+		<label for="firstName">Prénom</label>
+		<input type="text" name="firstName" placeholder="Prénom (obligatoire)" required>
+		<br>
+		<label for="lastName">Nom</label>
+		<input type="text" name="lastName" placeholder="Nom (obligatoire)" required>
+
+		<br>
+		<label for="mail">Mail</label>
+		<input type="mail" name="mail" placeholder="Mail (obligatoire)" required>
+
+		<br>
+		<label for="adress">Adresse</label>
+		<input type="password" name="adress" placeholder="Adresse (obligatoire)" required>
+		<br>
+		<label for="phone">Téléphone</label>
+		<input type="text" name="phone" placeholder="+33XXXXXXXXX (obligatoire)" required>
+
+		<br>
+		<label for="socialReason">Raison sociale</label>
+		<input type="text" name="socialReason" placeholder="Raison sociale (obligatoire)" required>
+
+		<br>
+		<label for="siret">SIRET</label>
+		<input type="text" name="siret" placeholder="Numéro de SIRET (obligatoire)" required>
+
+		<br>
+		<label for="formule">Formule</label>
+		<select name="formule" id="formule">Choisir une formule</select>
+
+
+		<button>Commencer gratuitement</button>
+	</form>
+	{% if error %}
+		<p>{{error}}</p>
+	{% endif %}
+{% endblock %}

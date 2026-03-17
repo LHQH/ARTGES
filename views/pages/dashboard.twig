@@ -1,0 +1,102 @@
+{% extends "../layouts/base.twig" %}
+{% extends "../partials/navBar.twig" %}
+
+
+{% block main %}
+	<h2>Tableau de bord</h2>
+	<p>Vue d’ensemble de votre activité</p>
+
+{# RAPID INFOS #}
+	<section>
+		<div>
+			<p>Clients actif</p>
+			<img src="" alt="iconeClient">
+		</div>
+		{# VARIABLE A NOMCLIENT !!!! #}
+		<div>
+			<p>3</p>
+		</div>
+
+		<div>
+			<p>Chantier en cours</p>
+			<img src="" alt="iconeHammer">
+		</div>
+		{# VARIABLE A CHANGER !!!! #}
+		<div>
+			<p>3</p>
+		</div>
+
+		<div>
+			<p>Tâche en cours</p>
+			<img src="" alt="iconePlanning">
+		</div>
+		{# VARIABLE A CHANGER !!!! #}
+		<div>
+			<p>2</p>
+		</div>
+
+		<div>
+			<p>CA du mois</p>
+			<img src="" alt="icone€">
+		</div>
+		{# VARIABLE A CHANGER !!!! #}
+		<div>
+			<p>30 000 €</p>
+		</div>
+
+	</section>
+
+{# CHANTIER DETAIL RAPID #}
+
+	<section>
+		<h3>Chantiers actifs</h3>
+		{# VARIABLE A CHANGER !!!! #}
+		<article>
+			<div>
+				<h3>Rénovation SDB</h3>
+				<p>Jean Dupont</p>
+			</div>
+			<div>
+				<p>3000 €</p>
+				<p>Fin : 15/04/2026</p>
+
+			</div>
+		</article>
+		{# VARIABLE A CHANGER !!!! #}
+		<article>
+			<div>
+				<h3>Extension cuisine</h3>
+				<p>Sylvie Martin</p>
+			</div>
+			<div>
+				<p>9000 €</p>
+				<p>Fin : 15/07/2026</p>
+
+			</div>
+		</article>
+
+
+	</section>
+
+{# RDV A VENIR #}
+	<section>
+{# VARIABLE A CHANGER !!!! #}
+		<h3>Prochaines interventions</h3>
+		<article>
+			<div>
+				<p>11</p>
+				<p>mars</p>
+			</div>
+			<div>
+				<h3>Rénovation salle de bain</h3>
+				<p>Démolition ancien carrelage</p>
+			</div>
+
+			<div>08:00 - 17:00</div>
+
+		</article>
+
+
+	</section>
+
+{% endblock %}

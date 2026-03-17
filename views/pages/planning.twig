@@ -1,0 +1,48 @@
+{% extends "../layouts/base.twig" %}
+{% extends "../partials/navBar.twig" %}
+
+{% block main %}
+	<section class="headGest">
+		<h2>Planning</h2>
+		<p>Gérer vos rendez-vous</p>
+
+		<div id="search">
+			<label for="finder">Recherche :</label>
+			<input type="text" name="searchContent" id="searchContent">
+		</div>
+		<div>
+			<button>+ Nouvelle tâche</button>
+		</div>
+	</section>
+	<section>
+		<article>
+			<div>
+				<p>
+					{# {{VARIABLE DATE ENREGISTRER}} #}
+				</p>
+				<img src="" alt="iconeModif">
+				<img src="" alt="iconeSupp">
+			</div>
+			<div>
+				<img src="" alt="iconeRdv">
+				<p>
+					{# {{VARIABLE TITRE CHANTIER (FALCULTATIF)}} #}
+				</p>
+				<p>
+					{# {{VARIABLE DESCRIPTION EVENT}} #}
+				</p>
+				<p>Réference chantier</p>
+				<p>
+					{# {{VARIABLE REF CHANTIER (FALCULTATIF)}} #}
+				</p>
+				<p>
+					{# {{VARIABLE HEURE EVENT}} #}
+				</p>
+
+
+			</div>
+		</article>
+	</section>
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+model Purchase {
+  id_purchase   Int      @id @default(autoincrement())
+  purchase_date DateTime
+  supplier_name String
+  description   String?
+  quantity      Int
+  price         Float
+  created_at    DateTime @default(now())
+
+  id_construct Int
+  construct    ConstructSite @relation(fields: [id_construct], references: [id_construct])
+}

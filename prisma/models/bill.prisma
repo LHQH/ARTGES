@@ -1,0 +1,15 @@
+model Bill {
+    id_bill      Int      @id @default(autoincrement())
+    reference    String
+    issue_date   DateTime
+    due_date     DateTime
+    total_amount Float
+    status       String
+    created_at   DateTime @default(now())
+
+    construct_sites ConstructSite[]
+    id_estimate     Int?
+    estimate        Estimate?       @relation(fields: [id_estimate], references: [id_estimate])
+    id_craftman     Int
+    craftman        Craftman        @relation(fields: [id_craftman], references: [id_craftman])
+}

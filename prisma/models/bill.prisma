@@ -7,7 +7,7 @@ model Bill {
     status       String
     created_at   DateTime @default(now())
 
-    construct_sites ConstructSite[]
+    construct_sites Construct[]
     id_estimate     Int?
     estimate        Estimate?       @relation(fields: [id_estimate], references: [id_estimate])
     id_craftman     Int

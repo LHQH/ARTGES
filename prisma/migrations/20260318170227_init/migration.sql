@@ -41,7 +41,7 @@ CREATE TABLE `Client` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ConstructSite` (
+CREATE TABLE `Construct` (
     `id_construct` INTEGER NOT NULL AUTO_INCREMENT,
     `construct_ref` VARCHAR(191) NOT NULL,
     `construct_name` VARCHAR(191) NULL,
@@ -147,19 +147,19 @@ ALTER TABLE `Client` ADD CONSTRAINT `Client_id_address_fkey` FOREIGN KEY (`id_ad
 ALTER TABLE `Client` ADD CONSTRAINT `Client_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ConstructSite` ADD CONSTRAINT `ConstructSite_id_record_fkey` FOREIGN KEY (`id_record`) REFERENCES `Record`(`id_record`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_record_fkey` FOREIGN KEY (`id_record`) REFERENCES `Record`(`id_record`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ConstructSite` ADD CONSTRAINT `ConstructSite_id_bill_fkey` FOREIGN KEY (`id_bill`) REFERENCES `Bill`(`id_bill`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_bill_fkey` FOREIGN KEY (`id_bill`) REFERENCES `Bill`(`id_bill`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ConstructSite` ADD CONSTRAINT `ConstructSite_id_address_fkey` FOREIGN KEY (`id_address`) REFERENCES `Address`(`id_address`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_address_fkey` FOREIGN KEY (`id_address`) REFERENCES `Address`(`id_address`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ConstructSite` ADD CONSTRAINT `ConstructSite_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ConstructSite` ADD CONSTRAINT `ConstructSite_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Estimate` ADD CONSTRAINT `Estimate_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -168,7 +168,7 @@ ALTER TABLE `Estimate` ADD CONSTRAINT `Estimate_id_craftman_fkey` FOREIGN KEY (`
 ALTER TABLE `Event` ADD CONSTRAINT `Event_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Purchase` ADD CONSTRAINT `Purchase_id_construct_fkey` FOREIGN KEY (`id_construct`) REFERENCES `ConstructSite`(`id_construct`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Purchase` ADD CONSTRAINT `Purchase_id_construct_fkey` FOREIGN KEY (`id_construct`) REFERENCES `Construct`(`id_construct`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Record` ADD CONSTRAINT `Record_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;

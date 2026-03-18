@@ -1,5 +1,17 @@
 <header>
-<H1>ArtGes</H1>
-<button>Se connecter</button>
-<button>Commencer gratuitement</button>
+	<H1>ArtGes</H1>
+	<button name="login" id="login" onclick="login()">Se connecter</button>
+	<script>
+		function login() {
+window.location.href = "/login"
+}
+	</script>
+
+	<button name="register" id="register" onclick="register()">Commencer gratuitement</button>
+	<script>
+		function register() {
+window.location.href = "/register"
+}
+	</script>
+
 </header>

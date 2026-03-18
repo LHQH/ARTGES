@@ -14,8 +14,8 @@ export async function getClient(req, res) {
 // CREATION D'UNE FICHE CLIENT
 export async function clientRegister(req, res) {
     try {
-        const { firstName, lastName, phone, adress, postCode,city, mail } = req.body;
-      
+        const { firstName, lastName, phone, adress, postCode, city, mail } = req.body;
+
         if (!nameRegex.test(firstName)) {
             return res.render("pages/register.twig", {
                 old: req.body,
@@ -73,19 +73,66 @@ export async function clientRegister(req, res) {
             data: {
                 firstName: firstName,
                 lastName: lastName,
+                mail: mail,
                 phone: phone,
                 adress: adress,
-                mail: mail,
-                password: password,
+                postCode: postCode,
+                city: city,
                 createdBy: { connect: { id: req.craftman.id } } // creer la relation a la creation de user
             }
         })
-        res.redirect("/artisan/client")
+        res.redirect("/client/list")
     }
     catch (error) {
         console.log(error);
-        res.redirect("/artisans/client", {
-            error: "Erreur pendant la création de fiche client"
+        res.redirect("/client/list", {
+            error: "Erreur pendant la création de la fiche client"
+        })
+    }
+}
+
+
+// DELETE CLIENT
+export async function deleteClient(req, res) {
+    try {
+        await prisma.client.delete({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        })
+        res.redirect("/client/list")
+    } catch (error) {
+        console.log(error);
+        res.render("pages/home.twig", {
+            error: "Erreur lors de la suppression d'une fiche client"
+        })
+    }
+}
+
+
+//UPDATE  CLIENT
+export async function updateClient(req, res) {
+    try {
+        const { firstName, lastName, mail, phone, adress, postCode, city } = req.body
+        await prisma.client.update({
+            where: {
+                id: parseInt(req.params.id)
+            },
+            data: {
+                firstName,
+                lastName,
+                mail,
+                phone,
+                adress,
+                postCode,
+                city
+            }
+        })
+        res.redirect("/client/list")
+    } catch (error) {
+        console.log(error);
+        res.render("pages/client.twig", {
+            error: "Erreur lors de la modification d'uNE fiche client"
         })
     }
 }

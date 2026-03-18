@@ -12,7 +12,7 @@ model Craftman {
     created_at    DateTime @default(now())
     update_at     DateTime @updatedAt
 
-    construct_sites ConstructSite[]
+    construct_sites Construct[]
     events          Event[]
     records         Record[]
     clients         Client[]

@@ -1,4 +1,4 @@
-model ConstructSite {
+model Construct {
   id_construct   Int      @id @default(autoincrement())
   construct_ref  String
   construct_name String?

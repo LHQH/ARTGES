@@ -6,7 +6,7 @@ model Address {
     city        String?
 
     clients        Client[]
-    constructSites ConstructSite[]
+    constructsites Construct[]
     id_craftman    Int
     craftman       Craftman        @relation(fields: [id_craftman], references: [id_craftman])
 }

@@ -1,5 +1,14 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+{# {% extends "../partials/navBar.twig" %} #}
+
+{% block style %}
+
+<link rel="stylesheet" href="/assets/css/modale.css"
+
+
+
+
+{% endblock %}
 
 {% block main %}
 	<section class="headGest">
@@ -11,7 +20,7 @@
 			<input type="text" name="searchContent" id="searchContent">
 		</div>
 		<div>
-			<button>+ Nouveau client</button>
+			<button id="newClientBtn">+ Nouveau client</button>
 		</div>
 	</section>
 	<section>
@@ -48,6 +57,74 @@
 
 
 	</section>
+
+	{# //MODALE NEW CLIENT #}
+	<div class="newClientModale" id="newClientModale">
+
+		<form id="newClientForm" action="/client/register" method="POST">
+			<div>
+				<label for="firstName">Prénom</label>
+				<input type="text" id="firstName" name="firstName" value="">
+			</div>
+			<div>
+				<label for="lastName">Nom</label>
+				<input type="text" id="lastName" name="lastName" value="">
+			</div>
+			<div>
+				<label for="phone">Téléphone</label>
+				<input type="text" id="phone" name="phone" value="">
+			</div>
+			<div>
+				<label for="mail">Email</label>
+				<input type="text" id="mail" name="mail" value="">
+			</div>
+			<div>
+				<label for="adress">Adresse</label>
+				<input type="text" id="adress" name="adress" value="">
+			</div>
+			<div>
+				<label for="postCode">Code postal</label>
+				<input type="text" id="postCode" name="postCode" value="">
+			</div>
+			<div>
+				<label for="city">Ville</label>
+				<input type="text" id="city" name="city" value="">
+			</div>
+
+
+			<button type="submit">Enregistrer</button>
+			<button type="button" id="closeModale">Annuler</button>
+		</form>
+
+	</div>
+
+{% endblock %}
+
+
+{% block script %}
+	<script>
+		const newClientBtn = document.querySelector("#newClientBtn")
+const newClientModale = document.querySelector("#newClientModale")
+const newClientForm = document.querySelector("#newClientForm")
+const closeModale = document.querySelector("#closeModale")
+
+newClientBtn.addEventListener("click", (e) => {
+
+newClientModale.classList.add("active")
+})
+
+closeModale.addEventListener("click", (e) => {
+
+newClientModale.classList.remove("active")
+})
+
+// FERMER LA MODALE AU CLICK EXTERIEUR
+newClientModale.addEventListener("click", (e) => {
+if (e.target === newClientModale) {
+newClientModale.classList.remove("active");
+}
+});
+	</script>
 
 
 {% endblock %}

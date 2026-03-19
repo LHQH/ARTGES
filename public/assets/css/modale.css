@@ -1,0 +1,18 @@
+/* MODALES  */
+
+
+/* NEW CLIENT */
+.newClientModale {
+    display: none;
+    position: absolute;
+    background-color: rgb(43, 131, 226);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 370px;
+    width: 600px;
+}
+
+.newClientModale.active {
+    display: block;
+}

@@ -1,5 +1,8 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+{# {% extends "../partials/navBar.twig" %} #}
+{% block style %}
+<link rel="stylesheet" href="/assets/css/modale.css" 
+{% endblock %}
 
 {% block main %}
 	<section class="headGest">
@@ -11,7 +14,7 @@
 			<input type="text" name="searchContent" id="searchContent">
 		</div>
 		<div>
-			<button>+ Nouvel achat</button>
+			<button name="newPurchaseBtn" id="newPurchaseBtn">+ Nouvel achat</button>
 		</div>
 	</section>
 	<section>
@@ -46,6 +49,76 @@
 		</div>
 
 	</section>
+
+	{# //MODALE NEW CHANTIER #}
+	<div class="newPurchaseModale" id="newPurchaseModale">
+		<form id="newPurchaseForm" action="/purchase/new" method="POST">
+			<div>
+				<label for="supplier">Titre du chantier :</label>
+				<input type="text" id="supplier" name="supplier" value="">
+			</div>
+			<div>
+				<label for="constructSelect">Selectionner un chantier :</label>
+				<select name="constructSelect" id="constructSelect">
+					{% for construct in constructs %}
+						<option value="{{construct.construct_name}}"></option>
+					{% endfor %}
+				</select>
+
+			</div>
+			<div>
+				<label for="constructRef">Référence :</label>
+				<input type="text" id="constructRef" name="constructRef" value="">
+			</div>
+			<div>
+				<label for="purchaseDescription">Description :</label>
+				<input type="text" id="purchaseDescription" name="purchaseDescription" value="">
+			</div>
+			<div>
+				<label for="purchaseDate">Date d'achat :</label>
+				<input type="date" id="purchaseDate" name="purchaseDate" value="">
+			</div>
+			<div>
+				<label for="start_date">Date début :</label>
+				<input type="date" id="start_date" name="start_date" value="">
+			</div>
+
+			<div>
+				<label for="amount">Montant(€) :</label>
+				<input type="text" name="amount" id="amount">
+			</div>
+			<button type="submit">Enregistrer</button>
+			<button type="button" id="closeModale">Annuler</button>
+		</form>
+
+	</div>
+{% endblock %}
+
+
+{% block script %}
+	<script>
+		const newPurchaseBtn = document.querySelector("#newPurchaseBtn")
+const newPurchaseModale = document.querySelector("#newPurchaseModale")
+const newPurchaseForm = document.querySelector("#newPurchaseForm")
+const closeModale = document.querySelector("#closeModale")
+
+newPurchaseBtn.addEventListener("click", (e) => {
+
+newPurchaseModale.classList.add("active")
+})
+
+closeModale.addEventListener("click", (e) => {
+
+newPurchaseModale.classList.remove("active")
+})
+
+// FERMER LA MODALE AU CLICK EXTERIEUR
+newPurchaseModale.addEventListener("click", (e) => {
+if (e.target === newPurchaseModale) {
+newPurchaseModale.classList.remove("active");
+}
+});
+	</script>
 
 
 {% endblock %}

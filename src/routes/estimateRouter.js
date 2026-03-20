@@ -5,5 +5,5 @@ import { getEstimate, newEstimate } from "../controllers/estimateController.js";
 
 export const estimateRouter = express.Router()
 
-estimateRouter.get("/list", authguard, getEstimate)
-estimateRouter.post("/new", authguard, newEstimate)
+estimateRouter.get("/list",  getEstimate)
+estimateRouter.post("/new",  newEstimate)

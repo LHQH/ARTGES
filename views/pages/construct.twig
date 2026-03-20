@@ -1,59 +1,143 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+{# {% extends "../partials/navBar.twig" %} #}
+{% block style %}
+<link rel="stylesheet" href="/assets/css/modale.css"
 
+{% endblock %}
 {% block main %}
-<section class="headGest">
-	<h2>Chantier</h2>
-	<p>Créer et gérer vos chantiers</p>
+	<section class="headGest">
+		<h2>Chantier</h2>
+		<p>Créer et gérer vos chantiers</p>
 
-	<div id="search">
-		<label for="finder">Recherche :</label>
-		<input type="text" name="searchContent" id="searchContent">
+		<div id="search">
+			<label for="finder">Recherche :</label>
+			<input type="text" name="searchContent" id="searchContent">
+		</div>
+		<div>
+			<button name="newConstructBtn" id ="newConstructBtn">+ Nouveau chantier</button>
+		</div>
+	</section>
+	<section>
+		<article>
+			<div>
+				<h3>
+					{# {{VARIABLE TITRE CHANTIER}} #}
+				</h3>
+				<p>Réference</p>
+				<p>
+					{# {{VARIABLE REF CHANTIER}} #}
+				</p>
+				<p>Client</p>
+				<p>
+					{# {{VARIABLE DU NOM CLIENT}} #}
+				</p>
+			</div>
+			<div>
+				<img src="" alt="modifConstruct">
+				<img src="" alt="suppConstruct">
+			</div>
+			<div>
+				<img src="" alt="iconeMap">
+				<p>
+					{# {{VARIABLE ADRESSE CHANTIER}} #}
+				</p>
+			</div>
+			<div>
+				<img src="" alt="iconeDate">
+				<p>
+					{# {{VARIABLE DATE DEBUT/FIN CHANTIER}} #}
+				</p>
+			</div>
+			<div>
+				<p>
+					{# {{VARIABLE DESCRIPTION CHANTIER}} #}
+				</p>
+			</div>
+			<p>
+				{# {{VARIABLE PRIX CHANTIER}} #}
+			</p>
+
+		</article>
+
+	</section>
+
+	{# //MODALE NEW CHANTIER #}
+	<div class="newConstructModale" id="newConstructModale">
+		<form id="newConstructForm" action="/construct/new" method="POST">
+			<div>
+				<label for="constructTitle">Titre du chantier :</label>
+				<input type="text" id="constructTitle" name="constructTitle" value="">
+			</div>
+			<div>
+				<label for="clientSelect">Client :</label>
+				<select name="clientSelect" id="clientSelect">
+					{% for client in clients %}
+						<option value="{{client.lastName}}{{client.firstName}}"></option>
+					{% endfor %}
+				</select>
+
+			</div>
+			<div>
+				<label for="constructRef">Référence :</label>
+				<input type="text" id="constructRef" name="constructRef" value="">
+			</div>
+			<div>
+				<label for="adress">Adresse :</label>
+				<input type="text" id="mail" name="mail" value="">
+			</div>
+			<div>
+				<label for="city">Ville</label>
+				<input type="text" id="city" name="city" value="">
+			</div>
+			<div>
+				<label for="start_date">Date début :</label>
+				<input type="date" id="start_date" name="start_date" value="">
+			</div>
+			<div>
+				<label for="start_end">Date fin :</label>
+				<input type="date" id="start_end" name="start_date" value="">
+			</div>
+			<div>
+				<label for="amount">Montant(€) :</label>
+				<input type="text" name="amount" id="amount">
+			</div>
+			<div>
+				<label for="constructDescription">Description :</label>
+				<input type="text" name="constructDescription" id="constructDescription">
+			</div>
+			<button type="submit">Enregistrer</button>
+			<button type="button" id="closeModale">Annuler</button>
+		</form>
+
 	</div>
-	<div>
-		<button>+ Nouveau chantier</button>
-	</div>
-</section>
-<section>
-	<article>
-		<div>
-			<h3>
-				{# {{VARIABLE TITRE CHANTIER}} #}
-			</h3>
-			<p>Réference</p>
-			<p>
-				{# {{VARIABLE REF CHANTIER}} #}
-			</p>
-			<p>Client</p>
-			<p>
-				{# {{VARIABLE DU NOM CLIENT}} #}
-			</p>
-		</div>
-		<div>
-			<img src="" alt="modifConstruct">
-			<img src="" alt="suppConstruct">
-		</div>
-		<div>
-			<img src="" alt="iconeMap">
-			<p>
-				{# {{VARIABLE ADRESSE CHANTIER}} #}
-			</p>
-		</div>
-		<div>
-			<img src="" alt="iconeDate">
-			<p>
-				{# {{VARIABLE DATE DEBUT/FIN CHANTIER}} #}
-			</p>
-		</div>
-		<div>
-			<p>
-				{# {{VARIABLE DESCRIPTION CHANTIER}} #}
-			</p>
-		</div>
-		<p>
-			{# {{VARIABLE PRIX CHANTIER}} #}
-		</p>
 
-	</article>
 
-</section>
+{% endblock %}
+
+{% block script %}
+	<script>
+const newConstructBtn = document.querySelector("#newConstructBtn")
+const newConstructModale = document.querySelector("#newConstructModale")
+const newConstructForm = document.querySelector("#newConstructForm")
+const closeModale = document.querySelector("#closeModale")
+
+newConstructBtn.addEventListener("click", (e) => {
+
+newConstructModale.classList.add("active")
+})
+
+closeModale.addEventListener("click", (e) => {
+
+newConstructModale.classList.remove("active")
+})
+
+// FERMER LA MODALE AU CLICK EXTERIEUR
+newConstructModale.addEventListener("click", (e) => {
+if (e.target === newConstructModale) {
+newConstructModale.classList.remove("active");
+}
+});
+	</script>
+
+
+{% endblock %}

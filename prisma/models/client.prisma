@@ -10,7 +10,7 @@ model Client {
     address    Address? @relation(fields: [id_address], references: [id_address])
 
     records         Record[]
-    construct_sites ConstructSite[]
+    construct_sites Construct[]
 
     id_craftman Int?
     craftman    Craftman? @relation(fields: [id_craftman], references: [id_craftman])

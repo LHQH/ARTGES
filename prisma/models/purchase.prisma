@@ -8,5 +8,5 @@ model Purchase {
   created_at    DateTime @default(now())
 
   id_construct Int
-  construct    ConstructSite @relation(fields: [id_construct], references: [id_construct])
+  construct    Construct @relation(fields: [id_construct], references: [id_construct])
 }

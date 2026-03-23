@@ -1,0 +1,66 @@
+/* MODALES  */
+
+
+/* NEW CLIENT */
+.newClientModale {
+    display: none;
+    position: absolute;
+    background-color: rgb(43, 131, 226);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 370px;
+    width: 600px;
+}
+
+.newClientModale.active {
+    display: block;
+}
+
+/* NEW CHANTIER */
+.newConstructModale {
+    display: none;
+    position: absolute;
+    background-color: rgb(43, 131, 226);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 370px;
+    width: 600px;
+}
+
+.newConstructModale.active {
+    display: block;
+}
+
+/* NEW ACHAT */
+.newPurchaseModale {
+    display: none;
+    position: absolute;
+    background-color: rgb(43, 131, 226);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 370px;
+    width: 600px;
+}
+
+.newPurchaseModale.active {
+    display: block;
+}
+
+/* NEW DEVIS */
+.newEstimateModale {
+    display: none;
+    position: absolute;
+    background-color: rgb(43, 131, 226);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 370px;
+    width: 600px;
+}
+
+.newEstimateModale.active {
+    display: block;
+}

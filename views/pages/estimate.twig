@@ -1,7 +1,9 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
-
+{# {% extends "../partials/navBar.twig" %} #}
+{% block style %}
+<link rel="stylesheet" href="/assets/css/modale.css" {% endblock %}
 {% block main %}
+
 	<section class="headGest">
 		<h2>Devis</h2>
 		<p>Créer et gérer vos devis</p>
@@ -11,7 +13,7 @@
 			<input type="text" name="searchContent" id="searchContent">
 		</div>
 		<div>
-			<button>+ Nouveau devis</button>
+			<button name="newEstimateBtn" id="newEstimateBtn">+ Nouveau devis</button>
 		</div>
 	</section>
 	<section>
@@ -43,6 +45,82 @@
 
 	</section>
 
+	{# //MODALE NEW CLIENT #}
+	<div class="newEstimateModale" id="newEstimateModale">
+
+		<form id="newEstimateForm" action="/estimate/new" method="POST">
+			<div>
+				<label for="estimateRef">Référence du devis :</label>
+				<input type="text" id="estimateRef" name="estimateRef" value="">
+			</div>
+			<div>
+				<label for="estimateClient">Client :</label>
+				<select name="estimateClient" id="estimateClient">
+					{% for client in clients %}
+						<option value="{{client.firstName}}{{client.lastName}}"></option>
+					{% endfor %}
+				</select>
+			</div>
+			<div>
+				<label for="estimateTVA">TVA(%) :</label>
+				<input type="text" id="estimateTVA" name="estimateTVA" value="">
+			</div>
+			<div class="lines" id="lines">
+				<label for="estimateDescription">Description :</label>
+				<input type="text" id="estimateDescription" name="estimateDescription" value="">
+
+				<label for="estimateQTY">Quantité :</label>
+				<input type="text" id="estimateQTY" name="estimateQTY" value="">
+
+				<label for="unitEstimateAmount">Montant(€) :</label>
+				<input type="text" id="unitEstimateAmount" name="unitEstimateAmount" value="">
+			</div>
+			<div>
+				<button type="button" onclick="ajouterLigne()">Ajouter une ligne</button>
+			</div>
+
+
+			<button type="submit">Enregistrer</button>
+			<button type="button" id="closeModale">Annuler</button>
+		</form>
+
+	</div>
+
 
 {% endblock %}
 
+{% block script %}
+	<script>
+
+		// AJOUTER UNE LIGNE DANS LE FORMULAIRE ?
+function ajouterLigne() {
+const linesContainer = document.querySelector("#lines");
+
+const newLine = document.createElement("div");
+newLine.classList.add("lines");
+
+newLine.innerHTML = `<input type="text" name="description[]" placeholder="Description">
+    <input type="number" name="prix[]" placeholder="Prix">`
+
+linesContainer.appendChild(newLine)
+}
+
+// LOGIQUE MODALE NEW DEVIS
+const newEstimateBtn = document.querySelector("#newEstimateBtn")
+const newEstimateModale = document.querySelector("#newEstimateModale")
+const newEstimateForm = document.querySelector("#newEstimateForm")
+const closeModale = document.querySelector("#closeModale")
+
+newEstimateBtn.addEventListener("click", (e) => {
+
+newEstimateModale.classList.add("active")
+})
+
+closeModale.addEventListener("click", (e) => {
+
+newEstimateModale.classList.remove("active")
+})
+	</script>
+
+
+{% endblock %}

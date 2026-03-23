@@ -2,14 +2,14 @@
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { adapter } from "../../prisma/adapter.js";
 import { hashPasswordExtension } from "../../prisma/extensions/hashPassword.js";
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient({ adapter }).$extends(hashPasswordExtension);
 import bcrypt from "bcrypt"
 import { adressRegex, phoneRegex, mailRegex, passwordRegex, nameRegex, siretRegex, socialReasonRegex } from "../services/regex.js";
 
 
 
 //VIEW PAGE ACCUEIL
-export async function start(req, res) {
+export function start(req, res) {
     res.render("pages/home.twig", {
         title: "Bienvenue"
 
@@ -131,7 +131,7 @@ export async function postRegister(req, res) {
 
 // LOGIN
 
-export async function getLogin(req, res) {
+export function getLogin(req, res) {
     res.render("pages/login.twig", {
         title: "connexion",
         error: "Erreur lors de la connexion"

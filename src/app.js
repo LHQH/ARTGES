@@ -19,7 +19,7 @@ app.use(session({
 
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/artisan", craftmanRouter)
+app.use( craftmanRouter)
 app.use("/client", clientRouter)
 app.use("/estimate", estimateRouter)
 app.use("/bill", billRouter)

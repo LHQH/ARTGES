@@ -1,15 +1,17 @@
 model Bill {
-    id_bill      Int      @id @default(autoincrement())
-    reference    String
-    issue_date   DateTime
-    due_date     DateTime
-    total_amount Float
-    status       String
-    created_at   DateTime @default(now())
+    id_bill     Int      @id @default(autoincrement())
+    billTitle   String
+    reference   String
+    tva         Decimal
+    description String
+    QTY         Float
+    unitAmount  Float
+    status      String
+    created_at  DateTime @default(now())
 
     construct_sites Construct[]
     id_estimate     Int?
-    estimate        Estimate?       @relation(fields: [id_estimate], references: [id_estimate])
+    estimate        Estimate?   @relation(fields: [id_estimate], references: [id_estimate])
     id_craftman     Int
-    craftman        Craftman        @relation(fields: [id_craftman], references: [id_craftman])
+    craftman        Craftman    @relation(fields: [id_craftman], references: [id_craftman])
 }

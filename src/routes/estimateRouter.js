@@ -1,8 +1,9 @@
 import express from "express";
 import { authguard } from "../services/authguard.js"
-import { getEstimate } from "../controllers/estimateController.js";
+import { getEstimate, newEstimate } from "../controllers/estimateController.js";
 
 
 export const estimateRouter = express.Router()
 
-estimateRouter.get("/list", authguard, getEstimate)
+estimateRouter.get("/list",  getEstimate)
+estimateRouter.post("/new",  newEstimate)

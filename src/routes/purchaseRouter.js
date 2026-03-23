@@ -5,7 +5,7 @@ import { deletePurchase, getPurchase, newPurchase, updatePurchase } from "../con
 
 export const purchaseRouter = express.Router()
 
-purchaseRouter.get("/list", authguard, getPurchase)
-purchaseRouter.post("/newPurchase", authguard, newPurchase)
-purchaseRouter.post("/:id/delPurchase", authguard, deletePurchase)
-purchaseRouter.post("/:id/upPurchase", authguard,updatePurchase)
+purchaseRouter.get("/list",  getPurchase)
+purchaseRouter.post("/newPurchase",  newPurchase)
+purchaseRouter.post("/:id/delPurchase",  deletePurchase)
+purchaseRouter.post("/:id/upPurchase", updatePurchase)

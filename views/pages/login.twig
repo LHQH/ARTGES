@@ -1,5 +1,8 @@
 {% extends "../layouts/base.twig" %}
 {% include "../partials/header.twig" %}
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleLogin.css">
+{% endblock %}
 
 {% block main %}
 	<section>
@@ -19,10 +22,6 @@
 
 
 		</form>
-		{% if error %}
-			<p>{{error}}</p>
-		{% endif %}
-
 	</section>
 
 	<p>OU</p>

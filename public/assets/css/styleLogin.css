@@ -1,0 +1,99 @@
+/* Style global pour centrer le contenu sur la page */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Conteneurs blancs (sections) */
+section {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+/* Le "OU" au milieu */
+p {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 30px 0;
+}
+
+h2,
+h3 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+
+/* Formulaire et Inputs */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 15px;
+}
+
+input {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Boutons */
+button {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Bouton "Se connecter" (Blanc avec bordure) */
+#loginBtn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+#loginBtn button {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* Bouton "Commencer gratuitement" (Noir) */
+section h3+button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Messages d'erreur */
+p[style*="error"] {
+    color: red;
+    text-align: center;
+    font-size: 0.9rem;
+}

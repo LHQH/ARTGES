@@ -1,64 +1,78 @@
 {% extends "../layouts/base.twig" %}
 {% include "../partials/header.twig" %}
-
-
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleRegister.css">
+{% endblock %}
 {% block main %}
-	<div>
-		<p>Tout les champs sont obligatoire*</p>
+	<div class="container">
+		<div class="register-card">
+			<p class="instruction">Tous les champs sont obligatoires</p>
+
+			<form action="/register" method="POST">
+
+				<div class="form-group">
+					<label for="lastName">Nom</label>
+					<input name="lastName" type="text" placeholder="Nom">
+				</div>
+
+				<div class="form-group">
+					<label for="firstName">Prénom</label>
+					<input name="firstName" type="text" placeholder="Prénom">
+				</div>
+
+				<div class="form-group">
+					<label for="mail">Email</label>
+					<input name="mail" type="email" placeholder="email">
+				</div>
+
+				<div class="form-group">
+					<label>Telephone</label>
+					<input name="phone" type="text" placeholder="telephone">
+				</div>
+
+				<div class="form-group">
+					<label>Adresse</label>
+					<input name="proAdress" type="text" placeholder="adresse">
+				</div>
+
+				<div class="form-group">
+					<label>Code postal</label>
+					<input name="postCode" type="text" placeholder="code postal">
+				</div>
+
+				<div class="form-group">
+					<label>Ville</label>
+					<input name="city" type="text" placeholder="ville">
+				</div>
+
+				<div class="form-group">
+					<label>SIRET</label>
+					<input name="siret" type="text" placeholder="SIRET">
+				</div>
+
+				<div class="form-group">
+					<label>Raison social</label>
+					<input name="socialReason"type="text" placeholder="raison social">
+				</div>
+
+				<div class="form-group">
+					<label>Mot de passe</label>
+					<input name="password" type="password" placeholder="mot de passe">
+				</div>
+
+				<div class="form-group">
+					<label>Formule</label>
+					<select>
+						<option>Selectionnez</option>
+					</select>
+				</div>
+
+				<div class="button-container">
+					<button type="submit">Commencer gratuitement</button>
+				</div>
+			</form>
+		</div>
 	</div>
-
-
-	<form action="/artisan/register" method="POST">
-		<label for="firstName">Prénom</label>
-		<input type="text" name="firstName" placeholder="Prénom (obligatoire)" required>
-
-		<br>
-
-		<label for="lastName">Nom</label>
-		<input type="text" name="lastName" placeholder="Nom (obligatoire)" required>
-
-		<br>
-
-		<label for="mail">Mail</label>
-		<input type="mail" name="mail" placeholder="Mail (obligatoire)" required>
-
-		<br>
-
-		<label for="phone">Téléphone</label>
-		<input type="text" name="phone" placeholder="+33XXXXXXXXX (obligatoire)" required>
-
-		<br>
-
-		<label for="adress">Adresse</label>
-		<input type="text" name="adress" placeholder="Adresse (obligatoire)" required>
-
-		<br>
-
-		<label for="postCode">Adresse</label>
-		<input type="text" name="postCode" placeholder="Code postal (obligatoire)" required>
-
-		<br>
-
-		<label for="city">Adresse</label>
-		<input type="text" name="city" placeholder="Ville (obligatoire)" required>
-
-		<br>
-
-		<label for="socialReason">Raison sociale</label>
-		<input type="text" name="socialReason" placeholder="Raison sociale (obligatoire)" required>
-
-		<br>
-		<label for="siret">SIRET</label>
-		<input type="text" name="siret" placeholder="Numéro de SIRET (obligatoire)" required>
-
-		<br>
-		<label for="formule">Formule</label>
-		<select name="formule" id="formule">Choisir une formule</select>
-
-
-		<button>Commencer gratuitement</button>
-
-	</form>
 	{% if error %}
 		<p>{{error}}</p>
 	{% endif %}

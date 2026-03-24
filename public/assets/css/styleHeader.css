@@ -1,0 +1,54 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* LOGO ARTGES */
+.logoAG {
+    color: #2563eb;
+    font-size: 1.5rem;
+    font-weight: 800
+}
+
+/* BOX DES BTNS */
+.headerBtn {
+    display: flex;
+    gap: 12px;
+}
+
+/* STYLES DES LIEN DE NAVIGATION */
+.loginBtn,
+.registerBtn {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+/* BTN LOGIN */
+.loginBtn {
+    color: #000;
+    border: 1px solid #e5e7eb;
+}
+
+.loginBtn {
+    background-color: #f9fafb;
+}
+
+/* BTN INSCRIPTION */
+.registerBtn {
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+}
+
+.registerBtn:hover {
+    background-color: #333;
+}

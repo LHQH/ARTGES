@@ -65,19 +65,19 @@ CREATE TABLE `Construct` (
 -- CreateTable
 CREATE TABLE `Craftman` (
     `id_craftman` INTEGER NOT NULL AUTO_INCREMENT,
-    `company_name` VARCHAR(191) NULL,
+    `lastName` VARCHAR(191) NULL,
+    `firstName` VARCHAR(191) NULL,
+    `mail` VARCHAR(191) NULL,
+    `phone` VARCHAR(191) NULL,
+    `proAdress` VARCHAR(191) NULL,
+    `postCode` VARCHAR(191) NULL,
+    `city` VARCHAR(191) NULL,
     `SIRET` VARCHAR(191) NULL,
     `socialReason` VARCHAR(191) NULL,
-    `last_name` VARCHAR(191) NULL,
-    `first_name` VARCHAR(191) NULL,
-    `email` VARCHAR(191) NULL,
-    `phone` VARCHAR(191) NULL,
     `logo_url` VARCHAR(191) NOT NULL,
-    `hash_password` VARCHAR(191) NULL,
-    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `update_at` DATETIME(3) NOT NULL,
+    `password` VARCHAR(191) NULL,
 
-    UNIQUE INDEX `Craftman_email_key`(`email`),
+    UNIQUE INDEX `Craftman_mail_key`(`mail`),
     PRIMARY KEY (`id_craftman`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -19,7 +19,7 @@ app.use(session({
 
 app.use(express.urlencoded({ extended: true }))
 
-app.use( craftmanRouter)
+app.use(craftmanRouter)
 app.use("/client", clientRouter)
 app.use("/estimate", estimateRouter)
 app.use("/bill", billRouter)
@@ -29,11 +29,11 @@ app.use("/planning", planningRouter )
 
 
 
-app.listen(process.env.DB_PORT, (error) => {
+app.listen(process.env.PORT, (error) => {
     if (error) {
         console.log(error);
     }
     else {
-        console.log(`Connecté sur le port ${process.env.DB_PORT}`);
+        console.log(`Connecté sur le port ${process.env.PORT}`);
     }
 })

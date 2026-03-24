@@ -1,10 +1,10 @@
-
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { adapter } from "../../prisma/adapter.js";
 import { hashPasswordExtension } from "../../prisma/extensions/hashPassword.js";
 const prisma = new PrismaClient({ adapter }).$extends(hashPasswordExtension);
 import bcrypt from "bcrypt"
-import { adressRegex, phoneRegex, mailRegex, passwordRegex, nameRegex, siretRegex, socialReasonRegex } from "../services/regex.js";
+import { adressRegex, phoneRegex, mailRegex, passwordRegex, nameRegex, siretRegex, socialReasonRegex, postCodeRegex } from "../services/regex.js";
+import { log } from "console";
 
 
 
@@ -25,9 +25,10 @@ export function getRegister(req, res) {
 
 //REGISTER
 export async function postRegister(req, res) {
+    console.log("--- DONNÉES REÇUES ---", req.body);
     try {
         //VERIF PRENOM
-        const { firstName, lastName, mail, phone, adress, postCode, city, siret, socialReason, password } = req.body;
+        const { firstName, lastName, mail, phone, proAdress, postCode, city, siret, socialReason, password } = req.body;
 
         if (!nameRegex.test(firstName)) {
             return res.render("pages/register.twig", {
@@ -59,7 +60,7 @@ export async function postRegister(req, res) {
             });
         }
         // VERIF ADRESS
-        if (!adressRegex.test(adress)) {
+        if (!adressRegex.test(proAdress)) {
             return res.render("pages/register.twig", {
                 old: req.body,
                 error: "Adresse invalide"
@@ -90,7 +91,7 @@ export async function postRegister(req, res) {
         }
 
         //VERIF SOCIALREASON
-        if (!socialReasonRegex.test(socialReason)) {
+        if (!socialReason) {
             return res.render("pages/register.twig", {
                 old: req.body,
                 error: "erreur lors de l'enregistrement"
@@ -103,6 +104,7 @@ export async function postRegister(req, res) {
                 error: "Mot de passe trop faible"
             });
         }
+console.log("blaa");
 
         await prisma.craftman.create({
             data: {
@@ -110,23 +112,26 @@ export async function postRegister(req, res) {
                 lastName: lastName,
                 mail: mail,
                 phone: phone,
-                adress: adress,
+                proAdress: proAdress,
                 postCode: postCode,
                 city: city,
                 password: password,
-                siret: siret,
-                socialReason: socialReason
+                SIRET: siret,        
+                socialReason: socialReason,
+                logo_url: ""         
             }
-        })
+        });
         res.redirect("/login")
     }
     catch (error) {
         console.log(error);
         res.render("pages/register.twig", {
             title: "Inscription",
-            error: "Erreur lors de l'inscription..."
+            error: "Erreur lors de l'inscription...",
+            
+            
         })
-    }
+    } 
 }
 
 // LOGIN

@@ -1,0 +1,317 @@
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
+
+.wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+}
+
+.blueTitle {
+    color: #3b82f6;
+}
+
+.container p {
+    max-width: 700px;
+    color: #6b7280;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.step-card p {
+    max-width: 700px;
+    color: #6b7280;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.freeRegisterBtn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* INTRO FEATURE */
+.homeFeatures {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 30px 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.iconIntro {
+    width: 55px;
+    height: 55px;
+    background-color: #eff6ff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconIntro img {
+    width: 26px;
+    filter: invert(48%) sepia(85%) saturate(1825%) hue-rotate(200deg) brightness(101%) contrast(101%);
+}
+
+h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* --- Responsive Rapide --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .card {
+        flex: 1 1 45%;
+    }
+
+    /* 2 cartes par ligne sur tablette */
+}
+
+
+
+/* STYLE DES TITRES */
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 50px;
+}
+
+/* COMMENT CA MARCHE?*/
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.step-card {
+    flex: 1;
+    text-align: center;
+    max-width: 300px;
+}
+
+
+/* LES 3 ETAPES */
+.step-number {
+    width: 80px;
+    height: 80px;
+    background-color: #2563eb;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+/* Grille de résumé (fond gris) */
+.features-summary {
+    background-color: #f8fafc;
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    width: 300px;
+}
+
+.feature-icon.blue-bg {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* CHOIX FORMULE ECO */
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    padding: 20px;
+}
+
+.pricing-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.premium-card {
+    border: 2px solid #2563eb;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+}
+
+.pricing-header-gray {
+    background: #f1f5f9;
+    padding: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.pricing-header-blue {
+    background: #dbeafe;
+    color: #2563eb;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.badge-recommended {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2563eb;
+    color: white;
+    padding: 4px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.pricing-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 15px 0;
+}
+
+.currency {
+    font-size: 1.5rem;
+    vertical-align: super;
+}
+
+.period {
+    font-size: 1rem;
+    color: #94a3b8;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin: 25px 0;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #475569;
+}
+
+.check {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+/* BOUTONS DES CARD PRICE */
+.btn-primary {
+    background: #000;
+    color: #fff;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}

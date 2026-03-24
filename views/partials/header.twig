@@ -1,17 +1,15 @@
-<header>
-	<H1>ArtGes</H1>
-	<button name="login" id="login" onclick="login()">Se connecter</button>
-	<script>
-		function login() {
-window.location.href = "/login"
-}
-	</script>
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleHeader.css">
 
-	<button name="register" id="register" onclick="register()">Commencer gratuitement</button>
-	<script>
-		function register() {
-window.location.href = "/register"
-}
-	</script>
 
+{% endblock %}
+<header class="header">
+	<h1>
+		<div class="logoAG">ARTGES</div>
+	</h1>
+
+	<nav class="headerBtn">
+		<a href="/login" class="loginBtn">Se connecter</a>
+		<a href="/register" class="registerBtn">Commencer gratuitement</a>
+	</nav>
 </header>

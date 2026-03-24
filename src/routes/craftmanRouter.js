@@ -6,7 +6,7 @@ import { getDashboard, getLogin, getRegister, postLogin, postRegister, start } f
 export const craftmanRouter = express.Router()
 
 craftmanRouter.get("/", start)
-craftmanRouter.get("/dashboard", authguard, getDashboard)
+craftmanRouter.get("/dashboard", getDashboard)
 craftmanRouter.get("/register", getRegister)
 craftmanRouter.get("/login",getLogin)
 craftmanRouter.post("/register", postRegister)

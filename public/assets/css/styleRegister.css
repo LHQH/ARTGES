@@ -1,0 +1,90 @@
+body {
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+    margin: 0;
+}
+
+/* FORM REGISTER*/
+.register-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px 50px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.instruction {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #000;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+input,
+select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    color: #666;
+    box-sizing: border-box;
+    outline: none;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    /* Coins légèrement arrondis */
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Style spécifique pour le select */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    width: 50%;
+    /* Le select est plus court sur l'image */
+}

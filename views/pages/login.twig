@@ -1,36 +1,39 @@
 {% extends "../layouts/base.twig" %}
-{% include "../partials/header.twig" %}
+
 {% block style %}
 	<link rel="stylesheet" href="/assets/css/styleLogin.css">
 {% endblock %}
 
 {% block main %}
-	<section>
-		<div>
-			<h2>Connexion</h2>
-		</div>
-
-
-		<form action="/artisan/login" method="POST">
-			<label for="mail">Mail</label>
-			<input type="mail" name="mail" placeholder="Votre adresse mail">
-			<label for="password">Mot de passe</label>
-			<input type="password" name="password" placeholder="Mot de passe">
-			<div id="loginBtn">
-				<button>Se connecter</button>
+	{% include "../partials/header.twig" %}
+	<section class="loginContainer">
+		<section id="loginForm">
+			<div>
+				<h2>Connexion</h2>
 			</div>
 
 
-		</form>
-	</section>
+			<form action="/login" method="POST">
+				<label for="mail">Mail</label>
+				<input type="mail" name="mail" placeholder="Votre adresse mail">
+				<label for="password">Mot de passe</label>
+				<input type="password" name="password" placeholder="Mot de passe">
+				<div id="loginBtn">
+					<button>Se connecter</button>
+				</div>
 
-	<p>OU</p>
+
+			</form>
+		</section>
+
+		<p>OU</p>
 
 
-	<section>
-		<h3>Pas encore inscrit ?</h3>
-		<button>Commencer gratuitement</button>
+		<section id="registerRedirect">
+			<h3>Pas encore inscrit ?</h3>
+			<a href="/register" class="registerBtn">Commencer gratuitement</a>
 
+		</section>
 	</section>
 
 

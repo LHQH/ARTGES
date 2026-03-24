@@ -1,33 +1,36 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<title>Dashboard - ArtisanPro</title>
-		<link rel="stylesheet" href="/assets/css/styleNavBar.css">
+{% block style %}<link rel="stylesheet" href="/assets/css/styleNavBar.css">
+{% endblock %}
+
+<aside class="sidebar">
+	<div class="logo">
+		<h1>ArtisanPro</h1>
+		<p>gestion d’entreprise</p>
+	</div>
+
+	<nav class="menu">
+		<ul>
+			<li class="active">
+				<a href="/artisans/dashboard">Tableau de bord</a>
+			</li>
+			<li>
+				<a href="/artisan/construct">Chantier</a>
+			</li>
+			<li>
+				<a href="/client/list">Client</a>
+			</li>
+			<li>
+				<a href="/artisan/estimate">Devis</a>
+			</li>
+			<li>
+				<a href="/artisan/bill">Facture</a></li>
+			<li>
+				<a href="/artisan/purchase">Achat</a>
+			</li>
+			<li>
+				<a href="/artisan/planning">Planning</a>
+			</li>
 
 
-	</head>
-	<body>
-
-		<aside class="sidebar">
-			<div class="logo">
-				<h1>ArtisanPro</h1>
-				<p>gestion d’entreprise</p>
-			</div>
-
-			<nav class="menu">
-				<ul>
-					<li class="active" href="/artisans/dashboard"></li>
-					Tableau de bord
-				</li>
-				<li href="/artisan/construct">Chantier</li>
-				<li href="/client/list">Client</li>
-				<li href="/artisan/estimate">Devis</li>
-				<li href="/artisan/bill">Facture</li>
-				<li href="/artisan/purchase">Achats</li>
-				<li href="/artisan/planning">Planning</li>
-
-			</ul>
-		</nav>
-	</body>
-</html></aside></body></html>
+		</ul>
+	</nav>
+</aside>

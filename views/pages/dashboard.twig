@@ -1,102 +1,113 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleDashboard.css">
+{% endblock %}
 
 
 {% block main %}
-	<h2>Tableau de bord</h2>
-	<p>Vue d’ensemble de votre activité</p>
+{% include "../partials/navBar.twig" %}
 
-{# RAPID INFOS #}
-	<section>
-		<div>
-			<p>Clients actif</p>
-			<img src="" alt="iconeClient">
-		</div>
-		{# VARIABLE A NOMCLIENT !!!! #}
-		<div>
-			<p>3</p>
-		</div>
+	<div class="dashboardContent">
+		<h2>Tableau de bord</h2>
+		<p>Vue d’ensemble de votre activité</p>
 
-		<div>
-			<p>Chantier en cours</p>
-			<img src="" alt="iconeHammer">
-		</div>
-		{# VARIABLE A CHANGER !!!! #}
-		<div>
-			<p>3</p>
-		</div>
-
-		<div>
-			<p>Tâche en cours</p>
-			<img src="" alt="iconePlanning">
-		</div>
-		{# VARIABLE A CHANGER !!!! #}
-		<div>
-			<p>2</p>
-		</div>
-
-		<div>
-			<p>CA du mois</p>
-			<img src="" alt="icone€">
-		</div>
-		{# VARIABLE A CHANGER !!!! #}
-		<div>
-			<p>30 000 €</p>
-		</div>
-
-	</section>
-
-{# CHANTIER DETAIL RAPID #}
-
-	<section>
-		<h3>Chantiers actifs</h3>
-		{# VARIABLE A CHANGER !!!! #}
-		<article>
-			<div>
-				<h3>Rénovation SDB</h3>
-				<p>Jean Dupont</p>
-			</div>
-			<div>
-				<p>3000 €</p>
-				<p>Fin : 15/04/2026</p>
-
-			</div>
-		</article>
-		{# VARIABLE A CHANGER !!!! #}
-		<article>
-			<div>
-				<h3>Extension cuisine</h3>
-				<p>Sylvie Martin</p>
-			</div>
-			<div>
-				<p>9000 €</p>
-				<p>Fin : 15/07/2026</p>
-
-			</div>
-		</article>
-
-
-	</section>
-
-{# RDV A VENIR #}
-	<section>
-{# VARIABLE A CHANGER !!!! #}
-		<h3>Prochaines interventions</h3>
-		<article>
-			<div>
-				<p>11</p>
-				<p>mars</p>
-			</div>
-			<div>
-				<h3>Rénovation salle de bain</h3>
-				<p>Démolition ancien carrelage</p>
+		{# RAPID INFOS #}
+		<section class="fastStat">
+			<div class="statCard">
+				<div class="statHeader">
+					<p>Clients actif</p>
+					<img src="" alt="iconeClient">
+				</div>
+				{# VARIABLE A NOMCLIENT !!!! #}
+				<div class="statValue">3</div>
 			</div>
 
-			<div>08:00 - 17:00</div>
+			<div class="statCard">
+				<div class="statHeader">
+					<p>Chantier en cours</p>
+					<img src="" alt="iconeHammer">
+				</div>
+				{# VARIABLE A CHANGER !!!! #}
+				<div class="statValue">3</div>
+			</div>
 
-		</article>
+			<div class="statCard">
+				<div class="statHeader">
+					<p>Tâche en cours</p>
+					<img src="" alt="iconePlanning">
+				</div>
+				{# VARIABLE A CHANGER !!!! #}
+				<div class="statValue">2</div>
+			</div>
+
+			<div class="statCard">
+				<div class="statHeader">
+					<p>CA du mois</p>
+					<img src="" alt="icone€">
+				</div>
+				{# VARIABLE A CHANGER !!!! #}
+				<div class="statValue">30 000 €</div>
+			</div>
+		</section>
+
+		{# CHANTIER DETAIL RAPID #}
+
+		<section class="infoSection">
+			<h3>Chantiers actifs</h3>
+			{# VARIABLE A CHANGER !!!! #}
+			<div class="cardList">
+				<article class="listItem">
+					<div class="iteminfo">
+						<h4>Rénovation SDB</h4>
+						<p>Jean Dupont</p>
+					</div>
+					<div class="priceDate">
+						<p>3000 €</p>
+						<p>Fin : 15/04/2026</p>
+
+					</div>
+				</article>
+				{# VARIABLE A CHANGER !!!! #}
+
+				<article class="listItem">
+					<div class="iteminfo">
+						<h4>Extension cuisine</h4>
+						<p>Sylvie Martin</p>
+					</div>
+					<div class="priceDate">
+						<p>9000 €</p>
+						<p>Fin : 15/07/2026</p>
+					</div>
+				</article>
+
+			</div>
 
 
-	</section>
+		</section>
+
+		{# RDV A VENIR #}
+		<section class="nextDate">
+			{# VARIABLE A CHANGER !!!! #}
+			<h3>Prochaines interventions</h3>
+			<article>
+				<div>
+					<p>11</p>
+					<p>mars</p>
+				</div>
+				<div>
+					<h3>Rénovation salle de bain</h3>
+					<p>Démolition ancien carrelage</p>
+				</div>
+
+				<div>08:00 - 17:00</div>
+
+			</article>
+
+
+		</section>
+	</div>
+
 
 {% endblock %}

@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
+    width: 100%;
+    padding: 5px;
     background-color: #fff;
     border-bottom: 1px solid #f0f0f0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -10,15 +11,19 @@
 
 /* LOGO ARTGES */
 .logoAG {
+    text-decoration: none;
     color: #2563eb;
     font-size: 1.5rem;
-    font-weight: 800
+    font-weight: 800;
+    padding-left: 20px;
+
 }
 
 /* BOX DES BTNS */
 .headerBtn {
     display: flex;
     gap: 12px;
+    padding-right: 20px;
 }
 
 /* STYLES DES LIEN DE NAVIGATION */
@@ -36,10 +41,11 @@
 .loginBtn {
     color: #000;
     border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
 }
 
-.loginBtn {
-    background-color: #f9fafb;
+.loginBtn:hover {
+    background-color: #a9a9a9;
 }
 
 /* BTN INSCRIPTION */

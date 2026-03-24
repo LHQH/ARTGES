@@ -1,0 +1,204 @@
+/* 1. Reset et base */
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* 2. LE CONTENEUR PRINCIPAL (C'est lui qui pousse le contenu) */
+.dashboardContent {
+    margin-left: 260px;
+    /* Doit être égal à la width de ta sidebar */
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+}
+
+/* 3. TITRES (Correction des sélecteurs) */
+.dashboardContent h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.dashboardContent>p {
+    color: #666;
+    margin: -10px 0 10px 0;
+    /* Ajusté pour éviter les superpositions */
+}
+
+/* 4. GRILLE DE STATS */
+.fastStat {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.statCard {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #eef0f2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+}
+
+
+
+.statHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #666;
+    font-weight: 600;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-top: 10px;
+}
+
+/* --- SECTIONS LISTES --- */
+.infoSection,
+section:last-of-type {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #eef0f2;
+}
+
+.cardList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.listItem {
+    background-color: #f9fbff;
+    /* Teinte bleutée très légère */
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- SECTION PROCHAINES INTERVENTIONS (Carte Blanche) --- */
+.nextDate {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #eef0f2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    /* Ombre très légère */
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin-bottom: 30px;
+}
+
+.nextDate h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+/* --- LE LIGNES (Articles) --- */
+.nextDate article {
+    background-color: #f8fafc;
+    /* Fond gris très clair */
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    /* Espace entre les lignes */
+    display: flex;
+    /* Active Flexbox pour aligner horizontalement */
+    align-items: center;
+    /* Centre verticalement tous les éléments */
+    justify-content: flex-start;
+    /* Aligne au début par défaut */
+    transition: background-color 0.2s;
+}
+
+.nextDate article:hover {
+    background-color: #f1f5f9;
+    /* Légère interaction au survol */
+}
+
+/* --- 1. LE BLOC DATE (11 mars) --- */
+/* Cible la première div à l'intérieur de l'article */
+.nextDate article div:nth-child(1) {
+    text-align: center;
+    min-width: 60px;
+    /* Force une largeur fixe pour l'alignement */
+    margin-right: 30px;
+    /* Espace après la date */
+}
+
+/* Le gros chiffre (11) */
+.nextDate article div:nth-child(1) p:first-child {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2f66ff;
+    /* Le bleu ArtisanPro */
+    line-height: 1;
+    /* Supprime l'espace autour du chiffre */
+    margin: 0;
+}
+
+/* Le mois (mars) */
+.nextDate article div:nth-child(1) p:last-child {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-transform: lowercase;
+    /* Force le mois en minuscules */
+    margin: 3px 0 0 0;
+}
+
+/* --- 2. LE BLOC TEXTE (Rénovation...) --- */
+/* Cible la deuxième div à l'intérieur de l'article */
+.nextDate article div:nth-child(2) {
+    flex-grow: 1;
+    /* Le texte prend toute la place restante */
+    margin-right: 20px;
+}
+
+/* Le titre de la tâche (Rénovation...) */
+.nextDate article div:nth-child(2) h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 3px;
+    color: #1a1a1a;
+}
+
+/* La description (Démolition...) */
+.nextDate article div:nth-child(2) p {
+    font-size: 0.9rem;
+    color: #6c757d;
+    /* Gris pour le sous-texte */
+    margin: 0;
+}
+
+/* --- 3. LE BLOC HEURE (08:00 - 17:00) --- */
+/* Cible la dernière div à l'intérieur de l'article */
+.nextDate article div:nth-child(3) {
+    text-align: right;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    min-width: 120px;
+    /* Force une largeur pour l'alignement à droite */
+}

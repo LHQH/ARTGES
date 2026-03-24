@@ -149,7 +149,7 @@ export async function postLogin(req, res) {
         // RECUP L'ADMIN PAR SON SIRET
         const craftman = await prisma.craftman.findUnique({
             where: {
-                siret: req.body.siret
+                mail: req.body.mail
             }
         })
         if (craftman) {
@@ -158,7 +158,7 @@ export async function postLogin(req, res) {
                 // Garder en mémoire l'utilisateur
                 req.session.craftman = craftman.id
                 // Rediriger vers la page d'accueil si ok
-                res.redirect("/artisan/dashboard")
+                res.redirect("/dashboard")
             }
         } else {
             res.render("pages/login.twig", {

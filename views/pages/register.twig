@@ -1,12 +1,17 @@
 {% extends "../layouts/base.twig" %}
-{% include "../partials/header.twig" %}
+
 {% block style %}
 	<link rel="stylesheet" href="/assets/css/styleRegister.css">
 {% endblock %}
 {% block main %}
+{% include "../partials/header.twig" %}
+
 	<div class="container">
 		<div class="register-card">
 			<p class="instruction">Tous les champs sont obligatoires</p>
+			{% if error %}
+				<p>{{error}}</p>
+			{% endif %}
 
 			<form action="/register" method="POST">
 
@@ -52,7 +57,7 @@
 
 				<div class="form-group">
 					<label>Raison social</label>
-					<input name="socialReason"type="text" placeholder="raison social">
+					<input name="socialReason" type="text" placeholder="raison social">
 				</div>
 
 				<div class="form-group">
@@ -73,7 +78,5 @@
 			</form>
 		</div>
 	</div>
-	{% if error %}
-		<p>{{error}}</p>
-	{% endif %}
+
 {% endblock %}

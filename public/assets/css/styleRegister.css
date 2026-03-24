@@ -1,20 +1,23 @@
 body {
-    background-color: #ffffff;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 40px 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     margin: 0;
+    background-color: #ffffff;
+    color: #1a1a1a;
 }
 
 /* FORM REGISTER*/
+.container {
+display: flex;
+justify-content: center;
+
+}
 .register-card {
     background-color: #ffffff;
     width: 100%;
     max-width: 450px;
-    padding: 30px 50px;
+    padding: 20px 40px;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+   border: 1px solid #e0e0e0;
 }
 
 .instruction {
@@ -27,7 +30,7 @@ body {
 
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .form-group label {
@@ -35,7 +38,9 @@ body {
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 5px;
-    color: #333;
+    color: #000000;
+    font-weight: bold;
+
 }
 
 
@@ -68,7 +73,6 @@ button {
     border: none;
     padding: 12px 25px;
     border-radius: 10px;
-    /* Coins légèrement arrondis */
     font-weight: bold;
     cursor: pointer;
     font-size: 14px;

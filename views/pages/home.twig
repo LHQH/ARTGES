@@ -13,7 +13,10 @@
 		<h1 class="blueTitle">en toute simplicité</h1>
 		<p>Fini les cahiers et les feuilles volantes ! ArtGes centralise la  gestion de vos clients,chantiers, planning et administratif en un seul  endroit. Plus de temps pour votre métier,moins pour la paperasse.</p>
 
-		<button class="freeRegisterBtn">Démarrer gratuitement</button>
+		<nav>
+			<a href="/register" class="freeTryBtn">Démarrer gratuitement</a>
+		</nav>
+
 		{# INTRO PRESENTATION #}
 		<div class="homeFeatures">
 			<article class="card">
@@ -162,12 +165,14 @@
 					</li>
 
 				</ul>
-				<button class="btn-secondary">Commencer gratuitement</button>
+				<nav>
+					<a href="/register" class="freeHomeBtn">commencer gratuitement</a>
+				</nav>
 			</div>
 		</article>
 
 
-{# PREMIUM #}
+		{# PREMIUM #}
 		<article class="pricing-card premium-card">
 			<div class="badge-recommended">Recommandé</div>
 			<div class="pricing-header-blue">Pour les professionnels</div>
@@ -198,10 +203,11 @@
 					</li>
 
 				</ul>
+				<nav>
+					<a href="/register" class="freeTryBtn">Essayer 14 jours gratuits →</a>
+				</nav>
 
-				<button class="btn-primary">Essayer 14 jours gratuits →</button>
 			</div>
 		</article>
 	</div>
-</section>
-{% endblock %}
+</section>{% endblock %}

@@ -4,7 +4,7 @@ import { hashPasswordExtension } from "../../prisma/extensions/hashPassword.js";
 const prisma = new PrismaClient({ adapter }).$extends(hashPasswordExtension);
 import bcrypt from "bcrypt"
 import { adressRegex, phoneRegex, mailRegex, passwordRegex, nameRegex, siretRegex, socialReasonRegex, postCodeRegex } from "../services/regex.js";
-import { log } from "console";
+
 
 
 
@@ -25,7 +25,6 @@ export function getRegister(req, res) {
 
 //REGISTER
 export async function postRegister(req, res) {
-    console.log("--- DONNÉES REÇUES ---", req.body);
     try {
         //VERIF PRENOM
         const { firstName, lastName, mail, phone, proAdress, postCode, city, siret, socialReason, password } = req.body;
@@ -104,7 +103,7 @@ export async function postRegister(req, res) {
                 error: "Mot de passe trop faible"
             });
         }
-console.log("blaa");
+        
 
         await prisma.craftman.create({
             data: {
@@ -116,9 +115,9 @@ console.log("blaa");
                 postCode: postCode,
                 city: city,
                 password: password,
-                SIRET: siret,        
+                SIRET: siret,
                 socialReason: socialReason,
-                logo_url: ""         
+                logo_url: ""
             }
         });
         res.redirect("/login")
@@ -128,10 +127,10 @@ console.log("blaa");
         res.render("pages/register.twig", {
             title: "Inscription",
             error: "Erreur lors de l'inscription...",
-            
-            
+
+
         })
-    } 
+    }
 }
 
 // LOGIN
@@ -156,20 +155,21 @@ export async function postLogin(req, res) {
             // Vérifier la concordance des mots de passe
             if (await bcrypt.compare(req.body.password, craftman.password)) {
                 // Garder en mémoire l'utilisateur
-                req.session.craftman = craftman.id
-                // Rediriger vers la page d'accueil si ok
+                req.session.craftman = craftman.id_craftman
                 res.redirect("/dashboard")
             }
         } else {
             res.render("pages/login.twig", {
                 error: "Identifiants invalides"
             })
+            
         }
 
     } catch (error) {
+       
         console.log(error);
         res.render("pages/login.twig", {
-            error: "Identifiants invalides"
+            error: "Une erreur est survenue"
         })
     }
 }
@@ -177,8 +177,41 @@ export async function postLogin(req, res) {
 //DASHBOARD
 
 export async function getDashboard(req, res) {
-    res.render("pages/dashboard.twig", {
-        title: "Tableau de bord"
-    })
+    try {
+        const clients = await prisma.client.findMany({
+            where: {
+                id_craftman: req.craftman.id_craftman
+            }
+
+        })
+        const constructs = await prisma.construct.findMany({
+            where: {
+                id_craftman: req.craftman.id_craftman
+            },
+            include: {
+                client: {
+                    select: {
+                        lastName: true,
+                        firstName: true
+                    }
+                },
+                 bill: {
+                    select: {
+                         totalAmount: true
+                    }
+                }
+            },
+
+        })
+        res.render("pages/dashboard.twig", {
+            title: "Tableau de bord",
+            currentPage: 'dashboard',
+            clients: clients,
+            constructs: constructs
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erreur serveur");
+    }
 
 }

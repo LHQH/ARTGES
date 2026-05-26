@@ -6,5 +6,5 @@ export const constructRouter = express.Router()
 
 constructRouter.get("/list",  getConstruct)
 constructRouter.post("/new",  newConstruct)
-constructRouter.post("/:id/delConstruct",  deleteConstruct)
-constructRouter.post("/:id/upConstruct",  updateConstruct)
+constructRouter.post("/delete/:id",  deleteConstruct)
+constructRouter.post("/update/:id",  updateConstruct)

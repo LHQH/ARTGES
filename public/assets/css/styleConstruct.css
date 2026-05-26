@@ -1,0 +1,365 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+
+}
+
+
+/* ADAPTER LA PAGE CHANTIER A LA NAVBAR */
+#constructContent {
+    margin-left: 260px;
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* TITRE DE LA PAGE */
+.headGest h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #1a1a1a;
+}
+.headGest p {
+    color: #666;
+    margin: 17px 0 10px 0;
+}
+
+/* LA SECTION RECHERCHE */
+
+
+#search {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#search label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+
+#search label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+
+#searchConstruct {
+    width: 420px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #d8d8d8;
+    padding: 0 16px;
+    font-size: 18px;
+    outline: none;
+    background: white;
+}
+
+#searchConstruct:focus {
+    border: 1px solid #2f66ff;
+}
+
+
+/* BUTTON NOUVEAU CHANTIER */
+
+#newConstructBtn {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 16px 26px;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#newConstructBtn:hover {
+    transform: scale(1.03);
+}
+
+/* LISTE DES CHANTIER */
+
+#constructCardList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* CHANTIER CARDS */
+.constructCards {
+    width: 400px;
+    min-height: 340px;
+    background: white;
+    border: 1px solid #dddddd;
+    border-radius: 24px;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.2s;
+}
+
+.constructCards:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.titleConstructCard {
+    display: flex;
+    justify-content: space-between;
+}
+
+.imgTool {
+    display: flex;
+    gap: 10px;
+}
+
+.titleConstructCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleConstructCard div p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #111;
+}
+
+.deleteConstructBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.deleteConstructBtn img {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+}
+
+.updateConstructBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.updateConstructBtn img {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+}
+
+.constructAddress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.constructDate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.imgConstructInfos {
+    width: 20px;
+    height: 20px;
+}
+
+
+.constructDescription {
+    border-top: 1px solid #ececec;
+    padding-top: 18px;
+    margin-top: 25px;
+}
+
+.constructDescription p {
+    margin: 0;
+    text-align: center;
+    color: #7b7b7b;
+    font-size: 18px;
+}
+
+
+
+
+
+
+
+/* MODALES */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.newConstructModale {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.newConstructModale.active {
+    display: flex;
+}
+
+.updateConstructModale {
+    overflow-y: auto;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 9999;
+}
+
+.updateConstructModale.active {
+
+    display: flex;
+
+}
+
+/* FORMULAIRE DES MODALE NEW ET UODATE */
+
+/* NEW */
+#newConstructForm {
+    width: 500px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#newConstructForm div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#newConstructForm label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+#newConstructForm input {
+    height: 42px;
+
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+
+    padding: 0 14px;
+
+    font-size: 16px;
+}
+
+#newConstructForm input:focus {
+    outline: none;
+    border: 1px solid #2f66ff;
+}
+
+
+/* UPDATE */
+#updateConstructForm {
+    width: 500px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#updateConstructForm div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#updateConstructForm label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+#updateConstructForm input {
+    height: 42px;
+
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+
+    padding: 0 14px;
+
+    font-size: 16px;
+}
+
+#updateConstructForm input:focus {
+    outline: none;
+    border: 1px solid #2f66ff;
+}
+
+
+
+/* BUTTONS MODALE NEW ET UPDATE */
+
+#newConstructForm button {
+    height: 40px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#newConstructForm button[type="submit"] {
+    background: #2f66ff;
+    color: white;
+}
+
+#closeNewModale {
+    background: #ececec;
+    color: #333;
+}

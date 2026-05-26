@@ -1,13 +1,13 @@
 model Estimate {
-    id_estimate     Int       @id @default(autoincrement())
+    id_estimate     Int            @id @default(autoincrement())
     reference       String
     tva             Decimal
-    description     String
-    QTY             Float
-    unitAmount      Float
     status_estimate String
-    created_at      DateTime  @default(now())
+    created_at      DateTime       @default(now())
     id_craftman     Int?
-    craftman        Craftman? @relation(fields: [id_craftman], references: [id_craftman])
-    bills           Bill[]
+    craftman        Craftman?      @relation(fields: [id_craftman], references: [id_craftman])
+    id_client       Int?
+    client          Client?        @relation(fields: [id_client], references: [id_client])
+    bill            Bill[]
+    estimateLine    EstimateLine[]
 }

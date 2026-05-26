@@ -6,31 +6,104 @@ const prisma = new PrismaClient({ adapter });
 
 //VIEW DES CHANTIERS
 export async function getConstruct(req, res) {
-    res.render("pages/construct.twig", {
-        title: "Gestion des chantiers"
-    })
+    try {
+        const search = req.query.q || "";
+
+        const constructs = await prisma.construct.findMany({
+
+            where: {
+                id_craftman: req.session.craftman,
+
+                // PERMET LA RECHERCHE AU DELA DES AFFICHAGE DES 3 DERNIERS ENREGISTRE
+                OR: [
+                    {
+                        construct_name: {
+                            contains: search,
+                        }
+                    },
+                    {
+                        construct_ref: {
+                            contains: search,
+                        }
+                    },
+                    {
+                        status: {
+                            contains: search,
+                        }
+                    },
+                ]
+            },
+            include: {
+                client: true,
+                address: true
+            },
+            orderBy: {
+                created_at: "desc"
+            },
+            take: 4
+        });
+
+        // PRESENTE LES DATE ET HEURE SOUS UN FORMAT PLUS SYMPA
+
+        const formattedConstruct = constructs.map(construct => ({
+            ...construct,
+
+            start_date_formatted: construct.start_date
+                ? new Date(construct.start_date).toLocaleDateString('fr-FR')
+                : "",
+
+            end_date_formatted: construct.end_date
+                ? new Date(construct.end_date).toLocaleDateString('fr-FR')
+                : ""
+        }));
+
+        res.render("pages/construct.twig", {
+            constructs: formattedConstruct,
+            title: "Gestion des chantiers",
+            currentPage: "construct",
+            search
+        })
+    } catch (error) {
+        console.log(error);
+        res.render("pages/construct.twig", {
+            error: "Erreur de l'affichage des chantiers"
+        });
+    }
+
 }
 
 // NOUVEAU CHANTIER
 
 export async function newConstruct(req, res) {
     try {
-        const { construct_name, id_client, construct_ref, adress, postCode, city, start_date, end_date, id_bill, description } = req.body
-        await prisma.constructsite.create({
+        const { construct_name, id_client, construct_ref, address, postCode, city, start_date, end_date, id_bill, description } = req.body
+        await prisma.construct.create({
             data: {
                 construct_name,
-                id_client,
                 construct_ref,
-                adress,
-                postCode,
-                city,
-                start_date,
-                end_date,
-                id_bill,
+
+                start_date: new Date(start_date),
+                end_date: new Date(end_date),
+
                 description,
-                // LIAISON DE CHANTIER A SON ARTISAN
-                createdBy: { connect: { id: req.craftman.id } }
+
+                address: {
+                    create: {
+                        street: address,
+                        postcode: postCode,
+                        city: city,
+
+                        craftman: {
+                            connect: {
+                                id_craftman: req.session.craftman
+                            }
+                        }
+                    }
+                },
+
+                craftman: { connect: { id_craftman: req.session.craftman } }
             }
+
         })
         res.redirect("/construct/list")
     } catch (error) {
@@ -47,8 +120,8 @@ export async function newConstruct(req, res) {
 
 export async function updateConstruct(req, res) {
     try {
-        const { construct_name, id_client, construct_ref, adress, postCode, city, start_date, end_date, id_bill, description } = req.body
-        await prisma.constructsite.update({
+        const { construct_name, id_client, construct_ref, address, postCode, city, start_date, end_date, id_bill, description } = req.body
+        await prisma.construct.update({
             where: {
                 id: parseInt(req.params.id)
             },
@@ -56,14 +129,15 @@ export async function updateConstruct(req, res) {
                 construct_name,
                 id_client,
                 construct_ref,
-                adress,
+                address,
                 postCode,
                 city,
-                start_date,
-                end_date,
+                start_date: new Date(start_date),
+                end_date: new Date(end_date),
                 id_bill,
                 description
             }
+
         })
         res.redirect("/construct/list")
     } catch (error) {
@@ -78,9 +152,9 @@ export async function updateConstruct(req, res) {
 
 export async function deleteConstruct(req, res) {
     try {
-        await prisma.constructsite.delete({
+        await prisma.construct.delete({
             where: {
-                id: parseInt(req.params.id)
+                id_construct: parseInt(req.params.id)
             }
         })
         res.redirect("/construct/list")

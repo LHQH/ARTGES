@@ -1,112 +1,178 @@
 {% extends "../layouts/base.twig" %}
-{# {% extends "../partials/navBar.twig" %} #}
+
 {% block style %}
-<link rel="stylesheet" href="/assets/css/modale.css"
+	<link rel="stylesheet" href="/assets/css/styleConstruct.css">
 
 {% endblock %}
 {% block main %}
-	<section class="headGest">
-		<h2>Chantier</h2>
-		<p>Créer et gérer vos chantiers</p>
+	{% include "../partials/navBar.twig" %}
+	<div id="constructContent">
+		<section class="headGest">
+			<h2>Chantier</h2>
+			<p>Créer et gérer vos chantiers</p>
 
-		<div id="search">
-			<label for="finder">Recherche :</label>
-			<input type="text" name="searchContent" id="searchContent">
+			<form method="GET" action="/construct/list">
+				<input type="text" id="searchConstruct" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un chantier">
+				<button type="submit">Rechercher</button>
+			</form>
+			<div>
+				<button name="newConstructBtn" id="newConstructBtn">+ Nouveau chantier</button>
+			</div>
+		</section>
+		<section id="constructCardList">
+			{% for construct in constructs %}
+
+				<article class="constructCards">
+					<div class="titleConstructCard">
+
+						<h3>
+							{{construct.construct_name}}
+						</h3>
+						<div class="imgTool">
+							<button class="updateConstructBtn" value="{{construct.id_construct}}" data-name="{{construct.construct_name}}" data-ref="{{construct.construct_ref}}" data-start="{{construct.start_date}}" data-end="{{construct.end_date}}" data-address="{{construct.address.street}}" data-postcode="{{construct.address.postcode}}" data-city="{{construct.address.city}}" data-description="{{construct.description}}">
+								<img src="/assets/img/UPD.svg" alt="modifier">
+							</button>
+
+							<form action="/construct/delete/{{construct.id_construct}}" method="POST" class="imgTool">
+								<button type="submit" class="deleteConstructBtn" data-id="{{construct.id_construct}}">
+									<img src="/assets/img/DEL.svg" alt="Supprimer">
+								</button>
+							</form>
+						</div>
+
+
+					</div>
+					<div>
+						<p>
+							{{construct.construct_ref}}
+						</p>
+						<p>Client</p>
+						<p>
+							{# {{VARIABLE DU NOM CLIENT}} #}
+						</p>
+					</div>
+					<div class="constructAddress">
+						<img class="imgConstructInfos" src="/assets/img/LOCALISATION.svg" alt="ADRESSE">
+						<p>
+							{{construct.address.street}}
+							{{construct.address.postcode}}
+							{{construct.address.city}}
+						</p>
+					</div>
+					<div class="constructDate">
+						<img class="imgConstructInfos" src="/assets/img/planning.svg" alt="iconeDate">
+						<p>
+							Du
+							{{construct.start_date_formatted}}
+							au
+							{{construct.end_date_formatted}}
+						</p>
+					</div>
+					<div class="constructDescription">
+						<p>
+							{{construct.description}}
+						</p>
+					</div>
+					<p>
+						{# {{VARIABLE PRIX CHANTIER}} #}
+					</p>
+
+				</article>
+
+
+			{% endfor %}
+
+
+		</section>
+
+		{# //MODALE NEW CHANTIER #}
+		<div class="newConstructModale" id="newConstructModale">
+			<form id="newConstructForm" action="/construct/new" method="POST">
+				<div>
+					<label for="construct_name">Titre du chantier :</label>
+					<input type="text" id="construct_name" name="construct_name" value="">
+				</div>
+				<div>
+					<label for="construct_ref">Référence :</label>
+					<input type="text" id="construct_ref" name="construct_ref" value="">
+				</div>
+				<div>
+					<label for="address">Adresse :</label>
+					<input type="text" id="address" name="address" value="">
+				</div>
+				<div>
+					<label for="city">Ville</label>
+					<input type="text" id="city" name="city" value="">
+				</div>
+				<div>
+					<label for="postCode">code postal</label>
+					<input type="text" id="postCode" name="postCode" value="">
+				</div>
+				<div>
+					<label for="start_date">Date début :</label>
+					<input type="date" id="start_date" name="start_date" value="">
+				</div>
+				<div>
+					<label for="end_date">Date fin :</label>
+					<input type="date" id="end_date" name="end_date" value="">
+				</div>
+				<div>
+					<label for="amount">Montant(€) :</label>
+					<input type="text" name="amount" id="amount">
+				</div>
+				<div>
+					<label for="description">Description :</label>
+					<input type="text" name="description" id="description">
+				</div>
+				<button type="submit">Enregistrer</button>
+				<button type="button" id="closeNewModale">Annuler</button>
+			</form>
+
 		</div>
-		<div>
-			<button name="newConstructBtn" id ="newConstructBtn">+ Nouveau chantier</button>
-		</div>
-	</section>
-	<section>
-		<article>
-			<div>
-				<h3>
-					{# {{VARIABLE TITRE CHANTIER}} #}
-				</h3>
-				<p>Réference</p>
-				<p>
-					{# {{VARIABLE REF CHANTIER}} #}
-				</p>
-				<p>Client</p>
-				<p>
-					{# {{VARIABLE DU NOM CLIENT}} #}
-				</p>
-			</div>
-			<div>
-				<img src="" alt="modifConstruct">
-				<img src="" alt="suppConstruct">
-			</div>
-			<div>
-				<img src="" alt="iconeMap">
-				<p>
-					{# {{VARIABLE ADRESSE CHANTIER}} #}
-				</p>
-			</div>
-			<div>
-				<img src="" alt="iconeDate">
-				<p>
-					{# {{VARIABLE DATE DEBUT/FIN CHANTIER}} #}
-				</p>
-			</div>
-			<div>
-				<p>
-					{# {{VARIABLE DESCRIPTION CHANTIER}} #}
-				</p>
-			</div>
-			<p>
-				{# {{VARIABLE PRIX CHANTIER}} #}
-			</p>
+	</div>
 
-		</article>
+	{# MODALE UPDATE CHANTIER #}
 
-	</section>
-
-	{# //MODALE NEW CHANTIER #}
-	<div class="newConstructModale" id="newConstructModale">
-		<form id="newConstructForm" action="/construct/new" method="POST">
+	<div class="updateConstructModale" id="updateConstructModale">
+		<form id="updateConstructForm" action="/construct/update" method="POST">
 			<div>
-				<label for="constructTitle">Titre du chantier :</label>
-				<input type="text" id="constructTitle" name="constructTitle" value="">
+				<label for="construct_nameUpdate">Titre du chantier :</label>
+				<input type="text" id="construct_nameUpdate" name="construct_nameUpdate" value="">
 			</div>
 			<div>
-				<label for="clientSelect">Client :</label>
-				<select name="clientSelect" id="clientSelect">
-					{% for client in clients %}
-						<option value="{{client.lastName}}{{client.firstName}}"></option>
-					{% endfor %}
-				</select>
-
+				<label for="construct_refUpdate">Référence :</label>
+				<input type="text" id="construct_refUpdate" name="construct_refUpdate" value="">
 			</div>
 			<div>
-				<label for="constructRef">Référence :</label>
-				<input type="text" id="constructRef" name="constructRef" value="">
+				<label for="addressUpdate">Adresse :</label>
+				<input type="text" id="addressUpdate" name="addressUpdate" value="">
 			</div>
 			<div>
-				<label for="adress">Adresse :</label>
-				<input type="text" id="mail" name="mail" value="">
+				<label for="cityUpdate">Ville</label>
+				<input type="text" id="cityUpdate" name="cityUpdate" value="">
 			</div>
 			<div>
-				<label for="city">Ville</label>
-				<input type="text" id="city" name="city" value="">
+				<label for="postCodeUpdate">code postal</label>
+				<input type="text" id="postCodeUpdate" name="postCodeUpdate" value="">
 			</div>
 			<div>
-				<label for="start_date">Date début :</label>
-				<input type="date" id="start_date" name="start_date" value="">
+				<label for="start_dateUpdate">Date début :</label>
+				<input type="date" id="start_dateUpdate" name="start_dateUpdate" value="">
 			</div>
 			<div>
-				<label for="start_end">Date fin :</label>
-				<input type="date" id="start_end" name="start_date" value="">
+				<label for="end_dateUpdate">Date fin :</label>
+				<input type="date" id="end_dateUpdate" name="end_dateUpdate" value="">
 			</div>
 			<div>
-				<label for="amount">Montant(€) :</label>
-				<input type="text" name="amount" id="amount">
+				<label for="amountUpdate">Montant(€) :</label>
+				<input type="text" name="amountUpdate" id="amountUpdate">
 			</div>
 			<div>
-				<label for="constructDescription">Description :</label>
-				<input type="text" name="constructDescription" id="constructDescription">
+				<label for="descriptionUpdate">Description :</label>
+				<input type="text" name="descriptionUpdate" id="descriptionUpdate">
 			</div>
 			<button type="submit">Enregistrer</button>
-			<button type="button" id="closeModale">Annuler</button>
+			<button type="button" id="closeUpdateModale">Annuler</button>
 		</form>
 
 	</div>
@@ -115,18 +181,21 @@
 {% endblock %}
 
 {% block script %}
+
+	{# MODALE NOUVEAU CHANTIER #}
 	<script>
-const newConstructBtn = document.querySelector("#newConstructBtn")
+		const newConstructBtn = document.querySelector("#newConstructBtn")
 const newConstructModale = document.querySelector("#newConstructModale")
 const newConstructForm = document.querySelector("#newConstructForm")
-const closeModale = document.querySelector("#closeModale")
+const closeNewModale = document.querySelector("#closeNewModale")
+
 
 newConstructBtn.addEventListener("click", (e) => {
 
 newConstructModale.classList.add("active")
 })
 
-closeModale.addEventListener("click", (e) => {
+closeNewModale.addEventListener("click", (e) => {
 
 newConstructModale.classList.remove("active")
 })
@@ -136,6 +205,153 @@ newConstructModale.addEventListener("click", (e) => {
 if (e.target === newConstructModale) {
 newConstructModale.classList.remove("active");
 }
+});
+
+
+{ // # MODALE MODIF CHANTIER #
+}
+
+// const updateConstructModale = document.querySelector("#updateConstructModale")
+// const updateConstructBtns = document.querySelectorAll(".updateConstructBtn")
+// const construct_nameUpdate = document.querySelector("#construct_nameUpdate")
+// const construct_refUpdate = document.querySelector("#construct_refUpdate")
+// const addressUpdate = document.querySelector("#addressUpdate")
+// const cityUpdate = document.querySelector("#cityUpdate")
+// const postCodeUpdate = document.querySelector("#postCodeUpdate")
+// const start_dateUpdate = document.querySelector("#start_dateUpdate")
+// const end_dateUpdate = document.querySelector("#end_dateUpdate")
+// const descriptionUpdate = document.querySelector("#descriptionUpdate")
+// const updateConstructForm = document.querySelector("#updateConstructForm")
+// const closeUpdateModale = document.querySelector("#closeUpdateModale")
+
+// updateConstructBtns.forEach((btn) => {
+
+// btn.addEventListener("click", (e) => {
+// console.log("clik up ok");
+
+// updateConstructModale.classList.add("active");
+// document.body.classList.add("modal-open")
+
+// e.preventDefault();
+
+
+// });
+// closeUpdateModale.addEventListener("click", (e) => {
+
+// updateConstructModale.classList.remove("active")
+// })
+
+// // FERMER LA MODALE AU CLICK EXTERIEUR
+// updateConstructModale.addEventListener("click", (e) => {
+// if (e.target === updateConstructModale) {
+// updateConstructModale.classList.remove("active");
+// }
+// // RECUP LES DONNEES DEJA ENREGISTRER
+// const currentName = btn.dataset.name;
+// const currentRef = btn.dataset.ref;
+// const currentStart = btn.dataset.start;
+// const currentEnd = btn.dataset.end;
+// const currentAddress = btn.dataset.address;
+// const currentPostCode = btn.dataset.postcode;
+// const currentCity = btn.dataset.city;
+// const currentDescription = btn.dataset.description
+// // LES PLACE DANS LES INPUTS
+// construct_nameUpdate.value = currentName;
+// construct_refUpdate.value = currentRef;
+// start_dateUpdate.value = currentStart.split("T")[0];
+// end_dateUpdate.value = currentEnd.split("T")[0];
+// addressUpdate.value = currentAddress;
+// postCodeUpdate.value = currentPostCode;
+// cityUpdate.value = currentCity;
+// descriptionUpdate.value = currentDescription
+
+// const value = `/construct/update/${
+// btn.value
+// }`;
+
+// updateConstructForm.setAttribute("action", value);
+
+
+// });
+
+// });
+
+
+const updateConstructModale = document.querySelector("#updateConstructModale");
+const updateConstructBtns = document.querySelectorAll(".updateConstructBtn");
+
+const construct_nameUpdate = document.querySelector("#construct_nameUpdate");
+const construct_refUpdate = document.querySelector("#construct_refUpdate");
+const addressUpdate = document.querySelector("#addressUpdate");
+const cityUpdate = document.querySelector("#cityUpdate");
+const postCodeUpdate = document.querySelector("#postCodeUpdate");
+const start_dateUpdate = document.querySelector("#start_dateUpdate");
+const end_dateUpdate = document.querySelector("#end_dateUpdate");
+const descriptionUpdate = document.querySelector("#descriptionUpdate");
+
+const updateConstructForm = document.querySelector("#updateConstructForm");
+const closeUpdateModale = document.querySelector("#closeUpdateModale");
+
+
+// OUVERTURE MODALE
+updateConstructBtns.forEach((btn) => {
+
+btn.addEventListener("click", (e) => {
+
+e.preventDefault();
+
+updateConstructModale.classList.add("active");
+
+// RECUP DONNEES
+const currentName = btn.dataset.name;
+const currentRef = btn.dataset.ref;
+const currentStart = btn.dataset.start;
+const currentEnd = btn.dataset.end;
+const currentAddress = btn.dataset.address;
+const currentPostCode = btn.dataset.postcode;
+const currentCity = btn.dataset.city;
+const currentDescription = btn.dataset.description;
+
+// REMPLISSAGE INPUTS
+construct_nameUpdate.value = currentName;
+construct_refUpdate.value = currentRef;
+
+start_dateUpdate.value = currentStart.split("T")[0];
+end_dateUpdate.value = currentEnd.split("T")[0];
+
+addressUpdate.value = currentAddress;
+postCodeUpdate.value = currentPostCode;
+cityUpdate.value = currentCity;
+
+descriptionUpdate.value = currentDescription;
+
+// ACTION FORM
+updateConstructForm.setAttribute("action", `/construct/update/${
+btn.value
+}`);
+
+});
+
+});
+
+
+// FERMETURE BOUTON
+closeUpdateModale.addEventListener("click", () => {
+
+updateConstructModale.classList.remove("active");
+
+});
+
+
+// FERMETURE CLICK EXTERIEUR
+updateConstructModale.addEventListener("click", (e) => {
+
+if (e.target === updateConstructModale) {
+
+updateConstructModale.classList.remove("active");
+
+}
+
 });
 	</script>
 

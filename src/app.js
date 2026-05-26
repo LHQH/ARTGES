@@ -1,6 +1,7 @@
 import express from "express"
 import "dotenv/config"
 import session from "express-session"
+import puppeteer from "puppeteer"
 import { craftmanRouter } from "./routes/craftmanRouter.js"
 import { clientRouter } from "./routes/clientRouter.js"
 import { estimateRouter } from "./routes/estimateRouter.js"

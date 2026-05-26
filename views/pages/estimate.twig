@@ -1,89 +1,108 @@
 {% extends "../layouts/base.twig" %}
-{# {% extends "../partials/navBar.twig" %} #}
+
 {% block style %}
-<link rel="stylesheet" href="/assets/css/modale.css" {% endblock %}
+	<link rel="stylesheet" href="/assets/css/styleEstimate.css">
+{% endblock %}
 {% block main %}
+	{% include "../partials/navBar.twig" %}
+	<div id="estimateContent">
+		<section class="headGest">
+			<h2>Devis</h2>
+			<p>Créer et gérer vos devis</p>
+			<form method="GET" action="/construct/list">
+				<input type="text" id="searchEstimate" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un devis">
+				<button type="submit">Rechercher</button>
+			</form>
+			<div>
+				<button name="newEstimateBtn" id="newEstimateBtn">+ Nouveau devis</button>
+			</div>
+		</section>
+		<section id="estimatesList">
+			{% for estimate in estimates %}
 
-	<section class="headGest">
-		<h2>Devis</h2>
-		<p>Créer et gérer vos devis</p>
 
-		<div id="search">
-			<label for="finder">Recherche :</label>
-			<input type="text" name="searchContent" id="searchContent">
+				<article class="estimateCards">
+					<div>
+						<p>
+							{# {{variable du NOMCLIENT}} #}
+						</p>
+						<p>
+							Réference devis
+
+						</p>
+						<p id="estimateRef">
+							{{estimate.reference}}
+						</p>
+					</div>
+					<div>
+						<img src="" alt="previewDEVIS">
+					</div>
+
+					<div>
+						<p>
+							Créer le{{estimate.created_at_formatted}}
+
+						</p>
+					</div>
+					<div>
+						<a id="previewBtn" href="/estimate/preview/{{ estimate.id_estimate }}">
+							Aperçu du devis
+						</a>
+					</div>
+
+				</article>
+			{% endfor %}
+
+
+		</section>
+
+		{# //MODALE NEW DEVIS #}
+		<div class="newEstimateModale" id="newEstimateModale">
+
+			<form id="newEstimateForm" action="/estimate/new" method="POST">
+				<div>
+					<label for="reference">Référence du devis :</label>
+					<input type="text" id="reference" name="reference" value="">
+				</div>
+				<div>
+					<label for="estimateClient">Client :</label>
+					<select name="estimateClient" id="estimateClient">
+						<option value="" selected>Devis sans client</option>
+
+						{% for client in clients %}
+							<option value="{{client.id_client}}">
+								{{client.firstName}}
+								{{client.lastName}}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label for="tva">TVA(%) :</label>
+					<input type="text" id="tva" name="tva" value="">
+				</div>
+				<div id="lines">
+					<div class="line">
+						<input type="text" name="description[]" placeholder="Description">
+
+						<input type="number" name="unitAmount[]" placeholder="Montant">
+
+						<input type="number" name="QTY[]" placeholder="Quantité">
+
+
+					</div>
+				</div>
+
+				<div>
+					<button type="button" onclick="ajouterLigne()">Ajouter une ligne</button>
+				</div>
+
+
+				<button type="submit">Enregistrer</button>
+				<button type="button" id="closeModale">Annuler</button>
+			</form>
+
 		</div>
-		<div>
-			<button name="newEstimateBtn" id="newEstimateBtn">+ Nouveau devis</button>
-		</div>
-	</section>
-	<section>
-		<article>
-			<div>
-				<p>
-					{# {{variable du NOMCLIENT}} #}
-				</p>
-				<p>
-					Réference devis
-
-				</p>
-				<p>
-					{# {{VARIABLE REF DU DEVIS}} #}
-				</p>
-			</div>
-			<div>
-				<img src="" alt="previewDEVIS">
-			</div>
-
-			<div>
-				<p>
-					{# Créer le{{DATE CREATION DEVIS}} #}
-				</p>
-			</div>
-
-		</article>
-
-
-	</section>
-
-	{# //MODALE NEW CLIENT #}
-	<div class="newEstimateModale" id="newEstimateModale">
-
-		<form id="newEstimateForm" action="/estimate/new" method="POST">
-			<div>
-				<label for="estimateRef">Référence du devis :</label>
-				<input type="text" id="estimateRef" name="estimateRef" value="">
-			</div>
-			<div>
-				<label for="estimateClient">Client :</label>
-				<select name="estimateClient" id="estimateClient">
-					{% for client in clients %}
-						<option value="{{client.firstName}}{{client.lastName}}"></option>
-					{% endfor %}
-				</select>
-			</div>
-			<div>
-				<label for="estimateTVA">TVA(%) :</label>
-				<input type="text" id="estimateTVA" name="estimateTVA" value="">
-			</div>
-			<div class="lines" id="lines">
-				<label for="estimateDescription">Description :</label>
-				<input type="text" id="estimateDescription" name="estimateDescription" value="">
-
-				<label for="estimateQTY">Quantité :</label>
-				<input type="text" id="estimateQTY" name="estimateQTY" value="">
-
-				<label for="unitEstimateAmount">Montant(€) :</label>
-				<input type="text" id="unitEstimateAmount" name="unitEstimateAmount" value="">
-			</div>
-			<div>
-				<button type="button" onclick="ajouterLigne()">Ajouter une ligne</button>
-			</div>
-
-
-			<button type="submit">Enregistrer</button>
-			<button type="button" id="closeModale">Annuler</button>
-		</form>
-
 	</div>
 
 
@@ -94,15 +113,22 @@
 
 		// AJOUTER UNE LIGNE DANS LE FORMULAIRE ?
 function ajouterLigne() {
+
 const linesContainer = document.querySelector("#lines");
 
 const newLine = document.createElement("div");
-newLine.classList.add("lines");
 
-newLine.innerHTML = `<input type="text" name="description[]" placeholder="Description">
-    <input type="number" name="prix[]" placeholder="Prix">`
+newLine.classList.add("line");
 
-linesContainer.appendChild(newLine)
+newLine.innerHTML = `
+        <input type="text" name="description[]" placeholder="Description">
+
+        <input type="number" step="0.01" name="unitAmount[]" placeholder="Montant">
+
+        <input type="number" step="0.01" name="QTY[]" placeholder="Quantité">
+    `;
+
+linesContainer.appendChild(newLine);
 }
 
 // LOGIQUE MODALE NEW DEVIS

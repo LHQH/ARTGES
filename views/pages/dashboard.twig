@@ -7,7 +7,7 @@
 
 
 {% block main %}
-{% include "../partials/navBar.twig" %}
+	{% include "../partials/navBar.twig" %}
 
 	<div class="dashboardContent">
 		<h2>Tableau de bord</h2>
@@ -56,58 +56,60 @@
 
 		<section class="infoSection">
 			<h3>Chantiers actifs</h3>
-			{# VARIABLE A CHANGER !!!! #}
-			<div class="cardList">
-				<article class="listItem">
-					<div class="iteminfo">
-						<h4>Rénovation SDB</h4>
-						<p>Jean Dupont</p>
-					</div>
-					<div class="priceDate">
-						<p>3000 €</p>
-						<p>Fin : 15/04/2026</p>
 
-					</div>
-				</article>
+
+			{% for construct in constructs %}
+				<div class="cardList">
+					<article class="listItem">
+						<div class="iteminfo">
+							<h4>{{ construct.construct_name }}</h4>
+							<p>{{ construct.client ? construct.client.firstName ~ ' ' ~ construct.client.lastName : 'Aucun client' }}</p>
+						</div>
+						<div class="priceDate">
+							<p>
+								{% if construct.bill %}
+									<p>{{ construct.bill ? construct.bill.totalAmount : 'Pas de facture' }}</p>
+									{% else %}
+
+								{% endif %}
+							</p>
+							<p>Fin :
+								{{ construct.end_date ? construct.end_date|date("d/m/Y") : '' }}</p>
+						</div>
+					</article>
+
+
+				{% endfor %}
+</section>
+
+
 				{# VARIABLE A CHANGER !!!! #}
 
-				<article class="listItem">
-					<div class="iteminfo">
-						<h4>Extension cuisine</h4>
-						<p>Sylvie Martin</p>
+				{# <article class="listItem">
+
+
+		
+
+			{# RDV A VENIR #}
+			<section
+				class="nextDate">
+				{# VARIABLE A CHANGER !!!! #}
+				<h3>Prochaines interventions</h3>
+				<article>
+					<div>
+						<p>11</p>
+						<p>mars</p>
 					</div>
-					<div class="priceDate">
-						<p>9000 €</p>
-						<p>Fin : 15/07/2026</p>
+					<div>
+						<h3>Rénovation salle de bain</h3>
+						<p>Démolition ancien carrelage</p>
 					</div>
+
+					<div>08:00 - 17:00</div>
+
 				</article>
 
-			</div>
 
-
-		</section>
-
-		{# RDV A VENIR #}
-		<section class="nextDate">
-			{# VARIABLE A CHANGER !!!! #}
-			<h3>Prochaines interventions</h3>
-			<article>
-				<div>
-					<p>11</p>
-					<p>mars</p>
-				</div>
-				<div>
-					<h3>Rénovation salle de bain</h3>
-					<p>Démolition ancien carrelage</p>
-				</div>
-
-				<div>08:00 - 17:00</div>
-
-			</article>
-
-
-		</section>
-	</div>
-
-
-{% endblock %}
+			</section>
+		</div>
+	{% endblock %}

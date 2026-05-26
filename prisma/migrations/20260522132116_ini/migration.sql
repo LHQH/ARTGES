@@ -1,8 +1,18 @@
 -- CreateTable
+CREATE TABLE `EstimateLine` (
+    `id_line` INTEGER NOT NULL AUTO_INCREMENT,
+    `description` VARCHAR(191) NOT NULL,
+    `qty` DOUBLE NOT NULL,
+    `unitAmount` DOUBLE NOT NULL,
+    `id_estimate` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id_line`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Address` (
     `id_address` INTEGER NOT NULL AUTO_INCREMENT,
-    `way_number` VARCHAR(191) NULL,
-    `street_name` VARCHAR(191) NULL,
+    `street` VARCHAR(191) NULL,
     `postcode` VARCHAR(191) NULL,
     `city` VARCHAR(191) NULL,
     `id_craftman` INTEGER NOT NULL,
@@ -20,6 +30,7 @@ CREATE TABLE `Bill` (
     `QTY` DOUBLE NOT NULL,
     `unitAmount` DOUBLE NOT NULL,
     `status` VARCHAR(191) NOT NULL,
+    `totalAmount` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `id_estimate` INTEGER NULL,
     `id_craftman` INTEGER NOT NULL,
@@ -30,8 +41,8 @@ CREATE TABLE `Bill` (
 -- CreateTable
 CREATE TABLE `Client` (
     `id_client` INTEGER NOT NULL AUTO_INCREMENT,
-    `last_name` VARCHAR(191) NOT NULL,
-    `first_name` VARCHAR(191) NOT NULL,
+    `lastName` VARCHAR(191) NOT NULL,
+    `firstName` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -86,12 +97,10 @@ CREATE TABLE `Estimate` (
     `id_estimate` INTEGER NOT NULL AUTO_INCREMENT,
     `reference` VARCHAR(191) NOT NULL,
     `tva` DECIMAL(65, 30) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `QTY` DOUBLE NOT NULL,
-    `unitAmount` DOUBLE NOT NULL,
     `status_estimate` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `id_craftman` INTEGER NULL,
+    `id_client` INTEGER NULL,
 
     PRIMARY KEY (`id_estimate`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -136,6 +145,9 @@ CREATE TABLE `Record` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
+ALTER TABLE `EstimateLine` ADD CONSTRAINT `EstimateLine_id_estimate_fkey` FOREIGN KEY (`id_estimate`) REFERENCES `Estimate`(`id_estimate`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Address` ADD CONSTRAINT `Address_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -167,6 +179,9 @@ ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_craftman_fkey` FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE `Estimate` ADD CONSTRAINT `Estimate_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Estimate` ADD CONSTRAINT `Estimate_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Event` ADD CONSTRAINT `Event_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;

@@ -9,25 +9,23 @@
 
 	<nav class="menu">
 		<ul>
-			<li class="active">
-				<a href="/artisans/dashboard">Tableau de bord</a>
+			<li class="{{ currentPage == 'dashboard' ? 'active' : '' }}">
+				<a href="/dashboard">Tableau de bord</a>
 			</li>
-			<li>
-				<a href="/artisan/construct">Chantier</a>
+			<li class="{{ currentPage == 'construct' ? 'active' : '' }}">
+				<a href="/construct/list">Chantier</a>
 			</li>
-			<li>
+			<li class="{{ currentPage == 'client' ? 'active' : '' }}">
 				<a href="/client/list">Client</a>
 			</li>
-			<li>
-				<a href="/artisan/estimate">Devis</a>
+			<li class="{{ currentPage == 'estimate' ? 'active' : '' }}">
+				<a href="/estimate/list">Devis</a>
 			</li>
-			<li>
-				<a href="/artisan/bill">Facture</a></li>
-			<li>
-				<a href="/artisan/purchase">Achat</a>
+			<li class="{{ currentPage == 'bill' ? 'active' : '' }}">
+				<a href="/bill/list">Facture</a>
 			</li>
-			<li>
-				<a href="/artisan/planning">Planning</a>
+			<li class="{{ currentPage == 'planning' ? 'active' : '' }}">
+				<a href="/planning/list">planning</a>
 			</li>
 
 

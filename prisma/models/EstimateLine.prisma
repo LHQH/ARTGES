@@ -1,0 +1,10 @@
+model EstimateLine {
+    id_line Int @id @default(autoincrement())
+
+    description String
+    qty         Float
+    unitAmount  Float
+
+    id_estimate Int
+    estimate Estimate @relation(fields: [id_estimate], references: [id_estimate])
+}

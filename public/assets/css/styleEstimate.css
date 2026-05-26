@@ -1,0 +1,244 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+
+}
+
+/* ADAPTER LA PAGE DEVIS A LA NAVBAR */
+#estimateContent {
+    margin-left: 260px;
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* TITRE DE LA PAGE */
+.headGest h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.headGest p {
+    color: #666;
+    margin: 17px 0 10px 0;
+}
+
+/* LA SECTION RECHERCHE */
+
+
+#search {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#search label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+
+#search label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+
+#searchEstimate {
+    width: 420px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #d8d8d8;
+    padding: 0 16px;
+    font-size: 18px;
+    outline: none;
+    background: white;
+}
+
+#searchEstimate:focus {
+    border: 1px solid #2f66ff;
+}
+
+/* BUTTON NOUVEAU DEVIS */
+
+#newEstimateBtn {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 16px 26px;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#newEstimateBtn:hover {
+    transform: scale(1.03);
+}
+
+
+/* BUTTON PREVIEW DEVIS */
+
+#previewBtn {
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 8px 12px;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#previewBtn:hover {
+    transform: scale(1.03);
+}
+
+
+/* CARD DEVIS CONTAINER */
+#estimatesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* CARDS DEVIS */
+
+.estimateCards {
+    width: 250px;
+    min-height: 245px;
+
+    background: white;
+
+    border: 1px solid #dddddd;
+    border-radius: 24px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.2s;
+}
+
+#estimateRef {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
+    color: #111;
+}
+
+/* MODALES */
+
+/*Empeche le scroll hors-modale*/
+body.modal-open {
+    overflow: hidden;
+}
+
+.newEstimateModale {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.newEstimateModale.active {
+    display: flex;
+}
+
+/* FORMULAIRE MODALE NEW DEVIS */
+
+#newEstimateForm {
+    width: 500px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#newEstimateForm div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#newEstimateForm label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+#newEstimateForm input {
+    height: 42px;
+
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+
+    padding: 0 14px;
+
+    font-size: 16px;
+}
+
+#newEstimateForm input:focus {
+    outline: none;
+    border: 1px solid #2f66ff;
+}
+
+/* BOUTONS MODALE  */
+
+#newEstimateForm button {
+    height: 40px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#newEstimateForm button[type="submit"] {
+    background: #2f66ff;
+    color: white;
+}
+
+#closeModale {
+    background: #ececec;
+    color: #333;
+}

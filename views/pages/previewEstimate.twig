@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="/assets/css/stylePreview.css">
+
+
+<div class="preview">
+
+	<button onclick="history.back()" class="btnBack">
+		← Retour
+	</button>
+
+	<h1>DEVIS
+		{{ estimate.reference }}</h1>
+
+	<div class="box">
+		<h3>Client</h3>
+		<p>
+			{{ estimate.client.firstname }}
+			{{ estimate.client.lastname }}
+		</p>
+	</div>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th>Description</th>
+				<th>Qté</th>
+				<th>Prix</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for estimateLine in estimate.estimateLine %}
+				<tr>
+					<td>{{ estimateLine.description }}</td>
+					<td class="estimateNb">{{ estimateLine.qty }}</td>
+					<td class="estimateNb">{{ estimateLine.unitAmount }}€</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="totals">
+
+		<p>
+			Total HT :
+			{{ totalHT|number_format(2, ',', ' ') }}
+			€
+		</p>
+
+		<p>
+			TVA :
+			{{ montantTVA|number_format(2, ',', ' ') }}
+			€
+		</p>
+
+		<p>
+			<strong>
+				Total TTC :
+				{{ totalTTC|number_format(2, ',', ' ') }}
+				€
+			</strong>
+		</p>
+
+	</div>
+
+
+</div>

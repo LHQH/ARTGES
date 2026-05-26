@@ -18,6 +18,6 @@ model Craftman {
     records         Record[]
     clients         Client[]
     estimates       Estimate[]
-    bills           Bill[]
+    bill           Bill[]
     adress          Address[]
 }

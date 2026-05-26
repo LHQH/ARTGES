@@ -42,14 +42,32 @@ h1 {
     margin-bottom: 30px;
 }
 
-.freeRegisterBtn {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 8px;
+.freeTryBtn {
+    text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 600;
-    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+}
+
+.freeHomeBtn {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+    color: #000;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.freeHomeBtn:hover {
+    background-color: #a9a9a9;
 }
 
 /* INTRO FEATURE */

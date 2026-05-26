@@ -1,127 +1,283 @@
 {% extends "../layouts/base.twig" %}
-{# {% extends "../partials/navBar.twig" %} #}
+
 
 {% block style %}
 
-<link rel="stylesheet" href="/assets/css/modale.css"
-
-
-
+	<link rel="stylesheet" href="/assets/css/styleClient.css">
 
 {% endblock %}
 
 {% block main %}
-	<section class="headGest">
-		<h2>Clients</h2>
-		<p>Gérer votre base de données client</p>
+	{% include "../partials/navBar.twig" %}
 
-		<div id="search">
-			<label for="finder">Recherche :</label>
-			<input type="text" name="searchContent" id="searchContent">
+	<div id="clientContent">
+
+		{% if error %}
+			<div class="error-message">
+				{{ error }}
+			</div>
+		{% endif %}
+
+		<section class="headGest">
+			<h2>Clients</h2>
+			<p>Gérer votre base de données client</p>
+
+			<form method="GET" action="/client/list">
+				<input type="text" id="searchClient" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un client">
+				<button type="submit">Rechercher</button>
+			</form>
+
+			<div>
+				<button id="newClientBtn">+ Nouveau client</button>
+			</div>
+		</section>
+		<section id="cardsList">
+
+			{% for client in clients %}
+				<article class="clientCards">
+					<div class="clientTool">
+						<div>
+							<p>
+								{{client.firstName}}
+								{{client.lastName}}
+							</p>
+						</div>
+						<div class="imgTool">
+							<button class="updateClientBtn" value="{{client.id_client}}" data-firstname="{{client.firstName}}" data-lastname="{{client.lastName}}" data-email="{{client.email}}" data-phone="{{client.phone}}" data-street="{{client.address.street}}" data-postcode="{{client.address.postcode}}" data-city="{{client.address.city}}">
+								<img src="/assets/img/UPD.svg" alt="modifier">
+							</button>
+
+							<form action="/client/delete/{{client.id_client}}" method="POST" class="imgTool">
+								<button type="submit" class="deleteClientBtn" data-id="{{client.id_client}}">
+									<img src="/assets/img/DEL.svg" alt="Supprimer">
+								</button>
+							</form>
+						</div>
+
+					</div>
+
+					<div class="PHONE">
+						<img class="imgClient" src="/assets/img/PHONE.svg" alt="PHONE">
+						<p>
+							{{client.phone}}
+						</p>
+					</div>
+					<div class="MAIL">
+						<img class="imgClient" src="/assets/img/MAIL.svg" alt="MAIL">
+						<p>
+							{{client.email}}
+						</p>
+					</div>
+					<div class="clientAddress">
+						<img class="imgClient" src="/assets/img/LOCALISATION.svg" alt="ADRESSE">
+						<p>
+							{{client.address.street}}
+							{{client.address.postcode}}
+							{{client.address.city}}
+
+						</p>
+					</div>
+
+					<div class="createdAT">
+						<p>
+							Client depuis le
+							{{client.created_at_formatted}}
+						</p>
+					</div>
+
+				</article>
+
+
+			{% endfor %}
+
+
+		</section>
+
+
+		{# //MODALE NEW CLIENT #}
+		<div class="newClientModale" id="newClientModale">
+
+			<form id="newClientForm" action="/client/register" method="POST">
+				<div>
+					<label for="firstName">Prénom</label>
+					<input type="text" id="firstName" name="firstName" value="">
+				</div>
+				<div>
+					<label for="lastName">Nom</label>
+					<input type="text" id="lastName" name="lastName" value="">
+				</div>
+				<div>
+					<label for="phone">Téléphone</label>
+					<input type="text" id="phone" name="phone" value="">
+				</div>
+				<div>
+					<label for="mail">Email</label>
+					<input type="text" id="mail" name="mail" value="">
+				</div>
+				<div>
+					<label for="address">Adresse</label>
+					<input type="text" id="address" name="address" value="">
+				</div>
+				<div>
+					<label for="postCode">Code postal</label>
+					<input type="text" id="postCode" name="postCode" value="">
+				</div>
+				<div>
+					<label for="city">Ville</label>
+					<input type="text" id="city" name="city" value="">
+				</div>
+
+
+				<button type="submit">Enregistrer</button>
+				<button type="button" class="closeModale">Annuler</button>
+			</form>
+
 		</div>
-		<div>
-			<button id="newClientBtn">+ Nouveau client</button>
-		</div>
-	</section>
-	<section>
-		<article>
-			<div>
-				<p>
-					{# {{variable du NOMCLIENT}} #}
-				</p>
-				<img src="" alt="MODIF">
-				<img src="" alt="SUPP">
-			</div>
-			<div>
-				<img src="" alt="PHONE">
-				<p>
-					{# {{variable du PHONE CLIENT}} #}
-				</p>
-				<img src="" alt="MAIL">
-				<p>
-					{# {{variable du MAIL CLIENT}} #}
-				</p>
-				<img src="" alt="ADRESSE">
-				<p>
-					{# {{variable du ADRESSE CLIENT}} #}
-				</p>
-			</div>
-
-			<div>
-				<p>
-					{# Client depuis le {{DATE CREATION CLIENT}} #}
-				</p>
-			</div>
-
-		</article>
+	</div>
 
 
-	</section>
-
-	{# //MODALE NEW CLIENT #}
-	<div class="newClientModale" id="newClientModale">
-
-		<form id="newClientForm" action="/client/register" method="POST">
+	{# MODALE MODIF CLIENT #}
+	<div class="updateClientModale" id="updateClientModale">
+		<form id="updateClientForm" action="" method="POST">
 			<div>
-				<label for="firstName">Prénom</label>
-				<input type="text" id="firstName" name="firstName" value="">
+				<label for="firstNameUpdate">Prénom</label>
+				<input type="text" id="firstNameUpdate" name="firstNameUpdate" value="">
 			</div>
 			<div>
-				<label for="lastName">Nom</label>
-				<input type="text" id="lastName" name="lastName" value="">
+				<label for="lastNameUpdate">Nom</label>
+				<input type="text" id="lastNameUpdate" name="lastNameUpdate" value="">
 			</div>
 			<div>
-				<label for="phone">Téléphone</label>
-				<input type="text" id="phone" name="phone" value="">
+				<label for="phoneUpdate">Téléphone</label>
+				<input type="text" id="phoneUpdate" name="phoneUpdate" value="">
 			</div>
 			<div>
-				<label for="mail">Email</label>
-				<input type="text" id="mail" name="mail" value="">
+				<label for="mailUpdate">Email</label>
+				<input type="text" id="mailUpdate" name="mailUpdate" value="">
 			</div>
 			<div>
-				<label for="adress">Adresse</label>
-				<input type="text" id="adress" name="adress" value="">
+				<label for="streetUpdate">Adresse</label>
+				<input type="text" id="streetUpdate" name="streetUpdate" value="">
 			</div>
 			<div>
-				<label for="postCode">Code postal</label>
-				<input type="text" id="postCode" name="postCode" value="">
+				<label for="postCodeUpdate">Code postal</label>
+				<input type="text" id="postCodeUpdate" name="postCodeUpdate" value="">
 			</div>
 			<div>
-				<label for="city">Ville</label>
-				<input type="text" id="city" name="city" value="">
+				<label for="cityUpdate">Ville</label>
+				<input type="text" id="cityUpdate" name="cityUpdate" value="">
 			</div>
 
 
 			<button type="submit">Enregistrer</button>
-			<button type="button" id="closeModale">Annuler</button>
+			<button type="button" class="closeModale">Fermer</button>
 		</form>
 
 	</div>
+
 
 {% endblock %}
 
 
 {% block script %}
 	<script>
+
+
 		const newClientBtn = document.querySelector("#newClientBtn")
 const newClientModale = document.querySelector("#newClientModale")
 const newClientForm = document.querySelector("#newClientForm")
-const closeModale = document.querySelector("#closeModale")
+const closeModales = document.querySelectorAll(".closeModale");
+
 
 newClientBtn.addEventListener("click", (e) => {
 
 newClientModale.classList.add("active")
+
+// empeche le scroll hors modale
+document.body.classList.add("modal-open")
+
 })
 
-closeModale.addEventListener("click", (e) => {
 
-newClientModale.classList.remove("active")
-})
+closeModales.forEach((btn) => {
+
+btn.addEventListener("click", () => {
+
+newClientModale.classList.remove("active");
+updateClientModale.classList.remove("active");
+
+document.body.classList.remove("modal-open");
+
+});
+
+});
+
 
 // FERMER LA MODALE AU CLICK EXTERIEUR
 newClientModale.addEventListener("click", (e) => {
 if (e.target === newClientModale) {
 newClientModale.classList.remove("active");
+}
+});
+
+ 
+
+
+// MODALE UPDATE CLIENT
+
+const updateClientmodale = document.querySelector("#updateClientmodale");
+const updateClientBtns = document.querySelectorAll(".updateClientBtn");
+const firstNameUpdate = document.querySelector("#firstNameUpdate");
+const lastNameUpdate = document.querySelector("#lastNameUpdate");
+const phoneUpdate = document.querySelector("#phoneUpdate");
+const mailUpdate = document.querySelector("#mailUpdate");
+const streetUpdate = document.querySelector("#streetUpdate");
+const cityUpdate = document.querySelector("#cityUpdate");
+const postCodeUpdate = document.querySelector("#postCodeUpdate");
+const updateClientForm = document.querySelector("#updateClientForm");
+
+
+updateClientBtns.forEach((btn) => {
+
+btn.addEventListener("click", (e) => {
+updateClientModale.classList.add("active");
+document.body.classList.add("modal-open")
+
+e.preventDefault();
+
+// RECUP LES DONNEES DEJA ENREGISTRER
+const currentFirstName = btn.dataset.firstname;
+const currentLastName = btn.dataset.lastname;
+const currentPhone = btn.dataset.phone;
+const currentMail = btn.dataset.email;
+const currentStreet = btn.dataset.street;
+const currentPostCode = btn.dataset.postcode;
+const currentCity = btn.dataset.city;
+
+// LES PLACE DANS LES INPUTS
+firstNameUpdate.value = currentFirstName;
+lastNameUpdate.value = currentLastName;
+phoneUpdate.value = currentPhone;
+mailUpdate.value = currentMail;
+streetUpdate.value = currentStreet;
+postCodeUpdate.value = currentPostCode;
+cityUpdate.value = currentCity;
+
+const value = `/client/update/${
+btn.value
+}`;
+
+updateClientForm.setAttribute("action", value);
+
+});
+
+});
+
+
+// FERMER LA MODALE AU CLICK EXTERIEUR
+updateClientModale.addEventListener("click", (e) => {
+if (e.target === updateClientModale) {
+updateClientModale.classList.remove("active");
 }
 });
 	</script>

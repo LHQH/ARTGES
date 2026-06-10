@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+#planningContent {
+    margin-left: 260px;
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* TITRE DE LA PAGE */
+.headGest h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.headGest p {
+    color: #666;
+    margin: 17px 0 10px 0;
+}
+
+/* BOUTON NOUVEL ÉVÉNEMENT */
+#newEventBtn {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 26px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#newEventBtn:hover {
+    transform: scale(1.03);
+}
+
+/* CALENDRIER */
+#calendar {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    border: 1px solid #dddddd;
+}
+
+/* MODALES */
+.newEventModale,
+.eventDetailModale {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.newEventModale.active,
+.eventDetailModale.active {
+    display: flex;
+}
+
+.newEventForm,
+.eventDetailContent {
+    width: 500px;
+    background: white;
+    border-radius: 24px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.newEventForm h3,
+.eventDetailContent h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.newEventForm div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.newEventForm label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.newEventForm input,
+.newEventForm select {
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    padding: 0 14px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.newEventForm input:focus,
+.newEventForm select:focus {
+    outline: none;
+    border: 1px solid #2f66ff;
+}
+
+/* DÉTAIL ÉVÉNEMENT */
+.eventDetailContent p {
+    margin: 0;
+    color: #4c4c4c;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+/* BOUTONS MODALES */
+.newEventModale-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.newEventModale-actions button {
+    height: 40px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#cancelEvent,
+#closeDetail {
+    background: #ececec;
+    color: #333;
+}
+
+#cancelEvent:hover,
+#closeDetail:hover {
+    background: #ddd;
+}
+
+#saveEvent {
+    background: #2f66ff;
+    color: white;
+}
+
+#saveEvent:hover {
+    transform: scale(1.03);
+}
+
+#deleteEvent {
+    background: #e53935;
+    color: white;
+}
+
+#deleteEvent:hover {
+    transform: scale(1.03);
+}
+
+/* EMPÊCHE LE SCROLL HORS MODALE */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* MESSAGE ERREUR */
+.error-message {
+    margin-bottom: 20px;
+    background: #ffe1e1;
+    color: #c10000;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+}

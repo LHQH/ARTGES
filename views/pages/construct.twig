@@ -48,11 +48,17 @@
 						</p>
 						<p>Client</p>
 						<p>
-							{# {{VARIABLE DU NOM CLIENT}} #}
+							{% if construct.client %}
+								{{ construct.client.firstName }}
+								{{ construct.client.lastName }}
+							{% else %}
+								Aucun client
+							{% endif %}
+
 						</p>
 					</div>
 					<div class="constructAddress">
-						<img class="imgConstructInfos" src="/assets/img/LOCALISATION.svg" alt="ADRESSE">
+						<img class="imgConstructInfos" src="/assets/img/localisationHome.svg" alt="ADRESSE">
 						<p>
 							{{construct.address.street}}
 							{{construct.address.postcode}}
@@ -91,6 +97,20 @@
 				<div>
 					<label for="construct_name">Titre du chantier :</label>
 					<input type="text" id="construct_name" name="construct_name" value="">
+				</div>
+				<div>
+
+					<select name="id_client" id="id_client">
+						<option value="">Selectionner un client</option>
+						{% for client in clients %}
+							<option value="{{ client.id_client }}" {% if client.id_client == selectedClientId %} selected {% endif %}>
+								{{ client.firstName }}
+								{{ client.lastName }}
+							</option>
+						{% endfor %}
+					</select>
+
+
 				</div>
 				<div>
 					<label for="construct_ref">Référence :</label>
@@ -178,6 +198,20 @@
 	</div>
 
 
+{# MODAL CONFIRM SUPP  #}
+
+<div class="deleteModale" id="deleteModale">
+	<div class="deleteModaleContent">
+		<h3>Supprimer la chantier ?</h3>
+		<p>Cette action est irréversible.</p>
+		<div class="deleteModale-actions">
+			<button id="cancelDelete">Annuler</button>
+			<button id="confirmDelete">Supprimer</button>
+		</div>
+	</div>
+</div>
+
+
 {% endblock %}
 
 {% block script %}
@@ -207,74 +241,7 @@ newConstructModale.classList.remove("active");
 }
 });
 
-
-{ // # MODALE MODIF CHANTIER #
-}
-
-// const updateConstructModale = document.querySelector("#updateConstructModale")
-// const updateConstructBtns = document.querySelectorAll(".updateConstructBtn")
-// const construct_nameUpdate = document.querySelector("#construct_nameUpdate")
-// const construct_refUpdate = document.querySelector("#construct_refUpdate")
-// const addressUpdate = document.querySelector("#addressUpdate")
-// const cityUpdate = document.querySelector("#cityUpdate")
-// const postCodeUpdate = document.querySelector("#postCodeUpdate")
-// const start_dateUpdate = document.querySelector("#start_dateUpdate")
-// const end_dateUpdate = document.querySelector("#end_dateUpdate")
-// const descriptionUpdate = document.querySelector("#descriptionUpdate")
-// const updateConstructForm = document.querySelector("#updateConstructForm")
-// const closeUpdateModale = document.querySelector("#closeUpdateModale")
-
-// updateConstructBtns.forEach((btn) => {
-
-// btn.addEventListener("click", (e) => {
-// console.log("clik up ok");
-
-// updateConstructModale.classList.add("active");
-// document.body.classList.add("modal-open")
-
-// e.preventDefault();
-
-
-// });
-// closeUpdateModale.addEventListener("click", (e) => {
-
-// updateConstructModale.classList.remove("active")
-// })
-
-// // FERMER LA MODALE AU CLICK EXTERIEUR
-// updateConstructModale.addEventListener("click", (e) => {
-// if (e.target === updateConstructModale) {
-// updateConstructModale.classList.remove("active");
-// }
-// // RECUP LES DONNEES DEJA ENREGISTRER
-// const currentName = btn.dataset.name;
-// const currentRef = btn.dataset.ref;
-// const currentStart = btn.dataset.start;
-// const currentEnd = btn.dataset.end;
-// const currentAddress = btn.dataset.address;
-// const currentPostCode = btn.dataset.postcode;
-// const currentCity = btn.dataset.city;
-// const currentDescription = btn.dataset.description
-// // LES PLACE DANS LES INPUTS
-// construct_nameUpdate.value = currentName;
-// construct_refUpdate.value = currentRef;
-// start_dateUpdate.value = currentStart.split("T")[0];
-// end_dateUpdate.value = currentEnd.split("T")[0];
-// addressUpdate.value = currentAddress;
-// postCodeUpdate.value = currentPostCode;
-// cityUpdate.value = currentCity;
-// descriptionUpdate.value = currentDescription
-
-// const value = `/construct/update/${
-// btn.value
-// }`;
-
-// updateConstructForm.setAttribute("action", value);
-
-
-// });
-
-// });
+// # MODALE MODIF CHANTIER #
 
 
 const updateConstructModale = document.querySelector("#updateConstructModale");
@@ -353,6 +320,43 @@ updateConstructModale.classList.remove("active");
 }
 
 });
+
+
+
+// CONFIRM SUPPRESSION
+
+const deleteModale = document.querySelector("#deleteModale");
+const cancelDelete = document.querySelector("#cancelDelete");
+const confirmDelete = document.querySelector("#confirmDelete");
+let formToSubmit = null;
+
+document.querySelectorAll(".deleteConstructBtn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        formToSubmit = btn.closest("form");
+        deleteModale.classList.add("active");
+    });
+});
+
+cancelDelete.addEventListener("click", () => {
+    deleteModale.classList.remove("active");
+    formToSubmit = null;
+});
+
+confirmDelete.addEventListener("click", () => {
+    if (formToSubmit) {
+        formToSubmit.submit();
+    }
+});
+
+deleteModale.addEventListener("click", (e) => {
+    if (e.target === deleteModale) {
+        deleteModale.classList.remove("active");
+        formToSubmit = null;
+    }
+});
+
+
 	</script>
 
 

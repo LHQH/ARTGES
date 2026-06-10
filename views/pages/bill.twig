@@ -1,48 +1,174 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleBill.css">
+{% endblock %}
 
 {% block main %}
-	<section class="headGest">
-		<h2>Facture</h2>
-		<p>Créer et gérer vos factures</p>
+	{% include "../partials/navBar.twig" %}
+	<div id="billContent">
+		<section class="headGest">
+			<h2>Factures</h2>
+			<p>Gérez vos factures</p>
+			<form method="GET" action="/bill/list">
+				<input type="text" id="searchBill" name="q" value="{{ search ?? '' }}" placeholder="Rechercher une facture">
+				<button type="submit">Rechercher</button>
+			</form>
+		</section>
 
+		{# FACTURES NON PAYÉES #}
+		<h3>En attente de paiement</h3>
+		<section id="billList">
+			{% for bill in bills %}
+				{% if bill.status_bill != "payée" %}
+					<article class="billCards">
+						<div id="billClientContainer">
+							<div>
+								<p>
+									{% if bill.client %}
+										{{ bill.client.firstName }}
+										{{ bill.client.lastName }}
+									{% else %}
+										Aucun client
+									{% endif %}
+								</p>
+							</div>
+							<div class="imgTool">
+								<form action="/bill/delete/{{ bill.id_bill }}" method="POST">
+									<button type="submit" class="deleteBillBtn">
+										<img src="/assets/img/DEL.svg" alt="Supprimer">
+									</button>
+								</form>
+							</div>
+						</div>
 
-		<div id="search">
-			<label for="finder">Recherche :</label>
-			<input type="text" name="searchContent" id="searchContent">
+						<div class="statusBill">
+							{{ bill.status_bill }}
+						</div>
+
+						<div>
+							<p>Référence</p>
+							<p id="billRef">{{ bill.reference }}</p>
+						</div>
+
+						<div>
+							<p>Créée le
+								{{ bill.created_at_formatted }}</p>
+						</div>
+
+						<div class="footerBtn">
+							<a class="previewBtn" href="/bill/preview/{{ bill.id_bill }}">Aperçu</a>
+
+							{# Bouton pour marquer comme payée #}
+							<form action="/bill/pay/{{ bill.id_bill }}" method="POST">
+								<button type="submit" class="payBillBtn">Marquer comme payée</button>
+							</form>
+						</div>
+					</article>
+				{% endif %}
+			{% endfor %}
+		</section>
+
+		{# FACTURES PAYÉES #}
+		<h3>Payées</h3>
+		<section id="billListPaid">
+			{% for bill in bills %}
+				{% if bill.status_bill == "payée" %}
+					<article class="billCards billPaid">
+						<div id="billClientContainer">
+							<div>
+								<p>
+									{% if bill.client %}
+										{{ bill.client.firstName }}
+										{{ bill.client.lastName }}
+									{% else %}
+										Aucun client
+									{% endif %}
+								</p>
+							</div>
+							<div class="imgTool">
+								<form action="/bill/delete/{{ bill.id_bill }}" method="POST">
+									<button type="submit" class="deleteBillBtn">
+										<img src="/assets/img/DEL.svg" alt="Supprimer">
+									</button>
+								</form>
+							</div>
+						</div>
+
+						<div class="statusBill">
+							{{ bill.status_bill }}
+						</div>
+
+						<div>
+							<p>Référence</p>
+							<p id="billRef">{{ bill.reference }}</p>
+						</div>
+
+						<div>
+							<p>Créée le
+								{{ bill.created_at_formatted }}</p>
+						</div>
+
+						<div class="footerBtn">
+							<a class="previewBtn" href="/bill/preview/{{ bill.id_bill }}">Aperçu</a>
+						</div>
+					</article>
+				{% endif %}
+			{% endfor %}
+		</section>
+	</div>
+
+{# MODAL CONFIRM SUPP #}
+
+<div class="deleteModale" id="deleteModale">
+	<div class="deleteModaleContent">
+		<h3>Supprimer la facture ?</h3>
+		<p>Cette action est irréversible.</p>
+		<div class="deleteModale-actions">
+			<button id="cancelDelete">Annuler</button>
+			<button id="confirmDelete">Supprimer</button>
 		</div>
-		<div>
-			<button>+ Nouvelle facture</button>
-		</div>
-	</section>
-	<section>
-		<article>
-			<div>
-				<p>
-					{# {{variable du NOMCLIENT}} #}
-				</p>
-				<p>
-					{# {{VARIABLE TITRE CHANTIER}} #}
-
-				</p>
-				<p>
-					{# {{VARIABLE REF DU CHANTIER}} #}
-				</p>
-			</div>
-			<div>
-				<img src="" alt="previewBILL">
-			</div>
-
-			<div>
-				<p>
-					{# Créer le{{DATE CREATION FACTURE}} #}
-				</p>
-			</div>
-
-		</article>
+	</div>
+</div>
 
 
-	</section>
+{% endblock %}
 
+{% block script %}
+	<script>
+		
+// MODALE SUPPRESSION
+const deleteModale = document.querySelector("#deleteModale");
+const cancelDelete = document.querySelector("#cancelDelete");
+const confirmDelete = document.querySelector("#confirmDelete");
+let formToSubmit = null;
 
+document.querySelectorAll(".deleteBillBtn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        formToSubmit = btn.closest("form");
+        deleteModale.classList.add("active");
+    });
+});
+
+cancelDelete.addEventListener("click", () => {
+    deleteModale.classList.remove("active");
+    formToSubmit = null;
+});
+
+confirmDelete.addEventListener("click", () => {
+    if (formToSubmit) {
+        formToSubmit.submit();
+    }
+});
+
+// FERMER AU CLIC EXTERIEUR
+deleteModale.addEventListener("click", (e) => {
+    if (e.target === deleteModale) {
+        deleteModale.classList.remove("active");
+        formToSubmit = null;
+    }
+});
+
+	</script>
 {% endblock %}

@@ -103,7 +103,7 @@ export async function postRegister(req, res) {
                 error: "Mot de passe trop faible"
             });
         }
-        
+
 
         await prisma.craftman.create({
             data: {
@@ -162,11 +162,11 @@ export async function postLogin(req, res) {
             res.render("pages/login.twig", {
                 error: "Identifiants invalides"
             })
-            
+
         }
 
     } catch (error) {
-       
+
         console.log(error);
         res.render("pages/login.twig", {
             error: "Une erreur est survenue"
@@ -174,44 +174,96 @@ export async function postLogin(req, res) {
     }
 }
 
+
+
+// DECONNEXION
+
+export function logout(req, res) {
+    req.session.destroy((error) => {
+        if (error) {
+            console.error(error);
+        }
+        res.redirect("/login");
+    });
+}
+
+
+
 //DASHBOARD
 
 export async function getDashboard(req, res) {
     try {
-        const clients = await prisma.client.findMany({
-            where: {
-                id_craftman: req.craftman.id_craftman
-            }
+        const craftmanId = req.session.craftman;
 
-        })
-        const constructs = await prisma.construct.findMany({
+        // Nombre de clients
+        const nbClients = await prisma.client.count({
+            where: { id_craftman: craftmanId }
+        });
+
+        // Nombre de chantiers
+        const nbConstructs = await prisma.construct.count({
+            where: { id_craftman: craftmanId }
+        });
+
+        // Début du mois
+        const startMonth = new Date();
+        startMonth.setDate(1);
+        startMonth.setHours(0, 0, 0, 0);
+
+        // Chiffre d'affaires du mois calculé depuis les lignes
+        const bills = await prisma.bill.findMany({
             where: {
-                id_craftman: req.craftman.id_craftman
+                id_craftman: craftmanId,
+                created_at: { gte: startMonth }
             },
+            include: { billLine: true }
+        });
+
+        const monthlyRevenue = bills.reduce((total, bill) => {
+            const billHT = bill.billLine.reduce((sum, line) => sum + (line.qty * line.unitAmount), 0);
+            const billTTC = billHT + (billHT * Number(bill.tva) / 100);
+            return total + billTTC;
+        }, 0);
+
+        // Chantiers pour la liste
+        const constructs = await prisma.construct.findMany({
+            where: { id_craftman: craftmanId },
             include: {
                 client: {
                     select: {
-                        lastName: true,
-                        firstName: true
+                        firstName: true,
+                        lastName: true
                     }
                 },
-                 bill: {
-                    select: {
-                         totalAmount: true
-                    }
+                bill: {
+                    include: { billLine: true }
+                }
+            }
+        });
+        const upcomingEvents = await prisma.event.findMany({
+            where: {
+                id_craftman: craftmanId,
+                start_datetime: {
+                    gte: new Date() // seulement les événements futurs
                 }
             },
-
-        })
+            orderBy: {
+                start_datetime: "asc"
+            },
+            take: 3
+        });
         res.render("pages/dashboard.twig", {
-            title: "Tableau de bord",
-            currentPage: 'dashboard',
-            clients: clients,
-            constructs: constructs
-        })
+            title: "Dashboard",
+            currentPage: "dashboard",
+            nbClients,
+            nbConstructs,
+            monthlyRevenue,
+            constructs,
+            upcomingEvents  
+        });
+
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur serveur");
     }
-
 }

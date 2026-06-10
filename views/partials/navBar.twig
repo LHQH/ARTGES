@@ -1,12 +1,10 @@
 {% block style %}<link rel="stylesheet" href="/assets/css/styleNavBar.css">
 {% endblock %}
-
 <aside class="sidebar">
 	<div class="logo">
-		<h1>ArtisanPro</h1>
-		<p>gestion d’entreprise</p>
+		<h1>ArtGes</h1>
+		<p>gestion d'entreprise</p>
 	</div>
-
 	<nav class="menu">
 		<ul>
 			<li class="{{ currentPage == 'dashboard' ? 'active' : '' }}">
@@ -25,10 +23,14 @@
 				<a href="/bill/list">Facture</a>
 			</li>
 			<li class="{{ currentPage == 'planning' ? 'active' : '' }}">
-				<a href="/planning/list">planning</a>
+				<a href="/planning/list">Planning</a>
 			</li>
-
-
 		</ul>
 	</nav>
+	<div class="sidebar-footer">
+		<a href="/logout" class="logoutBtn">
+			<img src="/assets/img/deco.svg" alt="logout">
+			Déconnexion
+		</a>
+	</div>
 </aside>

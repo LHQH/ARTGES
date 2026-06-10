@@ -4,7 +4,7 @@ import { clientRegister, deleteClient, getClient, updateClient } from "../contro
 
 export const clientRouter = express.Router()
 
-clientRouter.get("/list", getClient)
-clientRouter.post("/register",  clientRegister)
-clientRouter.post("/delete/:id", deleteClient)
-clientRouter.post("/update/:id",  updateClient)
+clientRouter.get("/list", authguard, getClient)
+clientRouter.post("/register", authguard,  clientRegister)
+clientRouter.post("/delete/:id", authguard, deleteClient)
+clientRouter.post("/update/:id", authguard, updateClient)

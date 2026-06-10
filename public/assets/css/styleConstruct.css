@@ -202,10 +202,6 @@ body {
 
 
 
-
-
-
-
 /* MODALES */
 
 body.modal-open {
@@ -247,6 +243,80 @@ body.modal-open {
 
     display: flex;
 
+}
+
+/* MODALE SUPP CONFIRM */
+.deleteModale {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.deleteModale.active {
+    display: flex;
+}
+
+.deleteModaleContent {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.deleteModaleContent h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.deleteModaleContent p {
+    margin: 0;
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.deleteModale-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.deleteModale-actions button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+#cancelDelete {
+    background: #ececec;
+    color: #333;
+}
+
+#cancelDelete:hover {
+    background: #ddd;
+}
+
+#confirmDelete {
+    background: #000000;
+    color: white;
+}
+
+#confirmDelete:hover {
+    transform: scale(1.03);
 }
 
 /* FORMULAIRE DES MODALE NEW ET UODATE */

@@ -73,9 +73,47 @@
 .menu li.active {
     background: #cfe0ff;
 }
+
 /* LIEN ACTIF  */
 .menu li.active a {
     color: #1a5cff;
     font-weight: 600;
 }
 
+/* BTN DECO */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #ececec;
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #cfe0ff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.logoutBtn:hover {
+    background: #1a5cff;
+    transform: scale(1.02);
+}
+
+.logoutBtn img {
+    width: 20px;
+    height: 20px;
+}

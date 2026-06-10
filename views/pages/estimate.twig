@@ -3,13 +3,14 @@
 {% block style %}
 	<link rel="stylesheet" href="/assets/css/styleEstimate.css">
 {% endblock %}
+
 {% block main %}
 	{% include "../partials/navBar.twig" %}
 	<div id="estimateContent">
 		<section class="headGest">
 			<h2>Devis</h2>
 			<p>Créer et gérer vos devis</p>
-			<form method="GET" action="/construct/list">
+			<form method="GET" action="/estimate/list">
 				<input type="text" id="searchEstimate" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un devis">
 				<button type="submit">Rechercher</button>
 			</form>
@@ -17,48 +18,75 @@
 				<button name="newEstimateBtn" id="newEstimateBtn">+ Nouveau devis</button>
 			</div>
 		</section>
+
 		<section id="estimatesList">
 			{% for estimate in estimates %}
-
-
 				<article class="estimateCards">
-					<div>
-						<p>
-							{# {{variable du NOMCLIENT}} #}
-						</p>
-						<p>
-							Réference devis
+					<div id="estimateClientContainer">
+						<div>
+							<p>
+								{% if estimate.client %}
+									{{ estimate.client.firstName }}
+									{{ estimate.client.lastName }}
+								{% else %}
+									Aucun client
+								{% endif %}
+							</p>
+						</div>
+						<div class="imgTool">
 
-						</p>
-						<p id="estimateRef">
-							{{estimate.reference}}
-						</p>
+							<button class="assignClientBtn" value="{{ estimate.id_estimate }}">
+								<img src="/assets/img/assignClient.svg" alt="Assigner un client">
+							</button>
+							<form action="/estimate/delete/{{ estimate.id_estimate }}" method="POST" class="imgTool">
+								<button type="submit" class="deleteEstimateBtn" data-id="{{ estimate.id_estimate }}">
+									<img src="/assets/img/DEL.svg" alt="Supprimer">
+								</button>
+							</form>
+						</div>
+					</div>
+					<div class="statustEstimate">
+						{{estimate.status_estimate}}
 					</div>
 					<div>
-						<img src="" alt="previewDEVIS">
-					</div>
-
-					<div>
-						<p>
-							Créer le{{estimate.created_at_formatted}}
-
-						</p>
+						<p>Réference devis</p>
+						<p id="estimateRef">{{ estimate.reference }}</p>
 					</div>
 					<div>
-						<a id="previewBtn" href="/estimate/preview/{{ estimate.id_estimate }}">
-							Aperçu du devis
-						</a>
+						<p>Créer le
+							{{ estimate.created_at_formatted }}</p>
+					</div>
+
+					<div class="footerBtn">
+						<div>
+							<a id="previewBtn" href="/estimate/preview/{{ estimate.id_estimate }}">
+								Aperçu du devis
+							</a>
+						</div>
+
+						<div>
+							{% if estimate.status_estimate == "en attente" %}
+								<form action="/estimate/validate/{{ estimate.id_estimate }}" method="POST">
+									<button class="validateEstimate" type="submit">Valider</button>
+								</form>
+							{% endif %}
+						</div>
+
+						<div>
+							{% if estimate.status_estimate == "validé" %}
+								<form action="/bill/convert/{{estimate.id_estimate}}" method="post">
+									<button class="transformEstimate" type="submit">Transformer</button>
+								</form>
+							{% endif %}
+						</div>
 					</div>
 
 				</article>
 			{% endfor %}
-
-
 		</section>
 
-		{# //MODALE NEW DEVIS #}
+		{# MODALE NEW DEVIS #}
 		<div class="newEstimateModale" id="newEstimateModale">
-
 			<form id="newEstimateForm" action="/estimate/new" method="POST">
 				<div>
 					<label for="reference">Référence du devis :</label>
@@ -67,12 +95,11 @@
 				<div>
 					<label for="estimateClient">Client :</label>
 					<select name="estimateClient" id="estimateClient">
-						<option value="" selected>Devis sans client</option>
-
+						<option value="">Devis sans client</option>
 						{% for client in clients %}
-							<option value="{{client.id_client}}">
-								{{client.firstName}}
-								{{client.lastName}}
+							<option value="{{ client.id_client }}" {% if client.id_client == selectedClientId %} selected {% endif %}>
+								{{ client.firstName }}
+								{{ client.lastName }}
 							</option>
 						{% endfor %}
 					</select>
@@ -84,69 +111,154 @@
 				<div id="lines">
 					<div class="line">
 						<input type="text" name="description[]" placeholder="Description">
-
 						<input type="number" name="unitAmount[]" placeholder="Montant">
-
 						<input type="number" name="QTY[]" placeholder="Quantité">
-
-
 					</div>
 				</div>
-
 				<div>
 					<button type="button" onclick="ajouterLigne()">Ajouter une ligne</button>
 				</div>
-
-
 				<button type="submit">Enregistrer</button>
-				<button type="button" id="closeModale">Annuler</button>
-			</form>
 
+				<button type="button" id="closeNewModale">Annuler</button>
+			</form>
+		</div>
+
+		{# MODALE ASSIGN CLIENT #}
+		<div class="assignModale" id="assignModale">
+			<form class="assignForm" id="assignForm" action="" method="POST">
+				<p>Assigner un client</p>
+				<select name="availableClient" id="availableClient">
+
+					<option value="">-- Choisir un client --</option>
+					{% for client in clients %}
+						<option value="{{ client.id_client }}">
+							{{ client.firstName }}
+							{{ client.lastName }}
+						</option>
+					{% endfor %}
+				</select>
+				<div class="assignModale-actions">
+					<button type="button" id="closeAssignModale">Annuler</button>
+					<button type="submit">Enregistrer</button>
+				</div>
+
+			</form>
+		</div>
+
+	</div>
+{# 
+CONFIRM SUPP DEVIS #}
+
+{# MODALE CONFIRMATION SUPPRESSION #}
+<div class="deleteModale" id="deleteModale">
+	<div class="deleteModaleContent">
+		<h3>Supprimer ce devis ?</h3>
+		<p>Cette action est irréversible.</p>
+		<div class="deleteModale-actions">
+			<button id="cancelDelete">Annuler</button>
+			<button id="confirmDelete">Supprimer</button>
 		</div>
 	</div>
+</div>
 
 
 {% endblock %}
 
 {% block script %}
 	<script>
-
-		// AJOUTER UNE LIGNE DANS LE FORMULAIRE ?
+		// AJOUTER UNE LIGNE
 function ajouterLigne() {
-
 const linesContainer = document.querySelector("#lines");
-
 const newLine = document.createElement("div");
-
 newLine.classList.add("line");
-
 newLine.innerHTML = `
-        <input type="text" name="description[]" placeholder="Description">
-
-        <input type="number" step="0.01" name="unitAmount[]" placeholder="Montant">
-
-        <input type="number" step="0.01" name="QTY[]" placeholder="Quantité">
-    `;
-
+            <input type="text" name="description[]" placeholder="Description">
+            <input type="number" step="0.01" name="unitAmount[]" placeholder="Montant">
+            <input type="number" step="0.01" name="QTY[]" placeholder="Quantité">
+        `;
 linesContainer.appendChild(newLine);
 }
 
-// LOGIQUE MODALE NEW DEVIS
-const newEstimateBtn = document.querySelector("#newEstimateBtn")
-const newEstimateModale = document.querySelector("#newEstimateModale")
-const newEstimateForm = document.querySelector("#newEstimateForm")
-const closeModale = document.querySelector("#closeModale")
+// MODALE NEW DEVIS
+const newEstimateBtn = document.querySelector("#newEstimateBtn");
+const newEstimateModale = document.querySelector("#newEstimateModale");
+const closeNewModale = document.querySelector("#closeNewModale");
 
-newEstimateBtn.addEventListener("click", (e) => {
+const openModal = {{ openModal ? 'true' : 'false' }};
+if (openModal) {
+newEstimateModale.classList.add("active");
+}
 
-newEstimateModale.classList.add("active")
-})
+newEstimateBtn.addEventListener("click", () => {
+newEstimateModale.classList.add("active");
+});
 
-closeModale.addEventListener("click", (e) => {
+closeNewModale.addEventListener("click", () => {
+newEstimateModale.classList.remove("active");
+});
 
-newEstimateModale.classList.remove("active")
-})
+// MODALE ASSIGN CLIENT
+const assignClientBtns = document.querySelectorAll(".assignClientBtn");
+const assignModale = document.querySelector("#assignModale");
+const assignForm = document.querySelector("#assignForm");
+const closeAssignModale = document.querySelector("#closeAssignModale");
+
+assignClientBtns.forEach((btn) => {
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+
+const estimateId = btn.value;
+assignForm.setAttribute("action", `/estimate/assign/${estimateId}`);
+assignModale.classList.add("active");
+});
+});
+
+closeAssignModale.addEventListener("click", () => {
+assignModale.classList.remove("active");
+});
+
+
+// FERMER LA MODALE AU CLICK EXTERIEUR
+assignModale.addEventListener("click", (e) => {
+if (e.target === assignModale) {
+assignModale.classList.remove("active");
+}
+});
+
+// CONFIRM SUPPRESSION
+
+const deleteModale = document.querySelector("#deleteModale");
+const cancelDelete = document.querySelector("#cancelDelete");
+const confirmDelete = document.querySelector("#confirmDelete");
+let formToSubmit = null;
+
+document.querySelectorAll(".deleteEstimateBtn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        formToSubmit = btn.closest("form");
+        deleteModale.classList.add("active");
+    });
+});
+
+cancelDelete.addEventListener("click", () => {
+    deleteModale.classList.remove("active");
+    formToSubmit = null;
+});
+
+confirmDelete.addEventListener("click", () => {
+    if (formToSubmit) {
+        formToSubmit.submit();
+    }
+});
+
+deleteModale.addEventListener("click", (e) => {
+    if (e.target === deleteModale) {
+        deleteModale.classList.remove("active");
+        formToSubmit = null;
+    }
+});
+
+
 	</script>
-
-
 {% endblock %}

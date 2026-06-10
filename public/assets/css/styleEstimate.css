@@ -92,30 +92,44 @@ body {
 }
 
 
-/* BUTTON PREVIEW DEVIS */
-
-#previewBtn {
-    background: #000;
-    color: white;
-
-    border: none;
-    border-radius: 16px;
-
-    padding: 8px 12px;
-
-    font-size: 15px;
-    font-weight: 400;
-
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-#previewBtn:hover {
-    transform: scale(1.03);
-}
-
-
 /* CARD DEVIS CONTAINER */
+#estimateClientContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.imgTool {
+    display: flex;
+
+}
+
+.assignClientBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.assignClientBtn img {
+    width: 20px;
+    height: 18px;
+    padding: 14px;
+}
+
+
+.deleteEstimateBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.deleteEstimateBtn img {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+}
+
 #estimatesList {
     display: flex;
     flex-wrap: wrap;
@@ -151,7 +165,165 @@ body {
     color: #111;
 }
 
+/* BUTTON FOOTER CARDS */
+
+.footerBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.validateEstimate {
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 6px 10px;
+
+    font-size: 13px;
+    font-weight: 350;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.validateEstimate:hover {
+    transform: scale(1.03);
+}
+
+.transformEstimate {
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 6px 10px;
+
+    font-size: 13px;
+    font-weight: 350;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.transformEstimate:hover {
+    transform: scale(1.03);
+}
+
+/* BUTTON PREVIEW DEVIS */
+
+#previewBtn {
+    background: #000;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 16px;
+
+    padding: 6px 10px;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#previewBtn:hover {
+    transform: scale(1.03);
+}
+
 /* MODALES */
+
+/* MODALE ASSIGN */
+
+.assignModale {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+}
+
+.assignModale.active {
+    display: flex;
+}
+
+.assignModale form {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.assignModale h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.assignModale label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.assignModale select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.assignModale select:focus {
+    outline: none;
+    border-color: #888;
+}
+
+.assignModale .assignModale-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 0.5rem;
+}
+
+.assignModale button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.assignModale button[type="submit"] {
+    background: #1a56db;
+    color: #fff;
+    border-color: #1a56db;
+}
+
+.assignModale button[type="submit"]:hover {
+    background: #1446b8;
+}
+
+.assignModale button[type="button"]:hover {
+    background: #f5f5f5;
+}
 
 /*Empeche le scroll hors-modale*/
 body.modal-open {
@@ -173,6 +345,80 @@ body.modal-open {
 
 .newEstimateModale.active {
     display: flex;
+}
+
+/* MODALE SUPP CONFIRM */
+.deleteModale {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.deleteModale.active {
+    display: flex;
+}
+
+.deleteModaleContent {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.deleteModaleContent h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.deleteModaleContent p {
+    margin: 0;
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.deleteModale-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.deleteModale-actions button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+#cancelDelete {
+    background: #ececec;
+    color: #333;
+}
+
+#cancelDelete:hover {
+    background: #ddd;
+}
+
+#confirmDelete {
+    background: #000000;
+    color: white;
+}
+
+#confirmDelete:hover {
+    transform: scale(1.03);
 }
 
 /* FORMULAIRE MODALE NEW DEVIS */

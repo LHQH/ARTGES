@@ -1,0 +1,254 @@
+body {
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+/* ADAPTER LA PAGE FACTURE A LA NAVBAR */
+#billContent {
+    margin-left: 260px;
+    padding: 40px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* TITRE DE LA PAGE */
+.headGest h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.headGest p {
+    color: #666;
+    margin: 17px 0 10px 0;
+}
+
+/* LA SECTION RECHERCHE */
+#search {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#search label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+
+#searchBill {
+    width: 420px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #d8d8d8;
+    padding: 0 16px;
+    font-size: 18px;
+    outline: none;
+    background: white;
+}
+
+#searchBill:focus {
+    border: 1px solid #2f66ff;
+}
+
+/* CARD FACTURE CONTAINER */
+#billClientContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.imgTool {
+    display: flex;
+}
+
+.deleteBillBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.deleteBillBtn img {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+}
+
+#billList,
+#billListPaid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* CARDS FACTURE */
+.billCards {
+    width: 250px;
+    min-height: 245px;
+
+    background: white;
+
+    border: 1px solid #dddddd;
+    border-radius: 24px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.2s;
+}
+
+/* CARDS FACTURES PAYÉES - légèrement différenciées */
+.billPaid {
+    border-color: #b6f0c2;
+    background: #f6fff8;
+}
+
+#billRef {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
+    color: #111;
+}
+
+.statusBill {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    text-transform: capitalize;
+}
+
+/* BUTTON FOOTER CARDS */
+.footerBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payBillBtn {
+    background: #000;
+    color: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 6px 10px;
+
+    font-size: 13px;
+    font-weight: 350;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.payBillBtn:hover {
+    transform: scale(1.03);
+}
+
+/* BUTTON PREVIEW FACTURE */
+.previewBtn {
+    background: #000;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 16px;
+
+    padding: 6px 10px;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.previewBtn:hover {
+    transform: scale(1.03);
+}
+
+
+
+/* MODAL SUPP CONFIRM */
+
+
+.deleteModale {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.deleteModale.active {
+    display: flex;
+}
+
+.deleteModaleContent {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.deleteModaleContent h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.deleteModaleContent p {
+    margin: 0;
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.deleteModale-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.deleteModale-actions button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+#cancelDelete {
+    background: #ececec;
+    color: #333;
+}
+
+#cancelDelete:hover {
+    background: #ddd;
+}
+
+#confirmDelete {
+    background: #000000;
+    color: white;
+}
+
+#confirmDelete:hover {
+    transform: scale(1.03);
+}

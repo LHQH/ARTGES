@@ -12,8 +12,7 @@ model Client {
     id_craftman Int?
     craftman    Craftman? @relation(fields: [id_craftman], references: [id_craftman])
 
-    records         Record[]
     construct_sites Construct[]
-
-    estimates Estimate[]
+    bills           Bill[]
+    estimates       Estimate[]
 }

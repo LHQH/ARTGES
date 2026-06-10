@@ -23,19 +23,26 @@ CREATE TABLE `Address` (
 -- CreateTable
 CREATE TABLE `Bill` (
     `id_bill` INTEGER NOT NULL AUTO_INCREMENT,
-    `billTitle` VARCHAR(191) NOT NULL,
     `reference` VARCHAR(191) NOT NULL,
     `tva` DECIMAL(65, 30) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `QTY` DOUBLE NOT NULL,
-    `unitAmount` DOUBLE NOT NULL,
-    `status` VARCHAR(191) NOT NULL,
-    `totalAmount` DOUBLE NOT NULL,
+    `status_bill` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `id_estimate` INTEGER NULL,
+    `id_client` INTEGER NULL,
     `id_craftman` INTEGER NOT NULL,
 
     PRIMARY KEY (`id_bill`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `BillLine` (
+    `id_line` INTEGER NOT NULL AUTO_INCREMENT,
+    `description` VARCHAR(191) NOT NULL,
+    `qty` DOUBLE NOT NULL,
+    `unitAmount` DOUBLE NOT NULL,
+    `id_bill` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id_line`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -64,7 +71,6 @@ CREATE TABLE `Construct` (
     `end_date` DATETIME(3) NULL,
     `status` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `id_record` INTEGER NULL,
     `id_bill` INTEGER NULL,
     `id_address` INTEGER NULL,
     `id_client` INTEGER NULL,
@@ -117,33 +123,6 @@ CREATE TABLE `Event` (
     PRIMARY KEY (`id_event`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- CreateTable
-CREATE TABLE `Purchase` (
-    `id_purchase` INTEGER NOT NULL AUTO_INCREMENT,
-    `purchase_date` DATETIME(3) NOT NULL,
-    `supplier_name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
-    `quantity` INTEGER NOT NULL,
-    `price` DOUBLE NOT NULL,
-    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `id_construct` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id_purchase`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Record` (
-    `id_record` INTEGER NOT NULL AUTO_INCREMENT,
-    `file_name` VARCHAR(191) NOT NULL,
-    `file_url` VARCHAR(191) NOT NULL,
-    `type_estimate_bill_` VARCHAR(191) NOT NULL,
-    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `id_client` INTEGER NULL,
-    `id_craftman` INTEGER NULL,
-
-    PRIMARY KEY (`id_record`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
 -- AddForeignKey
 ALTER TABLE `EstimateLine` ADD CONSTRAINT `EstimateLine_id_estimate_fkey` FOREIGN KEY (`id_estimate`) REFERENCES `Estimate`(`id_estimate`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -154,16 +133,19 @@ ALTER TABLE `Address` ADD CONSTRAINT `Address_id_craftman_fkey` FOREIGN KEY (`id
 ALTER TABLE `Bill` ADD CONSTRAINT `Bill_id_estimate_fkey` FOREIGN KEY (`id_estimate`) REFERENCES `Estimate`(`id_estimate`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Bill` ADD CONSTRAINT `Bill_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Bill` ADD CONSTRAINT `Bill_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `BillLine` ADD CONSTRAINT `BillLine_id_bill_fkey` FOREIGN KEY (`id_bill`) REFERENCES `Bill`(`id_bill`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Client` ADD CONSTRAINT `Client_id_address_fkey` FOREIGN KEY (`id_address`) REFERENCES `Address`(`id_address`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Client` ADD CONSTRAINT `Client_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_record_fkey` FOREIGN KEY (`id_record`) REFERENCES `Record`(`id_record`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Construct` ADD CONSTRAINT `Construct_id_bill_fkey` FOREIGN KEY (`id_bill`) REFERENCES `Bill`(`id_bill`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -185,12 +167,3 @@ ALTER TABLE `Estimate` ADD CONSTRAINT `Estimate_id_client_fkey` FOREIGN KEY (`id
 
 -- AddForeignKey
 ALTER TABLE `Event` ADD CONSTRAINT `Event_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Purchase` ADD CONSTRAINT `Purchase_id_construct_fkey` FOREIGN KEY (`id_construct`) REFERENCES `Construct`(`id_construct`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Record` ADD CONSTRAINT `Record_id_client_fkey` FOREIGN KEY (`id_client`) REFERENCES `Client`(`id_client`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Record` ADD CONSTRAINT `Record_id_craftman_fkey` FOREIGN KEY (`id_craftman`) REFERENCES `Craftman`(`id_craftman`) ON DELETE SET NULL ON UPDATE CASCADE;

@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="/assets/css/stylePreview.css">
+<div class="preview">
+	<button onclick="history.back()" class="btnBack">← Retour</button>
+
+	{# HEADER ARTISAN #}
+	<div class="craftmanHeader">
+		<div>
+			<h2>{{ craftman.socialReason }}</h2>
+			<p>{{ craftman.mail }}</p>
+			<p>{{ craftman.proAdress }},
+				{{ craftman.postCode }}
+				{{ craftman.city }}</p>
+			<p>SIRET :
+				{{ craftman.SIRET }}</p>
+		</div>
+		{% if craftman.logo_url %}
+			<img src="{{ craftman.logo_url }}" alt="Logo" class="craftmanLogo">
+		{% endif %}
+	</div>
+
+	<h1>FACTURE
+		{{ bill.reference }}</h1>
+
+	<div class="billMeta">
+		<p>Date d'émission :
+			{{ bill.created_at|date("d/m/Y") }}</p>
+		<p>Statut :
+			{{ bill.status_bill }}</p>
+	</div>
+
+	{# CLIENT #}
+	<div class="box">
+		<h3>Client</h3>
+		{% if bill.client %}
+			<p>{{ bill.client.firstName }}
+				{{ bill.client.lastName }}</p>
+		{% else %}
+			<p>Aucun client assigné</p>
+		{% endif %}
+	</div>
+
+	{# LIGNES #}
+	<table>
+		<thead>
+			<tr>
+				<th>Description</th>
+				<th>Qté</th>
+				<th>Prix unitaire</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for line in bill.billLine %}
+				<tr>
+					<td>{{ line.description }}</td>
+					<td class="estimateNb">{{ line.qty }}</td>
+					<td class="estimateNb">{{ line.unitAmount|number_format(2, ',', ' ') }}
+						€</td>
+					<td class="estimateNb">{{ line.lineTotal|number_format(2, ',', ' ') }}
+						€</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{# TOTAUX #}
+	<div class="totals">
+		<p>Total HT :
+			{{ totalHT|number_format(2, ',', ' ') }}
+			€</p>
+		<p>TVA ({{ bill.tva }}%) :
+			{{ montantTVA|number_format(2, ',', ' ') }}
+			€</p>
+		<p>
+			<strong>Total TTC :
+				{{ totalTTC|number_format(2, ',', ' ') }}
+				€</strong>
+		</p>
+	</div>
+
+	{# BOUTON PDF #}
+	<a href="/bill/pdf/{{ bill.id_bill }}" class="btnPdf">
+		Télécharger en PDF
+	</a>
+
+	{# MENTIONS LÉGALES #}
+	<div class="legalMentions">
+		<p>En cas de retard de paiement, une pénalité de 3 fois le taux d'intérêt légal sera appliquée.</p>
+		<p>Indemnité forfaitaire pour frais de recouvrement : 40 €</p>
+	</div>
+</div>

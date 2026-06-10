@@ -206,8 +206,21 @@ h3 {
     color: white;
     padding: 10px;
     border-radius: 8px;
-    min-width: 40px;
+    min-width: 80px;
     text-align: center;
+}
+.feature-text h3 {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.feature-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
 }
 
 /* CHOIX FORMULE ECO */

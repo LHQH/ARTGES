@@ -7,7 +7,6 @@ import { clientRouter } from "./routes/clientRouter.js"
 import { estimateRouter } from "./routes/estimateRouter.js"
 import { billRouter } from "./routes/billRouter.js"
 import { constructRouter } from "./routes/constructRouter.js"
-import { purchaseRouter } from "./routes/purchaseRouter.js"
 import { planningRouter } from "./routes/planningRouter.js"
 
 const app = express()
@@ -17,7 +16,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 app.use(craftmanRouter)
@@ -25,7 +24,6 @@ app.use("/client", clientRouter)
 app.use("/estimate", estimateRouter)
 app.use("/bill", billRouter)
 app.use("/construct", constructRouter)
-app.use("/purchase", purchaseRouter)
 app.use("/planning", planningRouter )
 
 

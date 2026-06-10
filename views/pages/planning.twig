@@ -1,48 +1,172 @@
 {% extends "../layouts/base.twig" %}
-{% extends "../partials/navBar.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/stylePlanning.css">
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
+
+{% endblock %}
+
 
 {% block main %}
-	<section class="headGest">
-		<h2>Planning</h2>
-		<p>Gérer vos rendez-vous</p>
+	{% include "../partials/navBar.twig" %}
+	<div id="planningContent">
+		<section class="headGest">
+			<h2>Planning</h2>
+			<p>Gérez vos rendez-vous</p>
+			<button id="newEventBtn">+ Nouvel événement</button>
+		</section>
 
-		<div id="search">
-			<label for="finder">Recherche :</label>
-			<input type="text" name="searchContent" id="searchContent">
-		</div>
-		<div>
-			<button>+ Nouvelle tâche</button>
-		</div>
-	</section>
-	<section>
-		<article>
-			<div>
-				<p>
-					{# {{VARIABLE DATE ENREGISTRER}} #}
-				</p>
-				<img src="" alt="iconeModif">
-				<img src="" alt="iconeSupp">
+		<div id="calendar"></div>
+
+		{# MODALE NOUVEL ÉVÉNEMENT #}
+		<div class="newEventModale" id="newEventModale">
+			<div class="newEventForm">
+				<h3>Nouvel événement</h3>
+				<div>
+					<label>Type</label>
+					<select id="type_rdv" name="type_rdv">
+						<option value="rdv">Rendez-vous</option>
+						<option value="intervention">Intervention</option>
+						<option value="visite">Visite</option>
+					</select>
+				</div>
+				<div>
+					<label>Description</label>
+					<input type="text" id="description" placeholder="Description">
+				</div>
+				<div>
+					<label>Début</label>
+					<input type="datetime-local" id="start_datetime">
+				</div>
+				<div>
+					<label>Fin</label>
+					<input type="datetime-local" id="end_datetime">
+				</div>
+				<div class="newEventModale-actions">
+					<button id="cancelEvent">Annuler</button>
+					<button id="saveEvent">Enregistrer</button>
+				</div>
 			</div>
-			<div>
-				<img src="" alt="iconeRdv">
-				<p>
-					{# {{VARIABLE TITRE CHANTIER (FALCULTATIF)}} #}
-				</p>
-				<p>
-					{# {{VARIABLE DESCRIPTION EVENT}} #}
-				</p>
-				<p>Réference chantier</p>
-				<p>
-					{# {{VARIABLE REF CHANTIER (FALCULTATIF)}} #}
-				</p>
-				<p>
-					{# {{VARIABLE HEURE EVENT}} #}
-				</p>
+		</div>
 
-
+		{# MODALE DÉTAIL ÉVÉNEMENT #}
+		<div class="eventDetailModale" id="eventDetailModale">
+			<div class="eventDetailContent">
+				<h3 id="detailType"></h3>
+				<p id="detailDescription"></p>
+				<p id="detailStart"></p>
+				<p id="detailEnd"></p>
+				<div class="newEventModale-actions">
+					<button id="closeDetail">Fermer</button>
+					<button id="deleteEvent">Supprimer</button>
+				</div>
 			</div>
-		</article>
-	</section>
+		</div>
+	</div>
+{% endblock %}
 
 
+{% block script %}
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/locales/fr.global.min.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => { // INITIALISATION FULLCALENDAR
+const calendarEl = document.querySelector("#calendar");
+const calendar = new FullCalendar.Calendar(calendarEl, {
+initialView: "dayGridMonth",
+locale: "fr",
+headerToolbar: {
+left: "prev,next today",
+center: "title",
+right: "dayGridMonth,timeGridWeek,timeGridDay"
+},
+// CHARGE LES EVENTS DEPUIS L'API
+events: "/planning/api",
+
+// CLIC SUR UN EVENT → MODALE DÉTAIL
+eventClick: (info) => {
+currentEventId = info.event.id;
+document.querySelector("#detailType").textContent = info.event.title;
+document.querySelector("#detailDescription").textContent = info.event.extendedProps.description || "";
+document.querySelector("#detailStart").textContent = "Début : " + info.event.start.toLocaleString("fr-FR");
+document.querySelector("#detailEnd").textContent = info.event.end ? "Fin : " + info.event.end.toLocaleString("fr-FR") : "";
+eventDetailModale.classList.add("active");
+},
+
+// CLIC SUR UNE DATE → PRÉ-REMPLIT LA MODALE
+dateClick: (info) => {
+document.querySelector("#start_datetime").value = info.dateStr + "T08:00";
+document.querySelector("#end_datetime").value = info.dateStr + "T09:00";
+newEventModale.classList.add("active");
+}
+});
+
+calendar.render();
+
+// MODALES
+let currentEventId = null;
+const newEventModale = document.querySelector("#newEventModale");
+const eventDetailModale = document.querySelector("#eventDetailModale");
+
+document.querySelector("#newEventBtn").addEventListener("click", () => {
+newEventModale.classList.add("active");
+});
+
+document.querySelector("#cancelEvent").addEventListener("click", () => {
+newEventModale.classList.remove("active");
+});
+
+document.querySelector("#closeDetail").addEventListener("click", () => {
+eventDetailModale.classList.remove("active");
+});
+
+// FERMER AU CLIC EXTÉRIEUR
+newEventModale.addEventListener("click", (e) => {
+if (e.target === newEventModale) 
+newEventModale.classList.remove("active");
+
+
+});
+eventDetailModale.addEventListener("click", (e) => {
+if (e.target === eventDetailModale) 
+eventDetailModale.classList.remove("active");
+
+
+});
+
+// ENREGISTRER UN ÉVÉNEMENT
+document.querySelector("#saveEvent").addEventListener("click", async () => {
+const body = {
+type_rdv: document.querySelector("#type_rdv").value,
+description: document.querySelector("#description").value,
+start_datetime: document.querySelector("#start_datetime").value,
+end_datetime: document.querySelector("#end_datetime").value
+};
+
+await fetch("/planning/new", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(body)
+});
+
+newEventModale.classList.remove("active");
+calendar.refetchEvents(); // RECHARGE LES EVENTS SANS RECHARGER LA PAGE
+});
+
+// SUPPRIMER UN ÉVÉNEMENT
+document.querySelector("#deleteEvent").addEventListener("click", async () => {
+if (! currentEventId) 
+return;
+
+
+
+await fetch (`/planning/delete/${currentEventId}`, {method: "DELETE"});
+
+eventDetailModale.classList.remove("active");
+calendar.refetchEvents();
+});
+});
+	</script>
 {% endblock %}

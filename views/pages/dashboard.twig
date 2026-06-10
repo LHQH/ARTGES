@@ -1,115 +1,94 @@
 {% extends "../layouts/base.twig" %}
-
-
 {% block style %}
 	<link rel="stylesheet" href="/assets/css/styleDashboard.css">
 {% endblock %}
-
-
 {% block main %}
 	{% include "../partials/navBar.twig" %}
-
 	<div class="dashboardContent">
 		<h2>Tableau de bord</h2>
-		<p>Vue d’ensemble de votre activité</p>
+		<p>Vue d'ensemble de votre activité</p>
 
 		{# RAPID INFOS #}
 		<section class="fastStat">
 			<div class="statCard">
 				<div class="statHeader">
 					<p>Clients actif</p>
-					<img src="" alt="iconeClient">
+					<img src="/assets/img/clientDashboard.svg"  alt="iconeClient">
 				</div>
-				{# VARIABLE A NOMCLIENT !!!! #}
-				<div class="statValue">3</div>
+				<div class="statValue">{{ nbClients }}</div>
 			</div>
-
 			<div class="statCard">
 				<div class="statHeader">
 					<p>Chantier en cours</p>
-					<img src="" alt="iconeHammer">
+					<img src="/assets/img/hammerDashboard.svg" alt="iconeHammer">
 				</div>
-				{# VARIABLE A CHANGER !!!! #}
-				<div class="statValue">3</div>
+				<div class="statValue">{{ nbConstructs }}</div>
 			</div>
-
 			<div class="statCard">
 				<div class="statHeader">
-					<p>Tâche en cours</p>
-					<img src="" alt="iconePlanning">
+					<p>Les prochains rendez-vous</p>
+					<img src="/assets/img/calendarDashboard.svg" alt="iconePlanning">
 				</div>
-				{# VARIABLE A CHANGER !!!! #}
-				<div class="statValue">2</div>
+				<div class="statValue">{{upcomingEvents|length}}</div>
 			</div>
-
 			<div class="statCard">
 				<div class="statHeader">
 					<p>CA du mois</p>
-					<img src="" alt="icone€">
+					<img src="/assets/img/moneyDashboard.svg" alt="icone€">
 				</div>
-				{# VARIABLE A CHANGER !!!! #}
-				<div class="statValue">30 000 €</div>
+				<div class="statValue">{{ monthlyRevenue|number_format(2, ',', ' ') }}
+					€</div>
 			</div>
 		</section>
 
-		{# CHANTIER DETAIL RAPID #}
-
+		{# CHANTIERS #}
 		<section class="infoSection">
 			<h3>Chantiers actifs</h3>
 
+			<div class="cardList">
 
-			{% for construct in constructs %}
-				<div class="cardList">
+				{% for construct in constructs %}
+
 					<article class="listItem">
 						<div class="iteminfo">
 							<h4>{{ construct.construct_name }}</h4>
 							<p>{{ construct.client ? construct.client.firstName ~ ' ' ~ construct.client.lastName : 'Aucun client' }}</p>
 						</div>
 						<div class="priceDate">
-							<p>
-								{% if construct.bill %}
-									<p>{{ construct.bill ? construct.bill.totalAmount : 'Pas de facture' }}</p>
-									{% else %}
-
-								{% endif %}
-							</p>
 							<p>Fin :
 								{{ construct.end_date ? construct.end_date|date("d/m/Y") : '' }}</p>
 						</div>
 					</article>
 
-
 				{% endfor %}
-</section>
 
+			</div>
 
-				{# VARIABLE A CHANGER !!!! #}
+		</section>
 
-				{# <article class="listItem">
-
-
-		
-
-			{# RDV A VENIR #}
-			<section
-				class="nextDate">
-				{# VARIABLE A CHANGER !!!! #}
-				<h3>Prochaines interventions</h3>
+		{# RDV A VENIR #}
+		<section class="nextDate">
+			<h3>Prochaines interventions</h3>
+			{% for event in upcomingEvents %}
 				<article>
 					<div>
-						<p>11</p>
-						<p>mars</p>
+						<p>{{ event.start_datetime|date("d") }}</p>
+						<p>{{ event.start_datetime|date("M") }}</p>
 					</div>
 					<div>
-						<h3>Rénovation salle de bain</h3>
-						<p>Démolition ancien carrelage</p>
+						<h3>{{ event.type_rdv_intervention_visite_ }}</h3>
+						<p>{{ event.description ?? 'Aucune description' }}</p>
 					</div>
-
-					<div>08:00 - 17:00</div>
-
+					<div>
+						{{ event.start_datetime|date("H:i") }}
+						-
+						{{ event.end_datetime|date("H:i") }}
+					</div>
 				</article>
+			{% else %}
+				<p>Aucune intervention à venir</p>
+			{% endfor %}
+		</section>
 
-
-			</section>
-		</div>
-	{% endblock %}
+	</div>
+{% endblock %}

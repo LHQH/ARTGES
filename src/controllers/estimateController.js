@@ -17,13 +17,29 @@ export async function getEstimate(req, res) {
             where: {
                 id_craftman: req.session.craftman,
 
-                // PERMET LA RECHERCHE AU DELA DES AFFICHAGE DEs DERNIERS ENREGISTRE
+                // PERMET LA RECHERCHE AU DELA DES AFFICHAGE DES DERNIERS ENREGISTRE
                 OR: [
                     {
                         reference: {
                             contains: search,
                         }
                     },
+                    {
+                        client: {
+                            firstName: {
+                                contains: search
+                            }
+
+                        }
+                    },
+                    {
+                        client: {
+                            lastName: {
+                                contains: search
+                            }
+
+                        }
+                    }
                 ]
             },
             include: {
@@ -44,13 +60,20 @@ export async function getEstimate(req, res) {
                 id_craftman: req.session.craftman
             }
         });
+
+        const selectedClientId = parseInt(req.query.client);
+        const openModal = req.query.new === "1";
+
         res.render("pages/estimate.twig", {
             title: "Gestion des devis",
             estimates: formattedEstimate,
             clients,
+            selectedClientId,
+            openModal,
             search,
             currentPage: "estimate"
-        })
+        });
+
     } catch (error) {
         console.log(error);
         res.render("pages/estimate.twig", {
@@ -62,76 +85,7 @@ export async function getEstimate(req, res) {
 }
 
 // NEW DEVIS
-// export async function newEstimate(req, res) {
-//     try {
-//         const {
-//             reference,
-//             tva,
-//             status_estimate,
-//             estimateClient,
-//         } = req.body;
 
-//         const clientId = parseInt(estimateClient, 10);
-
-//         if (!estimateClient || isNaN(clientId)) {
-//             const clients = await prisma.client.findMany({
-//                 where: { id_craftman: req.session.craftman }
-//             });
-//             return res.render("pages/estimate.twig", {
-//                 error: "Veuillez sélectionner un client valide.",
-//                 clients,
-//                 currentPage: "estimate"
-//             });
-//         }
-
-
-//         const estimate = await prisma.estimate.create({
-//             data: {
-//                 reference,
-//                 tva: parseFloat(tva),
-//                 status_estimate,
-//                 craftman: {
-//                     connect: { id_craftman: req.session.craftman }
-//                 },
-//                 client: {
-//                     connect: { id_client: clientId }
-//                 }
-//             }
-//         });
-
-
-//         for (let i = 0; i < req.body.description.length; i++) {
-//             await prisma.estimateLine.create({
-//                 data: {
-//                     description: req.body.description[i],
-//                     qty: parseFloat(req.body.QTY[i]),
-//                     unitAmount: parseFloat(req.body.unitAmount[i]),
-//                     estimate: {
-//                         connect: { id_estimate: estimate.id_estimate }
-//                     }
-//                 }
-//             });
-//         }
-// console.log(req.body);
-
-//         res.redirect("/estimate/list");
-
-//     } catch (error) {
-//         console.log(error);
-//         const clients = await prisma.client.findMany({
-//             where: { id_craftman: req.session.craftman }
-//         }).catch(() => []);
-
-//         res.render("pages/estimate.twig", {
-//             error: "Erreur lors de la création d'un devis",
-//             clients,
-//             currentPage: "estimate"
-//         });
-//     }
-// }
-
-// NEW DEVIS (Version de test basique)
-// NEW DEVIS (Client 100% optionnel)
 export async function newEstimate(req, res) {
     try {
         const {
@@ -141,7 +95,7 @@ export async function newEstimate(req, res) {
             estimateClient,
         } = req.body;
 
-        // 1. On prépare les données de base du devis
+
         const estimateData = {
             reference: reference || "DEVIS-SANS-REF",
             tva: parseFloat(tva) || 20,
@@ -151,23 +105,17 @@ export async function newEstimate(req, res) {
             }
         };
 
-        // 2. LA MAGIE : On connecte le client UNIQUEMENT s'il y en a un de valide
+
         const clientId = parseInt(estimateClient, 10);
 
         if (estimateClient && !isNaN(clientId)) {
-            // Si estimateClient n'est pas vide et est un nombre, on l'ajoute à l'objet
             estimateData.client = {
                 connect: { id_client: clientId }
             };
         }
-        // Si estimateClient est vide (''), on ne fait rien ! L'objet restera sans client.
-
-        // 3. Création du devis avec nos données dynamiques
         const estimate = await prisma.estimate.create({
             data: estimateData
         });
-
-        // 4. Gestion des lignes (Inchangée, gère 1 ou plusieurs lignes)
         const descriptions = req.body.description
             ? (Array.isArray(req.body.description) ? req.body.description : [req.body.description])
             : [];
@@ -196,20 +144,44 @@ export async function newEstimate(req, res) {
     } catch (error) {
         console.error("Erreur lors de la création du devis :", error);
 
-        // Si ça crash ici, c'est probablement que ton fichier schema.prisma 
-        // oblige le devis à avoir un client (relation non-optionnelle)
         const clients = await prisma.client.findMany({
             where: { id_craftman: req.session.craftman }
         }).catch(() => []);
 
         res.render("pages/estimate.twig", {
-            error: "Impossible de créer le devis. Vérifie si ta base de données autorise les devis sans client.",
+            error: "Impossible de créer le devis.",
             clients,
             currentPage: "estimate"
         });
     }
 }
 
+// VALIDER UN DEVIS
+
+export async function validateEstimate(req, res) {
+    try {
+
+        const id_estimate = parseInt(req.params.id);
+
+        await prisma.estimate.update({
+            where: {
+                id_estimate: id_estimate
+            },
+            data: {
+                status_estimate: "validé"
+            }
+        });
+
+        return res.redirect("/estimate/list");
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la validation du devis");
+    }
+}
+
+
+// CREATION DU PDF
 export async function generatePDF(req, res) {
 
     try {
@@ -244,7 +216,7 @@ export async function generatePDF(req, res) {
         const totalTTC = totalHT + montantTVA;
 
 
-        // CREATION DU PDF
+        
         const html = await new Promise((resolve, reject) => {
 
             res.render(
@@ -268,7 +240,7 @@ export async function generatePDF(req, res) {
         });
 
         // Lancement du navigateur Chromium
-        const browser = await puppeteer.launch();
+        const browser = await Puppeteer.launch();
 
         const page = await browser.newPage();
 
@@ -349,7 +321,8 @@ export async function generatePreview(req, res) {
             estimate,
             totalHT,
             montantTVA,
-            totalTTC
+            totalTTC,
+
         });
 
     } catch (error) {
@@ -360,4 +333,53 @@ export async function generatePreview(req, res) {
             "Erreur preview devis"
         );
     }
+}
+
+export async function deleteEstimate(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+
+        //    SUPP LES LIGNES DU DEVIS
+        await prisma.estimateLine.deleteMany({
+            where: { id_estimate: id }
+        });
+
+        // ENELEVE LA RELATION DEVIS/FACTURE POUR POUVOIR EFFACER LE DEVIS
+        await prisma.bill.updateMany({
+            where: { id_estimate: id },
+            data: { id_estimate: null }
+        });
+
+
+        await prisma.estimate.delete({
+            where: { id_estimate: id }
+        });
+
+        res.redirect("/estimate/list");
+
+    } catch (error) {
+        console.log(error);
+        res.render("pages/estimate.twig", {
+            error: "Erreur lors de la suppression du devis"
+        });
+    }
+}
+
+// ASSIGNER UN CLIENT DEPUIS LA PAGE DE DEVIS
+export async function assignClient(req, res) {
+    const estimateId = parseInt(req.params.id);
+    const clientId = parseInt(req.body.availableClient)
+    try {
+        await prisma.estimate.update({
+            where: { id_estimate: estimateId },
+            data: {
+                client: { connect: { id_client: clientId } }
+            }
+        });
+        res.redirect("/estimate/list")
+    } catch (error) {
+        console.error(error);
+        res.redirect("/estimate/list");
+    }
+
 }

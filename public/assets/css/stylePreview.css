@@ -48,3 +48,64 @@ border: solid 1px;
     background: #444;
     transform: translateY(-2px);
 }
+
+
+/* PREVIEW FACTURE */
+
+.craftmanHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.craftmanHeader h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+}
+
+.craftmanHeader p {
+    margin: 3px 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.craftmanLogo {
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.billMeta {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.btnPdf {
+    display: inline-block;
+    margin-top: 20px;
+    background: #000;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btnPdf:hover {
+    transform: scale(1.03);
+}
+
+.legalMentions {
+    margin-top: 40px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.8rem;
+    color: #999;
+}

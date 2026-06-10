@@ -47,7 +47,7 @@
 								<img src="/assets/img/UPD.svg" alt="modifier">
 							</button>
 
-							<form action="/client/delete/{{client.id_client}}" method="POST" class="imgTool">
+							<form action="/client/delete/{{client.id_client}}" method="POST">
 								<button type="submit" class="deleteClientBtn" data-id="{{client.id_client}}">
 									<img src="/assets/img/DEL.svg" alt="Supprimer">
 								</button>
@@ -69,13 +69,18 @@
 						</p>
 					</div>
 					<div class="clientAddress">
-						<img class="imgClient" src="/assets/img/LOCALISATION.svg" alt="ADRESSE">
+						<img class="imgClient" src="/assets/img/localisationHome.svg" alt="ADRESSE">
 						<p>
 							{{client.address.street}}
 							{{client.address.postcode}}
 							{{client.address.city}}
 
 						</p>
+					</div>
+					<div>
+						<a href="/estimate/list?client={{ client.id_client }}&new=1" class="createEstimateBtn">
+							Créer un devis
+						</a>
 					</div>
 
 					<div class="createdAT">
@@ -175,6 +180,19 @@
 
 	</div>
 
+	{# MODAL CONFIRM SUPPRESSION #}
+
+	<div class="deleteModale" id="deleteModale">
+		<div class="deleteModaleContent">
+			<h3>Supprimer ce client ?</h3>
+			<p>Cette action est irréversible.</p>
+			<div class="deleteModale-actions">
+				<button id="cancelDelete">Annuler</button>
+				<button id="confirmDelete">Supprimer</button>
+			</div>
+		</div>
+	</div>
+
 
 {% endblock %}
 
@@ -219,8 +237,6 @@ if (e.target === newClientModale) {
 newClientModale.classList.remove("active");
 }
 });
-
- 
 
 
 // MODALE UPDATE CLIENT
@@ -278,6 +294,40 @@ updateClientForm.setAttribute("action", value);
 updateClientModale.addEventListener("click", (e) => {
 if (e.target === updateClientModale) {
 updateClientModale.classList.remove("active");
+}
+});
+
+// CONFIRM SUPP FICHE CLIENT
+
+// MODALE SUPPRESSION CLIENT
+const deleteModale = document.querySelector("#deleteModale");
+const cancelDelete = document.querySelector("#cancelDelete");
+const confirmDelete = document.querySelector("#confirmDelete");
+let formToSubmit = null;
+
+document.querySelectorAll(".deleteClientBtn").forEach(btn => {
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+formToSubmit = btn.closest("form");
+deleteModale.classList.add("active");
+});
+});
+
+cancelDelete.addEventListener("click", () => {
+deleteModale.classList.remove("active");
+formToSubmit = null;
+});
+
+confirmDelete.addEventListener("click", () => {
+if (formToSubmit) {
+formToSubmit.submit();
+}
+});
+
+deleteModale.addEventListener("click", (e) => {
+if (e.target === deleteModale) {
+deleteModale.classList.remove("active");
+formToSubmit = null;
 }
 });
 	</script>

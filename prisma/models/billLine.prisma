@@ -1,0 +1,8 @@
+model BillLine {
+    id_line     Int    @id @default(autoincrement())
+    description String
+    qty         Float
+    unitAmount  Float
+    id_bill     Int
+    bill        Bill   @relation(fields: [id_bill], references: [id_bill])
+}

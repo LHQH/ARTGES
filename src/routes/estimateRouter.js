@@ -1,13 +1,15 @@
 import express from "express";
 import { authguard } from "../services/authguard.js"
-import { getEstimate, newEstimate, generatePDF, generatePreview } from "../controllers/estimateController.js";
+import { getEstimate, newEstimate, generatePDF, generatePreview, deleteEstimate, assignClient, validateEstimate } from "../controllers/estimateController.js";
+
 
 
 export const estimateRouter = express.Router()
 
-estimateRouter.get("/list", getEstimate)
-estimateRouter.post("/new", newEstimate)
-estimateRouter.get("/pdf/:id", generatePDF);
-estimateRouter.get("/preview/:id", generatePreview);
-// estimateRouter.post("/delete/:id", deleteEstimate)
-// estimateRouter.post("/update/:id", updateEstimate)
+estimateRouter.get("/list", authguard, getEstimate)
+estimateRouter.post("/new", authguard, newEstimate)
+estimateRouter.get("/pdf/:id", authguard, generatePDF);
+estimateRouter.get("/preview/:id", authguard, generatePreview);
+estimateRouter.post("/validate/:id", authguard, validateEstimate)
+estimateRouter.post("/delete/:id", authguard, deleteEstimate)
+estimateRouter.post("/assign/:id", authguard, assignClient)

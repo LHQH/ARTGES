@@ -4,7 +4,7 @@ import { deleteConstruct, getConstruct, newConstruct, updateConstruct } from "..
 
 export const constructRouter = express.Router()
 
-constructRouter.get("/list",  getConstruct)
-constructRouter.post("/new",  newConstruct)
-constructRouter.post("/delete/:id",  deleteConstruct)
-constructRouter.post("/update/:id",  updateConstruct)
+constructRouter.get("/list", authguard,  getConstruct)
+constructRouter.post("/new", authguard,  newConstruct)
+constructRouter.post("/delete/:id", authguard,  deleteConstruct)
+constructRouter.post("/update/:id", authguard, updateConstruct)

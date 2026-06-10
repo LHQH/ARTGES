@@ -15,7 +15,6 @@ model Craftman {
 
     construct_sites Construct[]
     events          Event[]
-    records         Record[]
     clients         Client[]
     estimates       Estimate[]
     bill           Bill[]

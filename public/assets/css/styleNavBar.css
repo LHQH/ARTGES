@@ -292,6 +292,9 @@
     .menu li {
         font-size: 16px;
     }
+        .logo {
+            margin-left: 70px;
+        }
 }
 
 @media (max-width: 576px) {
@@ -315,6 +318,9 @@
     .logoutBtn {
         font-size: 14px;
     }
+        .logo {
+            margin-left: 70px;
+        }
 }
 
 @media (max-width: 992px) {
@@ -338,15 +344,19 @@
 
 @media (max-width: 992px) {
 
-    #constructContent,
-    #clientContent,
-    #dashboardContent,
-    #estimateContent,
-    #billContent,
-    #planningContent {
+    .constructContent,
+    .clientContent,
+    .dashboardContent,
+    .estimateContent,
+    .billContent,
+    .planningContent {
         margin-left: 0;
         width: 100%;
         max-width: 100%;
-        padding-top: 90px;
+        margin-left: 0;
+            width: 100%;
+            max-width: 100%;
+            padding-top: 120px;
+
     }
 }

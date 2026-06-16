@@ -334,6 +334,81 @@ export async function generatePreview(req, res) {
     }
 }
 
+
+// GENERATION PDF DEVIS
+export async function generatePDFEstimate(req, res) {
+    try {
+        const estimate = await prisma.estimate.findUnique({
+            where: { id_estimate: parseInt(req.params.id) },
+            include: {
+                client: true,
+                estimateLine: true
+            }
+        });
+
+        if (!estimate) {
+            return res.status(404).send("Devis introuvable");
+        }
+
+        // RÉCUPÈRE LES INFOS DE L'ARTISAN
+        const craftman = await prisma.craftman.findUnique({
+            where: { id_craftman: req.session.craftman }
+        });
+
+        let totalHT = 0;
+
+        estimate.estimateLine.forEach(line => {
+            line.lineTotal = line.qty * line.unitAmount;
+            totalHT += line.lineTotal;
+        });
+
+        const montantTVA = totalHT * Number(estimate.tva) / 100;
+        const totalTTC = totalHT + montantTVA;
+
+        const html = await new Promise((resolve, reject) => {
+            res.render(
+                "pages/pdf-estimate.twig",
+                {
+                    estimate,
+                    craftman,
+                    totalHT,
+                    montantTVA,
+                    totalTTC
+                },
+                (err, html) => {
+                    if (err) reject(err);
+                    resolve(html);
+                }
+            );
+        });
+
+        const browser = await Puppeteer.launch();
+        const page = await browser.newPage();
+
+        await page.setContent(html, {
+            waitUntil: "networkidle0"
+        });
+
+        const pdf = await page.pdf({
+            format: "A4",
+            printBackground: true
+        });
+
+        await browser.close();
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader(
+            "Content-Disposition",
+            `attachment; filename=devis-${estimate.reference}.pdf`
+        );
+
+        res.send(pdf);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erreur génération PDF devis");
+    }
+}
 export async function deleteEstimate(req, res) {
     try {
         const id = parseInt(req.params.id);

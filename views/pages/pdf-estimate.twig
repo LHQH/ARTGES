@@ -28,7 +28,7 @@
 	</thead>
 
 	<tbody>
-		{% for line in estimate.estimateLines %}
+		{% for line in estimate.estimateLine %}
 			<tr>
 				<td>{{ line.description }}</td>
 				<td>{{ line.qty }}</td>
@@ -46,7 +46,7 @@
 
 	{% set totalHT = 0 %}
 
-	{% for line in estimate.estimateLines %}
+	{% for line in estimate.estimateLine %}
 		{% set totalHT = totalHT + (line.qty * line.unitAmount) %}
 	{% endfor %}
 

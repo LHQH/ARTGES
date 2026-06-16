@@ -8,12 +8,14 @@
 	{% include "../partials/navBar.twig" %}
 	<div id="billContent">
 		<section class="headGest">
-			<h2>Factures</h2>
-			<p>Gérez vos factures</p>
-			<form method="GET" action="/bill/list">
-				<input type="text" id="searchBill" name="q" value="{{ search ?? '' }}" placeholder="Rechercher une facture">
-				<button type="submit">Rechercher</button>
-			</form>
+			<div id="titleCurrentPage">
+				<h2>Factures</h2>
+				<p>Gérez vos factures</p>
+				<form method="GET" action="/bill/list">
+					<input type="text" id="searchBill" name="q" value="{{ search ?? '' }}" placeholder="Rechercher une facture">
+					<button type="submit">Rechercher</button>
+				</form>
+			</div>
 		</section>
 
 		{# FACTURES NON PAYÉES #}
@@ -118,57 +120,56 @@
 		</section>
 	</div>
 
-{# MODAL CONFIRM SUPP #}
+	{# MODAL CONFIRM SUPP #}
 
-<div class="deleteModale" id="deleteModale">
-	<div class="deleteModaleContent">
-		<h3>Supprimer la facture ?</h3>
-		<p>Cette action est irréversible.</p>
-		<div class="deleteModale-actions">
-			<button id="cancelDelete">Annuler</button>
-			<button id="confirmDelete">Supprimer</button>
+	<div class="deleteModale" id="deleteModale">
+		<div class="deleteModaleContent">
+			<h3>Supprimer la facture ?</h3>
+			<p>Cette action est irréversible.</p>
+			<div class="deleteModale-actions">
+				<button id="cancelDelete">Annuler</button>
+				<button id="confirmDelete">Supprimer</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 {% endblock %}
 
 {% block script %}
 	<script>
-		
-// MODALE SUPPRESSION
+
+		// MODALE SUPPRESSION
 const deleteModale = document.querySelector("#deleteModale");
 const cancelDelete = document.querySelector("#cancelDelete");
 const confirmDelete = document.querySelector("#confirmDelete");
 let formToSubmit = null;
 
 document.querySelectorAll(".deleteBillBtn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        formToSubmit = btn.closest("form");
-        deleteModale.classList.add("active");
-    });
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+formToSubmit = btn.closest("form");
+deleteModale.classList.add("active");
+});
 });
 
 cancelDelete.addEventListener("click", () => {
-    deleteModale.classList.remove("active");
-    formToSubmit = null;
+deleteModale.classList.remove("active");
+formToSubmit = null;
 });
 
 confirmDelete.addEventListener("click", () => {
-    if (formToSubmit) {
-        formToSubmit.submit();
-    }
+if (formToSubmit) {
+formToSubmit.submit();
+}
 });
 
 // FERMER AU CLIC EXTERIEUR
 deleteModale.addEventListener("click", (e) => {
-    if (e.target === deleteModale) {
-        deleteModale.classList.remove("active");
-        formToSubmit = null;
-    }
+if (e.target === deleteModale) {
+deleteModale.classList.remove("active");
+formToSubmit = null;
+}
 });
-
 	</script>
 {% endblock %}

@@ -19,17 +19,22 @@
 		{% endif %}
 
 		<section class="headGest">
-			<h2>Clients</h2>
-			<p>Gérer votre base de données client</p>
+			<div id="titleCurrentPage">
+				<h2>Clients</h2>
+				<p>Gérer votre base de données client</p>
 
-			<form method="GET" action="/client/list">
-				<input type="text" id="searchClient" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un client">
-				<button type="submit">Rechercher</button>
-			</form>
+
+				<form method="GET" action="/client/list">
+					<input type="text" id="searchClient" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un client">
+					<button type="submit">Rechercher</button>
+				</form>
+			</div>
 
 			<div>
 				<button id="newClientBtn">+ Nouveau client</button>
 			</div>
+
+
 		</section>
 		<section id="cardsList">
 

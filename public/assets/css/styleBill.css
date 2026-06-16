@@ -15,6 +15,12 @@ body {
 }
 
 /* TITRE DE LA PAGE */
+.headGest {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
 .headGest h2 {
     font-size: 2.2rem;
     font-weight: 800;
@@ -25,6 +31,11 @@ body {
 .headGest p {
     color: #666;
     margin: 17px 0 10px 0;
+}
+
+#titleCurrentPage{
+display: flex;
+flex-direction: column;
 }
 
 /* LA SECTION RECHERCHE */
@@ -107,7 +118,7 @@ body {
     transition: 0.2s;
 }
 
-/* CARDS FACTURES PAYÉES - légèrement différenciées */
+/* CARDS FACTURES PAYÉES */
 .billPaid {
     border-color: #b6f0c2;
     background: #f6fff8;
@@ -251,4 +262,132 @@ body {
 
 #confirmDelete:hover {
     transform: scale(1.03);
+}
+
+/* =============================================
+   RESPONSIVE — GESTION FACTURES
+   ============================================= */
+
+/* TABLETTE LARGE (< 1200px) */
+@media (max-width: 1200px) {
+    #billContent {
+        margin-left: 260px;
+        padding: 30px;
+    }
+
+    .billCards {
+        width: calc(33% - 14px);
+    }
+}
+
+/* TABLETTE (< 900px) */
+@media (max-width: 900px) {
+    #billContent {
+        margin-left: 0;
+        padding: 24px 20px;
+    }
+
+    .headGest {
+        flex-direction: column;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .headGest h2 {
+        font-size: 1.7rem;
+    }
+
+    #searchBill {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .billCards {
+        width: calc(50% - 10px);
+    }
+
+    #billList,
+    #billListPaid {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+/* MOBILE (< 600px) */
+@media (max-width: 600px) {
+    #billContent {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    .headGest h2 {
+        font-size: 1.4rem;
+    }
+
+    .headGest p {
+        font-size: 14px;
+        margin: 10px 0 6px;
+    }
+
+    #search label {
+        font-size: 16px;
+    }
+
+    #searchBill {
+        font-size: 16px;
+        height: 44px;
+        width: 100%;
+    }
+
+    /* Cards pleine largeur */
+    #billList,
+    #billListPaid {
+        flex-direction: column;
+    }
+
+    .billCards {
+        width: 100%;
+        min-height: auto;
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    #billRef {
+        font-size: 20px;
+    }
+
+    /* Modale suppression */
+    .deleteModaleContent {
+        width: calc(100% - 32px);
+        border-radius: 16px;
+        padding: 24px 18px;
+    }
+
+    .deleteModale-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .deleteModale-actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+/* TRÈS PETIT MOBILE (< 380px) */
+@media (max-width: 380px) {
+    #billContent {
+        padding: 12px;
+    }
+
+    .headGest h2 {
+        font-size: 1.2rem;
+    }
+
+    #billRef {
+        font-size: 17px;
+    }
 }

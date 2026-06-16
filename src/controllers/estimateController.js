@@ -139,10 +139,10 @@ export async function newEstimate(req, res) {
             });
         }
 
-        return res.redirect("/estimate/list");
+        return res.redirect("/estimate/list?success=estimate_added");
 
     } catch (error) {
-        console.error("Erreur lors de la création du devis :", error);
+       
 
         const clients = await prisma.client.findMany({
             where: { id_craftman: req.session.craftman }
@@ -172,11 +172,10 @@ export async function validateEstimate(req, res) {
             }
         });
 
-        return res.redirect("/estimate/list");
+        return res.redirect("/estimate/list?success=estimate_validated");
 
     } catch (error) {
-        console.error(error);
-        return res.status(500).send("Erreur lors de la validation du devis");
+        res.redirect("/estimate/list?error=validate_failed")
     }
 }
 
@@ -355,13 +354,10 @@ export async function deleteEstimate(req, res) {
             where: { id_estimate: id }
         });
 
-        res.redirect("/estimate/list");
+        res.redirect("/estimate/list?success=estimate_deleted");
 
     } catch (error) {
-        console.log(error);
-        res.render("pages/estimate.twig", {
-            error: "Erreur lors de la suppression du devis"
-        });
+        res.redirect("/estimate/list?error=delete_failed")
     }
 }
 
@@ -376,10 +372,9 @@ export async function assignClient(req, res) {
                 client: { connect: { id_client: clientId } }
             }
         });
-        res.redirect("/estimate/list")
+        res.redirect("/estimate/list?success=estimate_assigned")
     } catch (error) {
-        console.error(error);
-        res.redirect("/estimate/list");
+        res.redirect("/estimate/list?error=assign_failed");
     }
 
 }

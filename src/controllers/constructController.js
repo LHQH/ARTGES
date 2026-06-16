@@ -89,9 +89,11 @@ export async function newConstruct(req, res) {
             data: {
                 construct_name,
                 construct_ref,
-                start_date: new Date(start_date),
-                end_date: new Date(end_date),
                 description,
+
+                start_date: start_date ? new Date(start_date) : null,
+                end_date: end_date ? new Date(end_date) : null,
+                
 
                 // CONNECTE LE CLIENT QUE SI VALEUR VALIDE
                 ...(!isNaN(clientId) && {
@@ -110,13 +112,11 @@ export async function newConstruct(req, res) {
             }
         });
 
-        res.redirect("/construct/list");
+        res.redirect("/construct/list?success=construct_added");
 
     } catch (error) {
         console.log(error);
-        res.render("pages/construct.twig", { // 
-            error: "Erreur lors de la création d'un chantier"
-        });
+        res.redirect("/construct/list?error=add_failed")
     }
 }
 
@@ -126,34 +126,92 @@ export async function newConstruct(req, res) {
 
 export async function updateConstruct(req, res) {
     try {
-        const { construct_name, id_client, construct_ref, address, postCode, city, start_date, end_date, id_bill, description } = req.body
-        await prisma.construct.update({
+        const {
+            construct_nameUpdate,
+            construct_refUpdate,
+            addressUpdate,
+            postCodeUpdate,
+            cityUpdate,
+            start_dateUpdate,
+            end_dateUpdate,
+            descriptionUpdate
+        } = req.body;
+
+        const data = {
+            construct_name: construct_nameUpdate,
+            construct_ref: construct_refUpdate,
+            description: descriptionUpdate,
+            
+        };
+
+        // DATE FALCUTATIV A LA MODIF
+        if (start_dateUpdate) {
+            data.start_date = new Date(start_dateUpdate);
+        } else {
+            data.start_date = null;
+        }
+
+        if (end_dateUpdate) {
+            data.end_date = new Date(end_dateUpdate);
+        } else {
+            data.end_date = null;
+        }
+
+        data.address = {
+            update: {
+                street: addressUpdate,
+                postcode: postCodeUpdate,
+                city: cityUpdate
+            }
+        };
+        console.log("REQ BODY :", req.body);
+        console.log("DATA ENVOYE A PRISMA :", data);
+        const updated = await prisma.construct.update({
             where: {
                 id_construct: parseInt(req.params.id)
             },
-            data: {
-                construct_name,
-                id_client,
-                construct_ref,
-                address,
-                postCode,
-                city,
-                start_date: new Date(start_date),
-                end_date: new Date(end_date),
-                id_bill,
-                description
+            data,
+            include: {
+                address: true,
+                client: true
             }
+        });
 
-        })
-        res.redirect("/construct/list")
+        res.redirect("/construct/list?success=construct_updated");
+
     } catch (error) {
         console.log(error);
-        res.render("pages/construct.twig", {
-            error: "Erreur lors de la modification d'un chantier"
-        })
+        res.redirect("/construct/list?error=update_failed");
     }
 }
 
+// ASSIGNER UN CLIENT DEPUIS LA PAGE DE DEVIS
+export async function assignClient(req, res) {
+    try {
+
+        const constructId = parseInt(req.params.id);
+        const clientId = parseInt(req.body.availableClient);
+
+        await prisma.construct.update({
+            where: {
+                id_construct: constructId
+            },
+            data: {
+                client: {
+                    connect: {
+                        id_client: clientId
+                    }
+                }
+            }
+        });
+
+        res.redirect("/construct/list?success=construct_updated");
+
+    } catch (error) {
+        console.log(error);
+        res.redirect("/construct/list?error=assign_failed");
+    }
+}
 //DELETE UN CHANTIER
 
 export async function deleteConstruct(req, res) {
@@ -163,11 +221,9 @@ export async function deleteConstruct(req, res) {
                 id_construct: parseInt(req.params.id)
             }
         })
-        res.redirect("/construct/list")
+        res.redirect("/construct/list?success=construct_deleted")
     } catch (error) {
         console.log(error);
-        res.render("pages/construct.twig", {
-            error: "Erreur lors de la suppression d'un chantier"
-        })
+        res.redirect("construct/list?error=delete_failed")
     }
 }

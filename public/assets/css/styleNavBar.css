@@ -117,3 +117,236 @@
     width: 20px;
     height: 20px;
 }
+
+/* MENU BURGER POUR RESPONSIV */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.logo {
+    margin-bottom: 40px;
+}
+
+.logo h1 {
+    margin: 0;
+    color: #2f66ff;
+    font-size: 32px;
+}
+
+.logo p {
+    margin-top: 5px;
+    color: #555;
+    font-size: 22px;
+}
+
+.menu {
+    flex: 1;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.menu li a {
+    display: block;
+    padding: 12px 14px;
+    text-decoration: none;
+    color: #444;
+    border-radius: 12px;
+}
+
+.sidebar a:visited {
+    color: #444;
+}
+
+.menu li:hover {
+    background: #e8f0ff;
+}
+
+.menu li:hover a {
+    color: #2f66ff;
+}
+
+.menu li.active {
+    background: #cfe0ff;
+}
+
+.menu li.active a {
+    color: #1a5cff;
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding-top: 20px;
+    border-top: 1px solid #ececec;
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #cfe0ff;
+    text-decoration: none;
+    font-weight: 600;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.logoutBtn:hover {
+    background: #1a5cff;
+    transform: scale(1.02);
+}
+
+.logoutBtn img {
+    width: 20px;
+    height: 20px;
+}
+
+.burgerBtn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: #2f66ff;
+    cursor: pointer;
+    z-index: 1200;
+}
+
+.burgerBtn span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    margin: 5px auto;
+    background: #fff;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.sidebarOverlay {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .burgerBtn {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebarOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999;
+    }
+
+    .sidebarOverlay.show {
+        display: block;
+    }
+
+    .logo h1 {
+        font-size: 28px;
+    }
+
+    .logo p {
+        font-size: 18px;
+    }
+
+    .menu li {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 85%;
+        max-width: 320px;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    .logo p {
+        font-size: 15px;
+    }
+
+    .menu li {
+        font-size: 15px;
+    }
+
+    .logoutBtn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu li a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .sidebar {
+        overflow-y: auto;
+    }
+}
+#constructContent,
+#clientContent,
+#dashboardContent,
+#estimateContent,
+#billContent,
+#planningContent {
+    margin-left: 260px;
+}
+
+@media (max-width: 992px) {
+
+    #constructContent,
+    #clientContent,
+    #dashboardContent,
+    #estimateContent,
+    #billContent,
+    #planningContent {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+        padding-top: 90px;
+    }
+}

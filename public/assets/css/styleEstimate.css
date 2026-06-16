@@ -16,6 +16,12 @@ body {
 }
 
 /* TITRE DE LA PAGE */
+
+.headGest {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 .headGest h2 {
     font-size: 2.2rem;
     font-weight: 800;
@@ -27,7 +33,10 @@ body {
     color: #666;
     margin: 17px 0 10px 0;
 }
-
+#titleCurrentPage {
+display: flex;
+flex-direction: column;
+}
 /* LA SECTION RECHERCHE */
 
 
@@ -487,4 +496,201 @@ body.modal-open {
 #closeModale {
     background: #ececec;
     color: #333;
+}
+/* =============================================
+   RESPONSIVE — GESTION DEVIS
+   ============================================= */
+
+/* TABLETTE LARGE (< 1200px) */
+@media (max-width: 1200px) {
+    #estimateContent {
+        margin-left: 260px;
+        padding: 30px;
+    }
+
+    .estimateCards {
+        width: calc(33% - 14px);
+    }
+
+    #newEstimateBtn {
+        position: static;
+        flex-shrink: 0;
+    }
+}
+
+/* TABLETTE (< 900px) */
+@media (max-width: 900px) {
+    #estimateContent {
+        margin-left: 0;
+        padding: 24px 20px;
+    }
+
+    .headGest {
+        flex-direction: column;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .headGest h2 {
+        font-size: 1.7rem;
+    }
+
+    #newEstimateBtn {
+        position: static;
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        padding: 14px 20px;
+    }
+
+    #searchEstimate {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .estimateCards {
+        width: calc(50% - 10px);
+    }
+}
+
+/* MOBILE (< 600px) */
+@media (max-width: 600px) {
+    #estimateContent {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    .headGest h2 {
+        font-size: 1.4rem;
+    }
+
+    .headGest p {
+        font-size: 14px;
+        margin: 10px 0 6px;
+    }
+
+    #search label {
+        font-size: 16px;
+    }
+
+    #searchEstimate {
+        font-size: 16px;
+        height: 44px;
+        width: 100%;
+    }
+
+    #newEstimateBtn {
+        position: static;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        align-self: flex-start;
+    }
+
+    /* Cards pleine largeur */
+    #estimatesList {
+        flex-direction: column;
+    }
+
+    .estimateCards {
+        width: 100%;
+        min-height: auto;
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    #estimateRef {
+        font-size: 20px;
+    }
+
+    /* Modales new — bottom sheet */
+    .newEstimateModale {
+        align-items: flex-end;
+    }
+
+    #newEstimateForm {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 20px 20px 0 0;
+        padding: 24px 18px;
+        box-sizing: border-box;
+    }
+
+    #newEstimateForm input {
+        font-size: 16px;
+        /* Évite le zoom auto sur iOS */
+        height: 46px;
+    }
+
+    #newEstimateForm button {
+        height: 46px;
+        font-size: 16px;
+    }
+
+    /* Modale suppression */
+    .deleteModaleContent {
+        width: calc(100% - 32px);
+        border-radius: 16px;
+        padding: 24px 18px;
+    }
+
+    .deleteModale-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .deleteModale-actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    /* Modale assign */
+    .assignModale {
+        align-items: flex-end;
+    }
+
+    .assignModale form {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px 12px 0 0;
+        padding: 20px 16px;
+        box-sizing: border-box;
+    }
+
+    .assignModale select {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .assignModale .assignModale-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .assignModale button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+/* TRÈS PETIT MOBILE (< 380px) */
+@media (max-width: 380px) {
+    #estimateContent {
+        padding: 12px;
+    }
+
+    .headGest h2 {
+        font-size: 1.2rem;
+    }
+
+    #estimateRef {
+        font-size: 17px;
+    }
 }

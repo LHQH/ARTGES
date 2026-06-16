@@ -4,10 +4,9 @@ body {
 
 }
 
-
+/* CONTENEUR PRINCIPAL QUI S'ADAPTE A LA NAVBAR */
 #clientContent {
     margin-left: 260px;
-    /* Doit être égal à la width de ta sidebar */
     padding: 40px;
     min-height: 100vh;
     box-sizing: border-box;
@@ -16,7 +15,17 @@ body {
     gap: 30px;
 }
 
+#titleCurrentPage {
+    display: flex;
+    flex-direction: column;
 
+}
+
+.headGest {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
 .headGest h2 {
     font-size: 2.2rem;
@@ -30,7 +39,7 @@ body {
     margin: 17px 0 10px 0;
 }
 
-
+/* BARRE DE RECHERCHE */
 
 #search {
     margin-top: 25px;
@@ -60,28 +69,19 @@ body {
     border: 1px solid #2f66ff;
 }
 
-/* =========================
-   BOUTON NOUVEAU CLIENT
-========================= */
+/* BTN NEW CLIENT */
 
 #newClientBtn {
-    position: absolute;
-    right: 50px;
-    top: 40px;
-
     background: #000;
     color: white;
-
     border: none;
     border-radius: 16px;
-
     padding: 16px 26px;
-
     font-size: 20px;
     font-weight: 500;
-
     cursor: pointer;
     transition: 0.2s;
+    flex-shrink: 0;
 }
 
 #newClientBtn:hover {
@@ -96,9 +96,7 @@ body {
     gap: 20px;
 }
 
-/* =========================
-   CARD CLIENT
-========================= */
+/* CARD CLIENT */
 
 .clientCards {
     width: 300px;
@@ -125,7 +123,7 @@ body {
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
 }
 
-/* TITRE CARD CLIENT (NOM+PRENOM+ TOOL) */
+/* TITRE CARD CLIENT + IMGTOOL */
 .imgTool {
     display: flex;
 }
@@ -236,8 +234,6 @@ body {
     cursor: pointer;
     transition: 0.2s;
 }
-
-
 
 
 /* FOOTER CARDS */
@@ -478,9 +474,7 @@ body.modal-open {
     border: 1px solid #2f66ff;
 }
 
-/* =========================
-   BOUTONS MODALE
-========================= */
+/* BTNS MODALE */
 
 #newClientForm button {
     height: 40px;
@@ -517,4 +511,191 @@ body.modal-open {
     border-radius: 12px;
 
     font-weight: 600;
+}
+
+/* RESPONSIVE */
+/* =============================================
+   RESPONSIVE — GESTION CLIENTS
+   ============================================= */
+
+/* TABLETTE LARGE (< 1200px) */
+@media (max-width: 1200px) {
+    #clientContent {
+        margin-left: 260px;
+        padding: 30px;
+    }
+
+    .clientCards {
+        width: calc(50% - 10px);
+    }
+}
+
+/* TABLETTE (< 900px) — navbar réduite ou glissante */
+@media (max-width: 900px) {
+    #clientContent {
+        margin-left: 0;
+        padding: 24px 20px;
+    }
+
+    .headGest {
+        flex-direction: column;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .headGest h2 {
+        font-size: 1.7rem;
+    }
+
+    .searchForm {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    #searchClient {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #newClientBtn {
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        padding: 14px 20px;
+    }
+
+    .clientCards {
+        width: 100%;
+    }
+
+    #cardsList {
+        flex-direction: column;
+    }
+}
+
+/* MOBILE (< 600px) */
+@media (max-width: 600px) {
+    #clientContent {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    .headGest h2 {
+        font-size: 1.4rem;
+    }
+
+    .headGest p {
+        font-size: 14px;
+        margin: 10px 0 6px;
+    }
+
+    #search label {
+        font-size: 16px;
+    }
+
+    #searchClient {
+        font-size: 16px;
+        height: 44px;
+    }
+
+    #newClientBtn {
+        font-size: 16px;
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+
+    /* Cards pleine largeur sur mobile */
+    .clientCards {
+        width: 100%;
+        min-height: auto;
+        border-radius: 18px;
+        padding: 14px;
+        gap: 12px;
+        margin-top: 0;
+    }
+
+    .clientTool div p {
+        font-size: 22px;
+    }
+
+    .clientCards p {
+        font-size: 15px;
+    }
+
+    .createEstimateBtn {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .createdAT div p {
+        font-size: 14px;
+    }
+
+    /* Modales plein écran sur mobile */
+    #newClientForm,
+    .updateClientModale form {
+        width: 100%;
+        min-width: 0;
+        border-radius: 20px 20px 0 0;
+        padding: 24px 18px;
+        margin-top: auto;
+        box-sizing: border-box;
+    }
+
+    .newClientModale,
+    .updateClientModale {
+        align-items: flex-end;
+    }
+
+    .deleteModaleContent {
+        width: calc(100% - 32px);
+        border-radius: 16px;
+        padding: 24px 18px;
+        box-sizing: border-box;
+    }
+
+    #newClientForm input,
+    #updateClientForm input {
+        font-size: 16px;
+        /* Évite le zoom auto sur iOS */
+        height: 46px;
+    }
+
+    #newClientForm button,
+    #updateClientForm button {
+        height: 46px;
+        font-size: 16px;
+    }
+
+    .deleteModale-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .deleteModale-actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+/* TRÈS PETIT MOBILE (< 380px) */
+@media (max-width: 380px) {
+    #clientContent {
+        padding: 12px;
+    }
+
+    .clientTool div p {
+        font-size: 18px;
+    }
+
+    .headGest h2 {
+        font-size: 1.2rem;
+    }
 }

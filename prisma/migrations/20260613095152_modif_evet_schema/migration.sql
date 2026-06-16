@@ -114,8 +114,8 @@ CREATE TABLE `Estimate` (
 -- CreateTable
 CREATE TABLE `Event` (
     `id_event` INTEGER NOT NULL AUTO_INCREMENT,
-    `start_datetime` DATETIME(3) NOT NULL,
-    `end_datetime` DATETIME(3) NOT NULL,
+    `start_datetime` DATETIME(3) NULL,
+    `end_datetime` DATETIME(3) NULL,
     `description` VARCHAR(191) NULL,
     `type_rdv_intervention_visite_` VARCHAR(191) NOT NULL,
     `id_craftman` INTEGER NULL,

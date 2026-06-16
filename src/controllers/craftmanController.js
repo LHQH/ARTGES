@@ -4,6 +4,7 @@ import { hashPasswordExtension } from "../../prisma/extensions/hashPassword.js";
 const prisma = new PrismaClient({ adapter }).$extends(hashPasswordExtension);
 import bcrypt from "bcrypt"
 import { adressRegex, phoneRegex, mailRegex, passwordRegex, nameRegex, siretRegex, socialReasonRegex, postCodeRegex } from "../services/regex.js";
+import { error } from "node:console";
 
 
 
@@ -26,56 +27,52 @@ export function getRegister(req, res) {
 //REGISTER
 export async function postRegister(req, res) {
     try {
-        //VERIF PRENOM
+
+
+
         const { firstName, lastName, mail, phone, proAdress, postCode, city, siret, socialReason, password } = req.body;
 
-        if (!nameRegex.test(firstName)) {
-            return res.render("pages/register.twig", {
-                old: req.body,
-                error: "Prénom invalide"
-            });
-        }
-
+        
         // VERIF NOM
         if (!nameRegex.test(lastName)) {
             return res.render("pages/register.twig", {
-                old: req.body,
                 error: "Nom invalide"
+            });
+        }
+        //VERIF PRENOM
+        if (!nameRegex.test(firstName)) {
+            return res.render("pages/register.twig", {
+                error: "Prénom invalide"
             });
         }
 
         // VERIF MAIL
         if (!mailRegex.test(mail)) {
             return res.render("pages/register.twig", {
-                old: req.body,
                 error: "Email invalide"
             });
         }
         //VERIF PHONE
         if (!phoneRegex.test(phone)) {
             return res.render("pages/register.twig", {
-                old: req.body,
                 error: "Numero de téléphone invalide"
             });
         }
         // VERIF ADRESS
         if (!adressRegex.test(proAdress)) {
             return res.render("pages/register.twig", {
-                old: req.body,
                 error: "Adresse invalide"
             });
         }
         //VERIF CODE POSTAL
         if (!postCodeRegex.test(postCode)) {
-            return res.render("pages/clientRegister.twig", {
-                old: req.body,
+            return res.render("pages/register.twig", {
                 error: "Code postal invalide"
             })
         }
         //VERIF VILLE
         if (!adressRegex.test(city)) {
-            return res.render("pages/clientRegister.twig", {
-                old: req.body,
+            return res.render("pages/register.twig", {
                 error: "Ville invalide"
             })
         }
@@ -84,23 +81,21 @@ export async function postRegister(req, res) {
         //VERIF SIRET
         if (!siretRegex.test(siret)) {
             return res.render("pages/register.twig", {
-                old: req.body,
                 error: "Siret incorrect"
             })
         }
 
         //VERIF SOCIALREASON
-        if (!socialReason) {
+        if (!socialReasonRegex.test(socialReason)) {
             return res.render("pages/register.twig", {
-                old: req.body,
-                error: "erreur lors de l'enregistrement"
+                error: "Raison Social incorrect ou invalide"
             })
         }
         // VERIF PASSWORD
         if (!passwordRegex.test(password)) {
             return res.render("pages/register.twig", {
 
-                error: "Mot de passe trop faible"
+                error: "Le mot de passe doit contenir 8 caractére minimum, 1 MAJUSCULE, un nombre et 1 caractére special"
             });
         }
 
@@ -120,16 +115,15 @@ export async function postRegister(req, res) {
                 logo_url: ""
             }
         });
-        res.redirect("/login")
+
+
+        res.redirect("/login?success=craftman_Added")
+
     }
     catch (error) {
-        console.log(error);
-        res.render("pages/register.twig", {
-            title: "Inscription",
-            error: "Erreur lors de l'inscription...",
+        console.log(error)
+        res.render("pages/register.twig")
 
-
-        })
     }
 }
 
@@ -138,7 +132,6 @@ export async function postRegister(req, res) {
 export function getLogin(req, res) {
     res.render("pages/login.twig", {
         title: "connexion",
-        error: "Erreur lors de la connexion"
     })
 }
 
@@ -159,9 +152,7 @@ export async function postLogin(req, res) {
                 res.redirect("/dashboard")
             }
         } else {
-            res.render("pages/login.twig", {
-                error: "Identifiants invalides"
-            })
+            res.redirect("/login?error=id_failed")
 
         }
 
@@ -169,7 +160,7 @@ export async function postLogin(req, res) {
 
         console.log(error);
         res.render("pages/login.twig", {
-            error: "Une erreur est survenue"
+            error: "Une erreur lors de la connection est survenue"
         })
     }
 }
@@ -259,11 +250,11 @@ export async function getDashboard(req, res) {
             nbConstructs,
             monthlyRevenue,
             constructs,
-            upcomingEvents  
+            upcomingEvents
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erreur serveur");
+        res.status(500).send("Erreur d'affichage du tableau de bord");
     }
 }

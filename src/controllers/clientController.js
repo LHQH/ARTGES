@@ -31,17 +31,17 @@ export async function getClient(req, res) {
                     {
                         email: {
                             contains: search,
-                            
+
                         }
                     },
                     {
                         phone: {
                             contains: search,
-                            
+
                         }
                     },
 
-                  
+
                 ]
             },
 
@@ -52,7 +52,7 @@ export async function getClient(req, res) {
             orderBy: {
                 created_at: "desc"
             },
-// N'AFFICHE QUE LES 3 DERNIERS ENREGISTREES
+            // N'AFFICHE QUE LES 3 DERNIERS ENREGISTREES
             take: 3
         });
 
@@ -65,7 +65,7 @@ export async function getClient(req, res) {
             clients: formattedClients,
             title: "Liste des clients",
             currentPage: "client",
-            
+
         });
 
     } catch (error) {
@@ -88,7 +88,7 @@ export async function clientRegister(req, res) {
             });
         }
 
-        // Vérification Last Name
+        
         if (!nameRegex.test(lastName)) {
             return res.render("pages/client.twig", {
                 old: req.body,
@@ -96,20 +96,13 @@ export async function clientRegister(req, res) {
             });
         }
 
-        // Vérification mail
+        
         if (!mailRegex.test(mail)) {
             return res.render("pages/client.twig", {
                 old: req.body,
                 error: "Email invalide"
             });
         }
-        //VERIF ADRESS   probleme ICI   !!!!
-        // if (!adressRegex.test(adress)) {
-        //     return res.render("pages/client.twig", {
-        //         old: req.body,
-        //         error: "Adresse invalide"
-        //     })
-        // }
         //VERIF CODE POSTAL
         if (!postCodeRegex.test(postCode)) {
             return res.render("pages/client.twig", {
@@ -147,18 +140,16 @@ export async function clientRegister(req, res) {
                         craftman: { connect: { id_craftman: req.session.craftman } }
                     }
                 },
-                craftman: { connect: { id_craftman: req.session.craftman } } // creer la relation a la creation de la fiche client
+                craftman: { connect: { id_craftman: req.session.craftman } } 
             },
 
         })
 
-        res.redirect("/client/list")
+        res.redirect("/client/list?success=client_added")
     }
     catch (error) {
         console.log(error);
-        res.render("pages/client.twig", {
-            error: "Erreur pendant la création de la fiche client"
-        })
+        res.redirect("/client/list?error=add_failed")
     }
 }
 
@@ -174,10 +165,10 @@ export async function deleteClient(req, res) {
 
         })
 
-        res.redirect("/client/list")
+        res.redirect("/client/list?success=client_deleted")
     } catch (error) {
         console.log(error);
-        res.render("pages/home.twig", {
+        res.render("pages/client.twig", {
             error: "Erreur lors de la suppression d'une fiche client"
         })
     }
@@ -209,11 +200,8 @@ export async function updateClient(req, res) {
             }
         })
 
-        res.redirect("/client/list")
+        res.redirect("/client/list?success=client_updated")
     } catch (error) {
-        console.log(error);
-        res.render("pages/client.twig", {
-            error: "Erreur lors de la modification d'une fiche client"
-        })
+        res.redirect("/client/list?success=update_failed")
     }
 }

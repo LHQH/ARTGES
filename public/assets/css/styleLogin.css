@@ -1,4 +1,3 @@
-/* Style global pour centrer le contenu sur la page */
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     margin: 0;
@@ -121,4 +120,95 @@ p[style*="error"] {
     color: red;
     text-align: center;
     font-size: 0.9rem;
+}
+
+/* =========================
+   RESPONSIVE TABLET
+   ========================= */
+@media screen and (max-width: 768px) {
+
+    .loginContainer {
+        padding: 20px;
+    }
+
+    section {
+        width: 100%;
+        max-width: 500px;
+        padding: 25px;
+        box-sizing: border-box;
+    }
+
+    #loginForm {
+        width: 100%;
+    }
+
+    h2,
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    #loginBtn button {
+        width: 100%;
+    }
+}
+
+/* 
+RESPONSIV */
+@media screen and (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .loginContainer {
+        padding: 10px;
+        min-height: 100vh;
+    }
+
+    section {
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 10px;
+    }
+
+    #loginForm {
+        width: 100%;
+    }
+
+    h2,
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    #loginBtn {
+        justify-content: center;
+    }
+
+    #loginBtn button {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .registerBtn {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 14px;
+    }
 }

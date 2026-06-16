@@ -9,6 +9,7 @@ body {
 
 .container {
     text-align: center;
+    gap: 15px;
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;
@@ -133,7 +134,7 @@ h3 {
         flex: 1 1 45%;
     }
 
-    /* 2 cartes par ligne sur tablette */
+
 }
 
 
@@ -183,7 +184,6 @@ h3 {
     margin: 0 auto 20px;
 }
 
-/* Grille de résumé (fond gris) */
 .features-summary {
     background-color: #f8fafc;
     border-radius: 20px;
@@ -209,6 +209,7 @@ h3 {
     min-width: 80px;
     text-align: center;
 }
+
 .feature-text h3 {
     margin: 0 0 6px 0;
     font-size: 1rem;
@@ -338,4 +339,249 @@ h3 {
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+/* =============================================
+   RESPONSIVE — PAGE D'ACCUEIL
+   ============================================= */
+
+/* TABLETTE (< 900px) */
+@media (max-width: 900px) {
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    .container p {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    /* Steps en colonne */
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .step-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Pricing en colonne */
+    .pricing-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .pricing-card {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    /* Features summary */
+    .features-summary {
+        padding: 30px 20px;
+        gap: 20px;
+    }
+
+    .feature-item {
+        width: 100%;
+        max-width: 420px;
+    }
+}
+
+/* MOBILE (< 600px) */
+@media (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+        padding: 0 16px;
+    }
+
+    .container {
+        margin-bottom: 40px;
+        padding: 0 16px;
+    }
+
+    .container p {
+        font-size: 0.95rem;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    /* Boutons côte à côte sur mobile */
+    .container>div,
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .freeTryBtn,
+    .freeHomeBtn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+        padding: 13px 20px;
+        font-size: 0.95rem;
+    }
+
+    /* Cards features intro — 1 colonne */
+    .homeFeatures {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 12px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        padding: 18px;
+        gap: 16px;
+    }
+
+    /* Icône plus petite en mode ligne */
+    .iconIntro {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        margin-bottom: 0;
+        border-radius: 10px;
+    }
+
+    .iconIntro img {
+        width: 20px;
+    }
+
+    /* Titres de section */
+    .section-title {
+        font-size: 1.7rem;
+        padding: 0 16px;
+    }
+
+    .section-subtitle {
+        font-size: 0.9rem;
+        padding: 0 16px;
+        margin-bottom: 30px;
+    }
+
+    /* Steps */
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 0 16px;
+        margin-bottom: 40px;
+    }
+
+    .step-card {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        gap: 16px;
+    }
+
+    /* Numéro d'étape plus compact */
+    .step-number {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        font-size: 1.4rem;
+        margin: 0;
+    }
+
+    .step-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    /* Features summary */
+    .features-summary {
+        border-radius: 16px;
+        padding: 20px 16px;
+        gap: 16px;
+        margin: 0 16px;
+    }
+
+    .feature-item {
+        width: 100%;
+    }
+
+    .feature-icon.blue-bg {
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+
+    .feature-text h3 {
+        font-size: 0.9rem;
+    }
+
+    .feature-text p {
+        font-size: 0.82rem;
+    }
+
+    /* Pricing */
+    .pricing-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 20px;
+    }
+
+    .pricing-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .pricing-content {
+        padding: 20px;
+    }
+
+    .price {
+        font-size: 2.4rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 14px;
+        font-size: 0.95rem;
+    }
+}
+
+/* TRÈS PETIT MOBILE (< 380px) */
+@media (max-width: 380px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .step-number {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 1.2rem;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
 }

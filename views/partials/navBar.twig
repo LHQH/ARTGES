@@ -1,36 +1,85 @@
-{% block style %}<link rel="stylesheet" href="/assets/css/styleNavBar.css">
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/styleNavBar.css">
 {% endblock %}
-<aside class="sidebar">
+
+<button class="burgerBtn" id="burgerBtn">
+	<span></span>
+	<span></span>
+	<span></span>
+</button>
+
+<div class="sidebarOverlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
 	<div class="logo">
 		<h1>ArtGes</h1>
 		<p>gestion d'entreprise</p>
 	</div>
+
 	<nav class="menu">
 		<ul>
 			<li class="{{ currentPage == 'dashboard' ? 'active' : '' }}">
 				<a href="/dashboard">Tableau de bord</a>
 			</li>
-			<li class="{{ currentPage == 'construct' ? 'active' : '' }}">
-				<a href="/construct/list">Chantier</a>
-			</li>
+
 			<li class="{{ currentPage == 'client' ? 'active' : '' }}">
 				<a href="/client/list">Client</a>
 			</li>
+
+			<li class="{{ currentPage == 'construct' ? 'active' : '' }}">
+				<a href="/construct/list">Chantier</a>
+			</li>
+
 			<li class="{{ currentPage == 'estimate' ? 'active' : '' }}">
 				<a href="/estimate/list">Devis</a>
 			</li>
+
 			<li class="{{ currentPage == 'bill' ? 'active' : '' }}">
 				<a href="/bill/list">Facture</a>
 			</li>
+
 			<li class="{{ currentPage == 'planning' ? 'active' : '' }}">
 				<a href="/planning/list">Planning</a>
 			</li>
 		</ul>
 	</nav>
+
 	<div class="sidebar-footer">
 		<a href="/logout" class="logoutBtn">
-			<img src="/assets/img/deco.svg" alt="logout">
+			<img src="/assets/img/deco.svg" alt="Déconnexion">
 			Déconnexion
 		</a>
 	</div>
+
 </aside>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+
+const burgerBtn = document.getElementById("burgerBtn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("sidebarOverlay");
+
+if (! burgerBtn || ! sidebar || ! overlay) 
+return;
+
+
+burgerBtn.addEventListener("click", () => {
+sidebar.classList.toggle("open");
+overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click", () => {
+sidebar.classList.remove("open");
+overlay.classList.remove("show");
+});
+
+window.addEventListener("resize", () => {
+if (window.innerWidth > 992) {
+sidebar.classList.remove("open");
+overlay.classList.remove("show");
+}
+});
+});
+</script>

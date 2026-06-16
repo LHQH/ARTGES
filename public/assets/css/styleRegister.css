@@ -83,12 +83,86 @@ button:hover {
     opacity: 0.8;
 }
 
-/* Style spécifique pour le select */
+
 select {
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
     width: 50%;
-    /* Le select est plus court sur l'image */
+}
+
+/* =========================
+   RESPONSIVE TABLET
+   ========================= */
+@media screen and (max-width: 768px) {
+
+    .register-card {
+        max-width: 100%;
+        padding: 20px;
+        margin: 15px;
+        border-radius: 12px;
+    }
+
+    .instruction {
+        text-align: center;
+        font-size: 13px;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .button-container {
+        justify-content: center;
+    }
+}
+
+
+/* RESPONSIV */
+@media screen and (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .register-card {
+        padding: 15px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .instruction {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    input,
+    select {
+        font-size: 16px;
+        padding: 12px 15px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 15px;
+        padding: 14px;
+    }
 }

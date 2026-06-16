@@ -8,12 +8,15 @@
 	{% include "../partials/navBar.twig" %}
 	<div id="estimateContent">
 		<section class="headGest">
-			<h2>Devis</h2>
-			<p>Créer et gérer vos devis</p>
-			<form method="GET" action="/estimate/list">
-				<input type="text" id="searchEstimate" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un devis">
-				<button type="submit">Rechercher</button>
-			</form>
+			<div id="titleCurrentPage">
+				<h2>Devis</h2>
+				<p>Créer et gérer vos devis</p>
+				<form method="GET" action="/estimate/list">
+					<input type="text" id="searchEstimate" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un devis">
+					<button type="submit">Rechercher</button>
+				</form>
+
+			</div>
 			<div>
 				<button name="newEstimateBtn" id="newEstimateBtn">+ Nouveau devis</button>
 			</div>
@@ -147,20 +150,20 @@
 		</div>
 
 	</div>
-{# 
-CONFIRM SUPP DEVIS #}
+	{# 
+	CONFIRM SUPP DEVIS #}
 
-{# MODALE CONFIRMATION SUPPRESSION #}
-<div class="deleteModale" id="deleteModale">
-	<div class="deleteModaleContent">
-		<h3>Supprimer ce devis ?</h3>
-		<p>Cette action est irréversible.</p>
-		<div class="deleteModale-actions">
-			<button id="cancelDelete">Annuler</button>
-			<button id="confirmDelete">Supprimer</button>
+	{# MODALE CONFIRMATION SUPPRESSION #}
+	<div class="deleteModale" id="deleteModale">
+		<div class="deleteModaleContent">
+			<h3>Supprimer ce devis ?</h3>
+			<p>Cette action est irréversible.</p>
+			<div class="deleteModale-actions">
+				<button id="cancelDelete">Annuler</button>
+				<button id="confirmDelete">Supprimer</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 {% endblock %}
@@ -197,7 +200,17 @@ newEstimateModale.classList.add("active");
 closeNewModale.addEventListener("click", () => {
 newEstimateModale.classList.remove("active");
 });
+// FERMETURE CLICK EXTERIEUR
+newEstimateModale.addEventListener("click", (e) => {
 
+if (e.target === newEstimateModale) {
+
+newEstimateModale.classList.remove("active");
+
+
+}
+
+});
 // MODALE ASSIGN CLIENT
 const assignClientBtns = document.querySelectorAll(".assignClientBtn");
 const assignModale = document.querySelector("#assignModale");
@@ -234,31 +247,29 @@ const confirmDelete = document.querySelector("#confirmDelete");
 let formToSubmit = null;
 
 document.querySelectorAll(".deleteEstimateBtn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        formToSubmit = btn.closest("form");
-        deleteModale.classList.add("active");
-    });
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+formToSubmit = btn.closest("form");
+deleteModale.classList.add("active");
+});
 });
 
 cancelDelete.addEventListener("click", () => {
-    deleteModale.classList.remove("active");
-    formToSubmit = null;
+deleteModale.classList.remove("active");
+formToSubmit = null;
 });
 
 confirmDelete.addEventListener("click", () => {
-    if (formToSubmit) {
-        formToSubmit.submit();
-    }
+if (formToSubmit) {
+formToSubmit.submit();
+}
 });
 
 deleteModale.addEventListener("click", (e) => {
-    if (e.target === deleteModale) {
-        deleteModale.classList.remove("active");
-        formToSubmit = null;
-    }
+if (e.target === deleteModale) {
+deleteModale.classList.remove("active");
+formToSubmit = null;
+}
 });
-
-
 	</script>
 {% endblock %}

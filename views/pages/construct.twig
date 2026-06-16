@@ -8,17 +8,23 @@
 	{% include "../partials/navBar.twig" %}
 	<div id="constructContent">
 		<section class="headGest">
-			<h2>Chantier</h2>
-			<p>Créer et gérer vos chantiers</p>
 
-			<form method="GET" action="/construct/list">
-				<input type="text" id="searchConstruct" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un chantier">
-				<button type="submit">Rechercher</button>
-			</form>
-			<div>
-				<button name="newConstructBtn" id="newConstructBtn">+ Nouveau chantier</button>
+			<div id="titleCurrentPage">
+				<h2>Chantier</h2>
+				<p>Créer et gérer vos chantiers</p>
+
+				<form method="GET" action="/construct/list">
+					<input type="text" id="searchConstruct" name="q" value="{{ search ?? '' }}" placeholder="Rechercher un chantier">
+					<button type="submit">Rechercher</button>
+				</form>
 			</div>
+
+			<button id="newConstructBtn">
+				+ Nouveau chantier
+			</button>
+
 		</section>
+
 		<section id="constructCardList">
 			{% for construct in constructs %}
 
@@ -29,6 +35,12 @@
 							{{construct.construct_name}}
 						</h3>
 						<div class="imgTool">
+
+							<button class="assignClientBtn" value="{{construct.id_construct}}">
+								<img src="/assets/img/assignClient.svg" alt="Assigner un client">
+							</button>
+
+
 							<button class="updateConstructBtn" value="{{construct.id_construct}}" data-name="{{construct.construct_name}}" data-ref="{{construct.construct_ref}}" data-start="{{construct.start_date}}" data-end="{{construct.end_date}}" data-address="{{construct.address.street}}" data-postcode="{{construct.address.postcode}}" data-city="{{construct.address.city}}" data-description="{{construct.description}}">
 								<img src="/assets/img/UPD.svg" alt="modifier">
 							</button>
@@ -198,18 +210,41 @@
 	</div>
 
 
-{# MODAL CONFIRM SUPP  #}
+	{# MODAL CONFIRM SUPP  #}
 
-<div class="deleteModale" id="deleteModale">
-	<div class="deleteModaleContent">
-		<h3>Supprimer la chantier ?</h3>
-		<p>Cette action est irréversible.</p>
-		<div class="deleteModale-actions">
-			<button id="cancelDelete">Annuler</button>
-			<button id="confirmDelete">Supprimer</button>
+	<div class="deleteModale" id="deleteModale">
+		<div class="deleteModaleContent">
+			<h3>Supprimer le chantier ?</h3>
+			<p>Cette action est irréversible.</p>
+			<div class="deleteModale-actions">
+				<button id="cancelDelete">Annuler</button>
+				<button id="confirmDelete">Supprimer</button>
+			</div>
 		</div>
 	</div>
-</div>
+
+	{# MODALE ASSIGN CONSTRUCT #}
+	<div class="assignModale" id="assignModale">
+		<form class="assignForm" id="assignForm" action="" method="POST">
+
+			<p>Assigner un client</p>
+			<select name="availableClient" id="availableClient">
+
+				<option value="">-- Choisir un client --</option>
+				{% for client in clients %}
+					<option value="{{ client.id_client }}">
+						{{ client.firstName }}
+						{{ client.lastName }}
+					</option>
+				{% endfor %}
+			</select>
+			<div class="assignModale-actions">
+				<button type="button" id="closeAssignModale">Annuler</button>
+				<button type="submit">Enregistrer</button>
+			</div>
+
+		</form>
+	</div>
 
 
 {% endblock %}
@@ -258,6 +293,40 @@ const descriptionUpdate = document.querySelector("#descriptionUpdate");
 
 const updateConstructForm = document.querySelector("#updateConstructForm");
 const closeUpdateModale = document.querySelector("#closeUpdateModale");
+
+
+// MODALE ASSIGN CLIENT
+const assignClientBtns = document.querySelectorAll(".assignClientBtn");
+const assignModale = document.querySelector("#assignModale");
+const assignForm = document.querySelector("#assignForm");
+const closeAssignModale = document.querySelector("#closeAssignModale");
+
+assignClientBtns.forEach((btn) => {
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+
+const constructId = btn.value;
+assignForm.setAttribute("action", `/construct/assign/${constructId}`);
+
+assignModale.classList.add("active");
+});
+});
+
+closeAssignModale.addEventListener("click", () => {
+assignModale.classList.remove("active");
+});
+
+// FERMETURE CLICK EXTERIEUR
+assignModale.addEventListener("click", (e) => {
+
+if (e.target === assignModale) {
+
+assignModale.classList.remove("active");
+
+
+}
+
+});
 
 
 // OUVERTURE MODALE
@@ -322,7 +391,6 @@ updateConstructModale.classList.remove("active");
 });
 
 
-
 // CONFIRM SUPPRESSION
 
 const deleteModale = document.querySelector("#deleteModale");
@@ -331,32 +399,30 @@ const confirmDelete = document.querySelector("#confirmDelete");
 let formToSubmit = null;
 
 document.querySelectorAll(".deleteConstructBtn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        formToSubmit = btn.closest("form");
-        deleteModale.classList.add("active");
-    });
+btn.addEventListener("click", (e) => {
+e.preventDefault();
+formToSubmit = btn.closest("form");
+deleteModale.classList.add("active");
+});
 });
 
 cancelDelete.addEventListener("click", () => {
-    deleteModale.classList.remove("active");
-    formToSubmit = null;
+deleteModale.classList.remove("active");
+formToSubmit = null;
 });
 
 confirmDelete.addEventListener("click", () => {
-    if (formToSubmit) {
-        formToSubmit.submit();
-    }
+if (formToSubmit) {
+formToSubmit.submit();
+}
 });
 
 deleteModale.addEventListener("click", (e) => {
-    if (e.target === deleteModale) {
-        deleteModale.classList.remove("active");
-        formToSubmit = null;
-    }
+if (e.target === deleteModale) {
+deleteModale.classList.remove("active");
+formToSubmit = null;
+}
 });
-
-
 	</script>
 
 

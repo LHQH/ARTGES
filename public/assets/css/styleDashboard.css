@@ -1,24 +1,19 @@
-
 body {
     margin: 0;
     background-color: #f8f9fa;
-    
 }
 
-/* 2. LE CONTENEUR PRINCIPAL (C'est lui qui pousse le contenu) */
 .dashboardContent {
     margin-left: 260px;
-    /* Doit être égal à la width de ta sidebar */
     padding: 40px;
     min-height: 100vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    
+    transition: margin-left 0.3s ease;
 }
 
-/* 3. TITRES (Correction des sélecteurs) */
 .dashboardContent h2 {
     font-size: 2.2rem;
     font-weight: 800;
@@ -28,20 +23,18 @@ body {
 
 .dashboardContent>p {
     color: #666;
-    margin: -10px 0 10px 0;
-    /* Ajusté pour éviter les superpositions */
+    margin: -10px 0 10px;
 }
 
-/* 4. GRILLE DE STATS */
 .fastStat {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
     width: 100%;
 }
 
 .statCard {
-    background: #ffffff;
+    background: #fff;
     padding: 20px;
     border-radius: 16px;
     border: 1px solid #eef0f2;
@@ -52,14 +45,13 @@ body {
     min-height: 120px;
 }
 
-
-
 .statHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #666;
     font-weight: 600;
+    gap: 10px;
 }
 
 .statValue {
@@ -67,12 +59,12 @@ body {
     font-weight: 800;
     color: #1a1a1a;
     margin-top: 10px;
+    word-break: break-word;
 }
 
-/* --- SECTIONS LISTES --- */
 .infoSection,
 section:last-of-type {
-    background: #ffffff;
+    background: #fff;
     padding: 30px;
     border-radius: 20px;
     border: 1px solid #eef0f2;
@@ -86,23 +78,22 @@ section:last-of-type {
 
 .listItem {
     background-color: #f9fbff;
-    /* Teinte bleutée très légère */
     padding: 20px;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-/* --- SECTION PROCHAINES INTERVENTIONS (Carte Blanche) --- */
 .nextDate {
-    background: #ffffff;
+    background: #fff;
     padding: 30px;
     border-radius: 16px;
     border: 1px solid #eef0f2;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-    /* Ombre très légère */
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: "Segoe UI", system-ui, sans-serif;
     margin-bottom: 30px;
 }
 
@@ -114,91 +105,168 @@ section:last-of-type {
     font-weight: 700;
 }
 
-/* --- LE LIGNES (Articles) --- */
 .nextDate article {
     background-color: #f8fafc;
-    /* Fond gris très clair */
     padding: 15px 25px;
     border-radius: 12px;
     margin-bottom: 15px;
-    /* Espace entre les lignes */
     display: flex;
-    /* Active Flexbox pour aligner horizontalement */
     align-items: center;
-    /* Centre verticalement tous les éléments */
-    justify-content: flex-start;
-    /* Aligne au début par défaut */
+    gap: 20px;
     transition: background-color 0.2s;
 }
 
 .nextDate article:hover {
     background-color: #f1f5f9;
-    /* Légère interaction au survol */
 }
 
-/* --- 1. LE BLOC DATE (11 mars) --- */
-/* Cible la première div à l'intérieur de l'article */
 .nextDate article div:nth-child(1) {
     text-align: center;
     min-width: 60px;
-    /* Force une largeur fixe pour l'alignement */
-    margin-right: 30px;
-    /* Espace après la date */
+    flex-shrink: 0;
 }
 
-/* Le gros chiffre (11) */
 .nextDate article div:nth-child(1) p:first-child {
     font-size: 2.2rem;
     font-weight: 800;
     color: #2f66ff;
-    /* Le bleu ArtisanPro */
     line-height: 1;
-    /* Supprime l'espace autour du chiffre */
     margin: 0;
 }
 
-/* Le mois (mars) */
 .nextDate article div:nth-child(1) p:last-child {
     font-size: 0.9rem;
     font-weight: 600;
     color: #1a1a1a;
     text-transform: lowercase;
-    /* Force le mois en minuscules */
-    margin: 3px 0 0 0;
+    margin: 3px 0 0;
 }
 
-/* --- 2. LE BLOC TEXTE (Rénovation...) --- */
-/* Cible la deuxième div à l'intérieur de l'article */
 .nextDate article div:nth-child(2) {
-    flex-grow: 1;
-    /* Le texte prend toute la place restante */
-    margin-right: 20px;
+    flex: 1;
+    min-width: 0;
 }
 
-/* Le titre de la tâche (Rénovation...) */
 .nextDate article div:nth-child(2) h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    margin: 0;
-    margin-bottom: 3px;
+    margin: 0 0 3px;
     color: #1a1a1a;
 }
 
-/* La description (Démolition...) */
 .nextDate article div:nth-child(2) p {
     font-size: 0.9rem;
     color: #6c757d;
-    /* Gris pour le sous-texte */
     margin: 0;
 }
 
-/* --- 3. LE BLOC HEURE (08:00 - 17:00) --- */
-/* Cible la dernière div à l'intérieur de l'article */
 .nextDate article div:nth-child(3) {
     text-align: right;
     font-size: 1rem;
     font-weight: 600;
     color: #1a1a1a;
     min-width: 120px;
-    /* Force une largeur pour l'alignement à droite */
+    flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
+    .fastStat {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboardContent {
+        margin-left: 0;
+        margin-top: 50;
+        padding: 90px 20px 30px;
+    }
+
+    .dashboardContent h2 {
+        font-size: 2rem;
+    }
+
+    .nextDate,
+    .infoSection,
+    section:last-of-type {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .fastStat {
+        grid-template-columns: 1fr;
+    }
+
+    .nextDate article {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .nextDate article div:nth-child(1) {
+        width: 100%;
+        text-align: left;
+    }
+
+    .nextDate article div:nth-child(3) {
+        width: 100%;
+        text-align: left;
+        min-width: auto;
+    }
+
+    .dashboardContent h2 {
+        font-size: 1.8rem;
+    }
+
+    .statValue {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboardContent {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .nextDate,
+    .infoSection,
+    section:last-of-type,
+    .statCard {
+        padding: 18px;
+    }
+
+    .nextDate article {
+        padding: 15px;
+    }
+
+    .dashboardContent h2 {
+        font-size: 1.5rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+
+    .nextDate article div:nth-child(1) p:first-child {
+        font-size: 1.8rem;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.fastStat,
+.cardList,
+.nextDate,
+.infoSection {
+    width: 100%;
+    overflow-x: hidden;
 }

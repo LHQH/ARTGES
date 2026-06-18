@@ -518,8 +518,8 @@ body.modal-open {
     }
 }
 
-/* TABLETTE (< 900px) */
-@media (max-width: 900px) {
+
+@media (max-width: 992px) {
     #estimateContent {
         margin-left: 0;
         padding: 24px 20px;
